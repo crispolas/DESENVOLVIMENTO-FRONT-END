@@ -1,12 +1,72 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gabriel Crispim</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerenciador de Tarefas Acadêmicas</title>
 </head>
 <body>
-    <h1>Gabriel Crispim</h1>
-    <p>Olá! Sou estudante de Engenharia de Software e este é meu primeiro projeto da disciplina de Desenvolvimento Frontend.</p>
+
+  <header>
+    <h1>Gerenciador de Tarefas Acadêmicas</h1>
+  </header>
+
+  <section aria-labelledby="busca-filtros-heading">
+  <h2 id="busca-filtros-heading">Busca e filtros</h2>
+
+  <form>
+    <div>
+      <label for="busca-titulo">Buscar por título da tarefa</label>
+      <input type="search" id="busca-titulo" name="busca-titulo">
+    </div>
+
+    <fieldset>
+      <legend>Filtrar por status</legend>
+      <div>
+        <input type="radio" id="status-todos" name="status" value="todos" checked>
+        <label for="status-todos">Todos</label>
+      </div>
+      <div>
+        <input type="radio" id="status-a-fazer" name="status" value="a-fazer">
+        <label for="status-a-fazer">A fazer</label>
+      </div>
+      <div>
+        <input type="radio" id="status-em-andamento" name="status" value="em-andamento">
+        <label for="status-em-andamento">Em andamento</label>
+      </div>
+      <div>
+        <input type="radio" id="status-em-revisao" name="status" value="em-revisao">
+        <label for="status-em-revisao">Em revisão</label>
+      </div>
+      <div>
+        <input type="radio" id="status-concluida" name="status" value="concluida">
+        <label for="status-concluida">Concluída</label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Filtrar por prioridade</legend>
+      <div>
+        <input type="radio" id="prioridade-todas" name="prioridade" value="todas" checked>
+        <label for="prioridade-todas">Todas</label>
+      </div>
+      <div>
+        <input type="radio" id="prioridade-baixa" name="prioridade" value="baixa">
+        <label for="prioridade-baixa">Baixa</label>
+      </div>
+      <div>
+        <input type="radio" id="prioridade-media" name="prioridade" value="media">
+        <label for="prioridade-media">Média</label>
+      </div>
+      <div>
+        <input type="radio" id="prioridade-alta" name="prioridade" value="alta">
+        <label for="prioridade-alta">Alta</label>
+      </div>
+    </fieldset>
+    
+  </form>
+
+</section>
+
 </body>
 </html>
