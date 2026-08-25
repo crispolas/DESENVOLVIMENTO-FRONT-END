@@ -120,3 +120,72 @@ fieldset input[type="radio"] {
   width: 20px;
   height: 20px;
 }
+
+section[aria-labelledby^="coluna-"] ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+section[aria-labelledby^="coluna-"] h3 {
+  font-size: 1rem;
+  margin-bottom: var(--espaco-1);
+}
+
+article {
+  background-color: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: var(--espaco-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  min-width: 0;
+}
+
+article h4 {
+  margin: 0;
+  font-size: 1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+article dl {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+  flex: 1;
+}
+
+article dt {
+  font-size: 0.75rem;
+  color: var(--cor-texto-secundario);
+}
+
+article dd {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+article dl > :nth-child(7),
+article dl > :nth-child(8) {
+  order: 1;
+}
+
+article dl > :nth-child(5),
+article dl > :nth-child(6) {
+  order: 2;
+}
+
+article dl > dt:nth-child(5) {
+  margin-top: auto;
+}
+
+article dl > dd:nth-child(8) {
+  font-weight: bold;
+}
