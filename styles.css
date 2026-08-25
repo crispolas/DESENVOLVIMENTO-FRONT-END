@@ -189,3 +189,38 @@ article dl > dt:nth-child(5) {
 article dl > dd:nth-child(8) {
   font-weight: bold;
 }
+
+section[aria-labelledby="quadro-heading"] {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--espaco-3);
+}
+
+section[aria-labelledby="quadro-heading"] h2 {
+  grid-column: 1 / -1;
+  font-size: 1.125rem;
+  margin: 0;
+}
+
+section[aria-labelledby^="coluna-"] {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background-color: var(--cor-fundo);
+}
+
+section[aria-labelledby="coluna-a-fazer-heading"] h3 {
+  color: var(--cor-status-a-fazer);
+}
+
+section[aria-labelledby="coluna-em-andamento-heading"] h3 {
+  color: var(--cor-status-em-andamento);
+}
+
+section[aria-labelledby="coluna-em-revisao-heading"] h3 {
+  color: var(--cor-status-em-revisao);
+}
+
+section[aria-labelledby="coluna-concluida-heading"] h3 {
+  color: var(--cor-status-concluida);
+}
