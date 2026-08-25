@@ -16,7 +16,7 @@ body {
 
   --cor-status-a-fazer: #6b6b70;
   --cor-status-em-andamento: #0a66c2;
-  --cor-status-em-revisao: #b8860b;
+  --cor-status-em-revisao: #7a5700;
   --cor-status-concluida: #1e7d32;
 
   --espaco-1: 0.5rem;
@@ -223,4 +223,41 @@ section[aria-labelledby="coluna-em-revisao-heading"] h3 {
 
 section[aria-labelledby="coluna-concluida-heading"] h3 {
   color: var(--cor-status-concluida);
+}
+
+/* Tipografia fluida do título principal, combinando rem e vw */
+header h1 {
+  font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+}
+
+main {
+  padding: clamp(1rem, 2vw, 2rem);
+}
+
+/* Breakpoint 1: 600px — os filtros de status/prioridade cabem lado a lado
+   sem espremer o texto das opções; abaixo disso ficavam empilhados e ocupando
+   altura demais na tela. */
+@media (min-width: 600px) {
+  fieldset {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+}
+
+/* Breakpoint 2: 700px — a partir daqui sobra largura para duas colunas do
+   quadro lado a lado sem que nenhuma fique abaixo de ~260px, largura mínima
+   para o conteúdo do card não truncar demais. */
+@media (min-width: 700px) {
+  section[aria-labelledby="quadro-heading"] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Breakpoint 3: 1024px — largura de desktop típica, onde as quatro colunas
+   de status cabem lado a lado sem espremer os cards abaixo de 260px cada. */
+@media (min-width: 1024px) {
+  section[aria-labelledby="quadro-heading"] {
+    grid-template-columns: repeat(4, 1fr);
+  }
 }
