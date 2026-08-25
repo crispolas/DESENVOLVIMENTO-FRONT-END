@@ -1,0 +1,45 @@
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+:root {
+  --cor-fundo: #f5f5f7;
+  --cor-superficie: #ffffff;
+
+  --cor-texto: #1c1c1e;
+  --cor-texto-secundario: #55555a;
+  --cor-borda: #d8d8dc;
+
+  --cor-status-a-fazer: #6b6b70;
+  --cor-status-em-andamento: #0a66c2;
+  --cor-status-em-revisao: #b8860b;
+  --cor-status-concluida: #1e7d32;
+
+  --espaco-1: 0.5rem;
+  --espaco-2: 1rem;
+  --espaco-3: 1.5rem;
+  --espaco-4: 2rem;
+
+  --raio: 0.5rem;
+}
+
+html {
+  font-size: 100%;
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background-color: var(--cor-fundo);
+  color: var(--cor-texto);
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+:focus-visible {
+  outline: 3px solid var(--cor-status-em-andamento);
+  outline-offset: 2px;
+}
