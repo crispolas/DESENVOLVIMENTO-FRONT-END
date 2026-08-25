@@ -43,3 +43,80 @@ body {
   outline: 3px solid var(--cor-status-em-andamento);
   outline-offset: 2px;
 }
+
+header {
+  background-color: var(--cor-superficie);
+  border-bottom: 1px solid var(--cor-borda);
+  padding: var(--espaco-2);
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+footer {
+  background-color: var(--cor-superficie);
+  border-top: 1px solid var(--cor-borda);
+  padding: var(--espaco-2);
+  color: var(--cor-texto-secundario);
+  font-size: 0.875rem;
+}
+
+main {
+  padding: var(--espaco-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-3);
+}
+
+#busca-filtros-heading {
+  font-size: 1rem;
+  margin-bottom: var(--espaco-2);
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-2);
+}
+
+form > div {
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+form input[type="search"] {
+  padding: var(--espaco-1) var(--espaco-2);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  font-size: 1rem;
+  min-height: 44px;
+}
+
+fieldset {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: var(--espaco-2);
+  display: flex;
+  flex-direction: column;
+  gap: var(--espaco-1);
+}
+
+legend {
+  padding: 0 var(--espaco-1);
+  font-weight: bold;
+}
+
+fieldset > div {
+  display: flex;
+  align-items: center;
+  gap: var(--espaco-1);
+  min-height: 24px;
+}
+
+fieldset input[type="radio"] {
+  width: 20px;
+  height: 20px;
+}
