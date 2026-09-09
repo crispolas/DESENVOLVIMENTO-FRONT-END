@@ -1,1 +1,76 @@
-
+{
+  "tarefas": [
+    {
+      "id": 1,
+      "titulo": "Modelar entidades Projeto e Tarefa no banco de dados",
+      "projeto": "Gerenciador de Tarefas Acadêmicas",
+      "responsavel": "Gabriel",
+      "prazo": "18/08/2026",
+      "prioridade": "alta",
+      "status": "a-fazer"
+    },
+    {
+      "id": 2,
+      "titulo": "Levantar requisitos com stakeholders",
+      "projeto": "App de Doação de Sangue",
+      "responsavel": "Ana",
+      "prazo": "20/08/2026",
+      "prioridade": "media",
+      "status": "a-fazer"
+    },
+    {
+      "id": 3,
+      "titulo": "Implementar tela de agendamento em Figma",
+      "projeto": "App de Doação de Sangue",
+      "responsavel": "Gabriel",
+      "prazo": "15/08/2026",
+      "prioridade": "alta",
+      "status": "em-andamento"
+    },
+    {
+      "id": 4,
+      "titulo": "Implementar versão em terminal do Tetris em Go",
+      "projeto": "Tetris — PLP",
+      "responsavel": "Bruno",
+      "prazo": "22/08/2026",
+      "prioridade": "media",
+      "status": "em-andamento"
+    },
+    {
+      "id": 5,
+      "titulo": "Revisar textos do mural de tipos de dados",
+      "projeto": "Mural Educativo — Tipos de Dados",
+      "responsavel": "Gabriel",
+      "prazo": "13/08/2026",
+      "prioridade": "baixa",
+      "status": "em-revisao"
+    },
+    {
+      "id": 6,
+      "titulo": "Ajustar filtro de busca por tipo sanguíneo",
+      "projeto": "App de Doação de Sangue",
+      "responsavel": "Ana",
+      "prazo": "16/08/2026",
+      "prioridade": "media",
+      "status": "em-revisao"
+    },
+    {
+      "id": 7,
+      "titulo": "Criar repositório pessoal da disciplina",
+      "projeto": "Gerenciador de Tarefas Acadêmicas",
+      "responsavel": "Gabriel",
+      "prazo": "05/08/2026",
+      "prioridade": "baixa",
+      "status": "concluida"
+    },
+    {
+      "id": 8,
+      "titulo": "Definir os campos das entidades Projeto e Tarefa",
+      "projeto": "Gerenciador de Tarefas Acadêmicas",
+      "responsavel": "Gabriel",
+      "prazo": "08/08/2026",
+      "prioridade": "alta",
+      "status": "concluida"
+    }
+  ]
+}
