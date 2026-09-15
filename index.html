@@ -69,119 +69,27 @@
   </form>
 
 </section>
-  <section aria-labelledby="quadro-heading">
+  <section aria-labelledby="quadro-heading" data-quadro>
       <h2 id="quadro-heading">Quadro de tarefas</h2>
 
       <section aria-labelledby="coluna-a-fazer-heading">
         <h3 id="coluna-a-fazer-heading">A fazer</h3>
-        <ul>
-          <li>
-            <article>
-              <h4>Modelar entidades Projeto e Tarefa no banco de dados</h4>
-              <dl>
-                <dt>Projeto</dt><dd>Gerenciador de Tarefas Acadêmicas</dd>
-                <dt>Responsável</dt><dd>Gabriel</dd>
-                <dt>Prazo</dt><dd>18/08/2026</dd>
-                <dt>Prioridade</dt><dd>Alta</dd>
-              </dl>
-            </article>
-          </li>
-          <li>
-            <article>
-              <h4>Levantar requisitos com stakeholders</h4>
-              <dl>
-                <dt>Projeto</dt><dd>App de Doação de Sangue</dd>
-                <dt>Responsável</dt><dd>Ana</dd>
-                <dt>Prazo</dt><dd>20/08/2026</dd>
-                <dt>Prioridade</dt><dd>Média</dd>
-              </dl>
-            </article>
-          </li>
-        </ul>
+        <ul data-lista-status="a-fazer"></ul>
       </section>
 
       <section aria-labelledby="coluna-em-andamento-heading">
         <h3 id="coluna-em-andamento-heading">Em andamento</h3>
-        <ul>
-          <li>
-            <article>
-              <h4>Implementar tela de agendamento em Figma</h4>
-              <dl>
-                <dt>Projeto</dt><dd>App de Doação de Sangue</dd>
-                <dt>Responsável</dt><dd>Gabriel</dd>
-                <dt>Prazo</dt><dd>15/08/2026</dd>
-                <dt>Prioridade</dt><dd>Alta</dd>
-              </dl>
-            </article>
-          </li>
-          <li>
-            <article>
-              <h4>Implementar versão em terminal do Tetris em Go</h4>
-              <dl>
-                <dt>Projeto</dt><dd>Tetris — PLP</dd>
-                <dt>Responsável</dt><dd>Bruno</dd>
-                <dt>Prazo</dt><dd>22/08/2026</dd>
-                <dt>Prioridade</dt><dd>Média</dd>
-              </dl>
-            </article>
-          </li>
-        </ul>
+        <ul data-lista-status="em-andamento"></ul>
       </section>
 
       <section aria-labelledby="coluna-em-revisao-heading">
         <h3 id="coluna-em-revisao-heading">Em revisão</h3>
-        <ul>
-          <li>
-            <article>
-              <h4>Revisar textos do mural de tipos de dados</h4>
-              <dl>
-                <dt>Projeto</dt><dd>Mural Educativo — Tipos de Dados</dd>
-                <dt>Responsável</dt><dd>Gabriel</dd>
-                <dt>Prazo</dt><dd>13/08/2026</dd>
-                <dt>Prioridade</dt><dd>Baixa</dd>
-              </dl>
-            </article>
-          </li>
-          <li>
-            <article>
-              <h4>Ajustar filtro de busca por tipo sanguíneo</h4>
-              <dl>
-                <dt>Projeto</dt><dd>App de Doação de Sangue</dd>
-                <dt>Responsável</dt><dd>Ana</dd>
-                <dt>Prazo</dt><dd>16/08/2026</dd>
-                <dt>Prioridade</dt><dd>Média</dd>
-              </dl>
-            </article>
-          </li>
-        </ul>
+        <ul data-lista-status="em-revisao"></ul>
       </section>
 
       <section aria-labelledby="coluna-concluida-heading">
         <h3 id="coluna-concluida-heading">Concluída</h3>
-        <ul>
-          <li>
-            <article>
-              <h4>Criar repositório pessoal da disciplina</h4>
-              <dl>
-                <dt>Projeto</dt><dd>Gerenciador de Tarefas Acadêmicas</dd>
-                <dt>Responsável</dt><dd>Gabriel</dd>
-                <dt>Prazo</dt><dd>05/08/2026</dd>
-                <dt>Prioridade</dt><dd>Baixa</dd>
-              </dl>
-            </article>
-          </li>
-          <li>
-            <article>
-              <h4>Definir os campos das entidades Projeto e Tarefa</h4>
-              <dl>
-                <dt>Projeto</dt><dd>Gerenciador de Tarefas Acadêmicas</dd>
-                <dt>Responsável</dt><dd>Gabriel</dd>
-                <dt>Prazo</dt><dd>08/08/2026</dd>
-                <dt>Prioridade</dt><dd>Alta</dd>
-              </dl>
-            </article>
-          </li>
-        </ul>
+        <ul data-lista-status="concluida"></ul>
       </section>
 
     </section>
@@ -191,5 +99,6 @@
     <p>Gabriel — Desenvolvimento Frontend, 2026.2 - Quarta</p>
   </footer>
 
+  <script type="module" src="js/app.js"></script>
 </body>
 </html>
