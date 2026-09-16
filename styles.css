@@ -87,13 +87,24 @@ form > div {
   gap: var(--espaco-1);
 }
 
-form input[type="search"] {
+form input[type="search"],
+form select,
+form button {
   padding: var(--espaco-1) var(--espaco-2);
   border: 1px solid var(--cor-borda);
   border-radius: var(--raio);
   font-size: 1rem;
   min-height: 44px;
+  background-color: var(--cor-superficie);
+  color: var(--cor-texto);
+  font-family: inherit;
 }
+
+form button {
+  cursor: pointer;
+  align-self: flex-start;
+}
+
 
 fieldset {
   border: 1px solid var(--cor-borda);
