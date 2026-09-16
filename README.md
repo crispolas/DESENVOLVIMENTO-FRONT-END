@@ -3,14 +3,12 @@
 Aplicação desenvolvida para a disciplina de **Desenvolvimento Frontend (2026.2)**.
 Trata-se de um quadro Kanban acadêmico construído progressivamente ao longo de quatro entregas, utilizando exclusivamente **HTML5 semântico**, **CSS3 responsivo** e **JavaScript moderno (ES Modules)**, sem frameworks ou bibliotecas externas.
 
----
 
 ## 🌐 Demonstração Online (GitHub Pages)
 
 Acesse a versão publicada e funcional da aplicação:
 🔗 **[https://crispolas.github.io/DESENVOLVIMENTO-FRONT-END/](https://crispolas.github.io/DESENVOLVIMENTO-FRONT-END/)**
 
----
 
 ## 📁 Estrutura do Projeto
 
@@ -69,5 +67,5 @@ Como a aplicação consome `dados.json` via requisições assíncronas (`fetch`)
 
 ---
 
-**Autor:** Gabriel  
-**Disciplina:** Desenvolvimento Frontend — 2026.2
+**Autor:** Crispim  
+**Disciplina:** Desenvolvimento Frontend - 2026.2
