@@ -1,30 +1,62 @@
 import { renderizarTarefas } from "./renderizacao.js";
+import { selecionarTarefas } from "./estado.js";
 
 /**
- * Módulo de Gerenciamento de Estados da Interface
- * Responsabilidade: decidir qual dos quatro estados da tela está ativo.
- * Não realiza requisições de rede (separação estrita de responsabilidades).
- * 
- * @param {"carregando" | "sucesso" | "vazio" | "erro"} estado - Estado atual da interface.
- * @param {Array|Object|string} [dados] - Dados associados ao estado (tarefas ou mensagem de erro).
+ * Módulo de Gerenciamento de Estados e Sincronização da Interface
+ * Responsabilidade: sincronizar a interface e a região viva a partir do estado.
+ * Não realiza requisições de rede e não altera o estado.
  */
-export function renderizarEstado(estado, dados) {
+
+/**
+ * Atualiza o texto da região acessível #status utilizando textContent.
+ * Não move o foco do teclado (WCAG 2.2).
+ * @param {number} totalVisiveis - Quantidade de tarefas visíveis após filtros.
+ * @param {number} totalGeral - Total de tarefas cadastradas na origem.
+ */
+export function renderizarResumo(totalVisiveis, totalGeral) {
+  const statusEl = document.getElementById("status");
+  if (!statusEl) return;
+
+  if (totalGeral === 0) {
+    statusEl.textContent = "Nenhuma tarefa foi cadastrada.";
+  } else if (totalVisiveis === 0) {
+    statusEl.textContent = "Nenhuma tarefa encontrada. Altere ou limpe os critérios de filtro.";
+  } else {
+    statusEl.textContent = `${totalVisiveis} de ${totalGeral} tarefas exibidas.`;
+  }
+}
+
+/**
+ * Sincroniza a aplicação inteira em um único ponto de renderização:
+ * 1. Deriva a lista visível sem alterar a fonte original.
+ * 2. Atualiza os cartões no quadro usando replaceChildren.
+ * 3. Atualiza o resumo acessível no #status.
+ * @param {Object} estado - Objeto de estado canônico.
+ */
+export function renderizarAplicacao(estado) {
+  const visiveis = selecionarTarefas(estado);
+  renderizarTarefas(visiveis);
+  renderizarResumo(visiveis.length, estado.tarefas.length);
+}
+
+/**
+ * Controla os quatro estados fundamentais da tela durante o carregamento inicial.
+ * @param {"carregando" | "sucesso" | "vazio" | "erro"} tipoEstado
+ * @param {any} [dados]
+ */
+export function renderizarEstado(tipoEstado, dados) {
   const statusEl = document.getElementById("status");
   const quadro = document.querySelector("[data-quadro]");
 
-  switch (estado) {
+  switch (tipoEstado) {
     case "carregando":
-      if (statusEl) {
-        statusEl.textContent = "Carregando tarefas...";
-      }
-      if (quadro) {
-        renderizarTarefas([], quadro);
-      }
+      if (statusEl) statusEl.textContent = "Carregando tarefas...";
+      if (quadro) renderizarTarefas([], quadro);
       break;
 
     case "sucesso":
       if (statusEl && Array.isArray(dados)) {
-        statusEl.textContent = `${dados.length} tarefas carregadas com sucesso.`;
+        statusEl.textContent = `${dados.length} de ${dados.length} tarefas exibidas.`;
       }
       if (quadro && Array.isArray(dados)) {
         renderizarTarefas(dados, quadro);
@@ -32,12 +64,8 @@ export function renderizarEstado(estado, dados) {
       break;
 
     case "vazio":
-      if (statusEl) {
-        statusEl.textContent = "Nenhuma tarefa encontrada.";
-      }
-      if (quadro) {
-        renderizarTarefas([], quadro);
-      }
+      if (statusEl) statusEl.textContent = "Nenhuma tarefa foi cadastrada.";
+      if (quadro) renderizarTarefas([], quadro);
       break;
 
     case "erro":
@@ -47,10 +75,9 @@ export function renderizarEstado(estado, dados) {
           : (dados?.mensagem || "Ocorreu um erro ao carregar as tarefas.");
         statusEl.textContent = mensagem;
       }
-      if (quadro) {
-        renderizarTarefas([], quadro);
-      }
+      if (quadro) renderizarTarefas([], quadro);
       break;
   }
 }
+
 
