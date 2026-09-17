@@ -18,13 +18,16 @@ export function renderizarResumo(totalVisiveis, totalGeral) {
   if (!statusEl) return;
 
   if (totalGeral === 0) {
-    statusEl.textContent = "Nenhuma tarefa foi cadastrada.";
+    statusEl.textContent = "Sistema vazio. Nenhum criminoso detectado na cidade.";
   } else if (totalVisiveis === 0) {
-    statusEl.textContent = "Nenhuma tarefa encontrada. Altere ou limpe os critérios de filtro.";
+    statusEl.textContent = "Nenhum alvo corresponde aos filtros no computador central.";
   } else {
-    statusEl.textContent = `${totalVisiveis} de ${totalGeral} tarefas exibidas.`;
+    statusEl.textContent = `${totalVisiveis} de ${totalGeral} casos exibidos no mural.`;
   }
 }
+//... no case "carregando":
+statusEl.textContent = "Acessando banco de dados da Torre Titã...";
+
 
 /**
  * Sincroniza a aplicação inteira em um único ponto de renderização:

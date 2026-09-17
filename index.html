@@ -3,113 +3,92 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gerenciador de Tarefas Acadêmicas</title>
+  <title>Torre Titã: Mural de Ameaças</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
+  <!-- Comunicador Titã (Substitui a Pokebola) -->
+  <button id="btn-t-com" class="btn-t-com" onclick="document.getElementById('painel-lateral').classList.toggle('aberto')" aria-label="Abrir Computador Central">
+    <div class="t-logo">T</div>
+  </button>
+
+  <!-- Computador Central (Mochila de Filtros) -->
+  <aside id="painel-lateral" class="painel-lateral">
+    <h2 id="busca-filtros-heading">Computador Central</h2>
+    <form>
+      <div>
+        <label for="busca-titulo">Buscar Vilão / Alvo</label>
+        <input type="search" id="busca-titulo" name="busca-titulo" placeholder="Ex: Slade, Jinx...">
+      </div>
+
+      <fieldset>
+        <legend>Status da Perseguição</legend>
+        <div><input type="radio" id="status-todos" name="status" value="todos" checked><label for="status-todos">Todos os Casos</label></div>
+        <div><input type="radio" id="status-suspeito" name="status" value="suspeito"><label for="status-suspeito">Sob Suspeita</label></div>
+        <div><input type="radio" id="status-rastreando" name="status" value="rastreando"><label for="status-rastreando">Rastreando</label></div>
+        <div><input type="radio" id="status-confronto" name="status" value="confronto"><label for="status-confronto">Em Confronto</label></div>
+        <div><input type="radio" id="status-capturado" name="status" value="capturado"><label for="status-capturado">Capturado (Arkham)</label></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Nível de Ameaça</legend>
+        <div><input type="radio" id="prioridade-todas" name="prioridade" value="todas" checked><label for="prioridade-todas">Todas</label></div>
+        <div><input type="radio" id="prioridade-c" name="prioridade" value="classe-c"><label for="prioridade-c">Classe C (Irritante)</label></div>
+        <div><input type="radio" id="prioridade-b" name="prioridade" value="classe-b"><label for="prioridade-b">Classe B (Supervilão)</label></div>
+        <div><input type="radio" id="prioridade-a" name="prioridade" value="classe-a"><label for="prioridade-a">Classe A (Nível Vingador)</label></div>
+      </fieldset>
+
+      <div>
+        <label for="ordenacao">Último Avistamento</label>
+        <select id="ordenacao" name="ordenacao">
+          <option value="prazo-asc">Mais recentes</option>
+          <option value="prazo-desc">Mais antigos</option>
+        </select>
+      </div>
+      
+      <div>
+        <button type="button" id="btn-limpar-filtros">Resetar Sistema</button>
+      </div>
+    </form>
+  </aside>
+
   <header>
-    <h1>Gerenciador de Tarefas Acadêmicas</h1>
+    <h1>Mural de Investigação de Jump City</h1>
   </header>
+
   <main>
-  <div id="status" role="status" aria-live="polite"></div>
-  <section aria-labelledby="busca-filtros-heading">
-  <h2 id="busca-filtros-heading">Busca e filtros</h2>
+    <div id="status" role="status" aria-live="polite" style="text-align: center; color: #fff; margin-bottom: 10px; font-weight: bold; background: rgba(0,0,0,0.5); padding: 5px; border-radius: 5px;"></div>
+    
+    <!-- O Quadro de Cortiça -->
+    <section aria-labelledby="quadro-heading" data-quadro class="playmat">
+      <h2 id="quadro-heading" class="sr-only" style="display: none;">Mural de Casos</h2>
 
-  <form>
-    <div>
-      <label for="busca-titulo">Buscar por título da tarefa</label>
-      <input type="search" id="busca-titulo" name="busca-titulo">
-    </div>
-
-    <fieldset>
-      <legend>Filtrar por status</legend>
-      <div>
-        <input type="radio" id="status-todos" name="status" value="todos" checked>
-        <label for="status-todos">Todos</label>
-      </div>
-      <div>
-        <input type="radio" id="status-a-fazer" name="status" value="a-fazer">
-        <label for="status-a-fazer">A fazer</label>
-      </div>
-      <div>
-        <input type="radio" id="status-em-andamento" name="status" value="em-andamento">
-        <label for="status-em-andamento">Em andamento</label>
-      </div>
-      <div>
-        <input type="radio" id="status-em-revisao" name="status" value="em-revisao">
-        <label for="status-em-revisao">Em revisão</label>
-      </div>
-      <div>
-        <input type="radio" id="status-concluida" name="status" value="concluida">
-        <label for="status-concluida">Concluída</label>
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Filtrar por prioridade</legend>
-      <div>
-        <input type="radio" id="prioridade-todas" name="prioridade" value="todas" checked>
-        <label for="prioridade-todas">Todas</label>
-      </div>
-      <div>
-        <input type="radio" id="prioridade-baixa" name="prioridade" value="baixa">
-        <label for="prioridade-baixa">Baixa</label>
-      </div>
-      <div>
-        <input type="radio" id="prioridade-media" name="prioridade" value="media">
-        <label for="prioridade-media">Média</label>
-      </div>
-      <div>
-        <input type="radio" id="prioridade-alta" name="prioridade" value="alta">
-        <label for="prioridade-alta">Alta</label>
-      </div>
-    </fieldset>
-
-    <div>
-      <label for="ordenacao">Ordenar por prazo</label>
-      <select id="ordenacao" name="ordenacao">
-        <option value="prazo-asc">Prazo mais próximo primeiro</option>
-        <option value="prazo-desc">Prazo mais distante primeiro</option>
-      </select>
-    </div>
-
-    <div>
-      <button type="button" id="btn-limpar-filtros">Limpar filtros</button>
-    </div>
-
-  </form>
-
-</section>
-  <section aria-labelledby="quadro-heading" data-quadro>
-      <h2 id="quadro-heading">Quadro de tarefas</h2>
-
-      <section aria-labelledby="coluna-a-fazer-heading">
-        <h3 id="coluna-a-fazer-heading">A fazer</h3>
-        <ul data-lista-status="a-fazer"></ul>
+      <section class="zona-suspeito" aria-labelledby="coluna-suspeito-heading">
+        <div class="fita-adesiva"></div>
+        <h3 id="coluna-suspeito-heading">Sob Suspeita</h3>
+        <ul data-lista-status="suspeito"></ul>
       </section>
 
-      <section aria-labelledby="coluna-em-andamento-heading">
-        <h3 id="coluna-em-andamento-heading">Em andamento</h3>
-        <ul data-lista-status="em-andamento"></ul>
+      <section class="zona-rastreando" aria-labelledby="coluna-rastreando-heading">
+        <div class="fita-adesiva"></div>
+        <h3 id="coluna-rastreando-heading">Rastreamento</h3>
+        <ul data-lista-status="rastreando"></ul>
       </section>
 
-      <section aria-labelledby="coluna-em-revisao-heading">
-        <h3 id="coluna-em-revisao-heading">Em revisão</h3>
-        <ul data-lista-status="em-revisao"></ul>
+      <section class="zona-confronto" aria-labelledby="coluna-confronto-heading">
+        <div class="fita-adesiva"></div>
+        <h3 id="coluna-confronto-heading">Confronto Iminente</h3>
+        <ul data-lista-status="confronto"></ul>
       </section>
 
-      <section aria-labelledby="coluna-concluida-heading">
-        <h3 id="coluna-concluida-heading">Concluída</h3>
-        <ul data-lista-status="concluida"></ul>
+      <section class="zona-capturado" aria-labelledby="coluna-capturado-heading">
+        <div class="fita-adesiva"></div>
+        <h3 id="coluna-capturado-heading">Capturados (Prisão)</h3>
+        <ul data-lista-status="capturado"></ul>
       </section>
-
     </section>
-</main>
-
-  <footer>
-    <p>Gabriel — Desenvolvimento Frontend, 2026.2 - Quarta</p>
-  </footer>
+  </main>
 
   <script type="module" src="js/app.js"></script>
 </body>

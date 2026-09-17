@@ -1,76 +1,76 @@
 {
-  "tarefas": [
+  "alvos": [
     {
       "id": 1,
-      "titulo": "Modelar entidades Projeto e Tarefa no banco de dados",
-      "projeto": "Gerenciador de Tarefas Acadêmicas",
-      "responsavel": "Gabriel",
-      "prazo": "18/08/2026",
-      "prioridade": "alta",
-      "status": "a-fazer"
+      "titulo": "Slade",
+      "projeto": "Destruir os Titãs",
+      "responsavel": "Robin",
+      "prazo": "20/09/2026",
+      "prioridade": "classe-a",
+      "status": "rastreando"
     },
     {
       "id": 2,
-      "titulo": "Levantar requisitos com stakeholders",
-      "projeto": "App de Doação de Sangue",
-      "responsavel": "Ana",
-      "prazo": "20/08/2026",
-      "prioridade": "media",
-      "status": "a-fazer"
+      "titulo": "Trigon",
+      "projeto": "Apocalipse Global",
+      "responsavel": "Ravena",
+      "prazo": "31/10/2026",
+      "prioridade": "classe-a",
+      "status": "suspeito"
     },
     {
       "id": 3,
-      "titulo": "Implementar tela de agendamento em Figma",
-      "projeto": "App de Doação de Sangue",
-      "responsavel": "Gabriel",
-      "prazo": "15/08/2026",
-      "prioridade": "alta",
-      "status": "em-andamento"
+      "titulo": "Jinx",
+      "projeto": "Assalto a Banco Hex",
+      "responsavel": "Ciborgue",
+      "prazo": "18/09/2026",
+      "prioridade": "classe-b",
+      "status": "confronto"
     },
     {
       "id": 4,
-      "titulo": "Implementar versão em terminal do Tetris em Go",
-      "projeto": "Tetris — PLP",
-      "responsavel": "Bruno",
-      "prazo": "22/08/2026",
-      "prioridade": "media",
-      "status": "em-andamento"
+      "titulo": "Irmão Sangue",
+      "projeto": "H.I.V.E. Academia",
+      "responsavel": "Ciborgue",
+      "prazo": "25/09/2026",
+      "prioridade": "classe-a",
+      "status": "capturado"
     },
     {
       "id": 5,
-      "titulo": "Revisar textos do mural de tipos de dados",
-      "projeto": "Mural Educativo — Tipos de Dados",
-      "responsavel": "Gabriel",
-      "prazo": "13/08/2026",
-      "prioridade": "baixa",
-      "status": "em-revisao"
+      "titulo": "Estelar Negra",
+      "projeto": "Usurpar o Trono",
+      "responsavel": "Estelar",
+      "prazo": "12/09/2026",
+      "prioridade": "classe-a",
+      "status": "rastreando"
     },
     {
       "id": 6,
-      "titulo": "Ajustar filtro de busca por tipo sanguíneo",
-      "projeto": "App de Doação de Sangue",
-      "responsavel": "Ana",
-      "prazo": "16/08/2026",
-      "prioridade": "media",
-      "status": "em-revisao"
+      "titulo": "Gizmo",
+      "projeto": "Roubar Peças Tech",
+      "responsavel": "Mutano",
+      "prazo": "16/09/2026",
+      "prioridade": "classe-c",
+      "status": "suspeito"
     },
     {
       "id": 7,
-      "titulo": "Criar repositório pessoal da disciplina",
-      "projeto": "Gerenciador de Tarefas Acadêmicas",
-      "responsavel": "Gabriel",
-      "prazo": "05/08/2026",
-      "prioridade": "baixa",
-      "status": "concluida"
+      "titulo": "Mad Mod",
+      "projeto": "Ilusão Escolar",
+      "responsavel": "Robin",
+      "prazo": "01/09/2026",
+      "prioridade": "classe-b",
+      "status": "capturado"
     },
     {
       "id": 8,
-      "titulo": "Definir os campos das entidades Projeto e Tarefa",
-      "projeto": "Gerenciador de Tarefas Acadêmicas",
-      "responsavel": "Gabriel",
-      "prazo": "08/08/2026",
-      "prioridade": "alta",
-      "status": "concluida"
+      "titulo": "Red X",
+      "projeto": "Roubo Xenothium",
+      "responsavel": "Robin",
+      "prazo": "22/09/2026",
+      "prioridade": "classe-b",
+      "status": "confronto"
     }
   ]
 }
