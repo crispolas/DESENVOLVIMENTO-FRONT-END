@@ -70,17 +70,22 @@ export function criarCartao(tarefa) {
 
   blocoMeta.append(prazo, btnAcessar);
 
+  const avatarSlot = document.createElement("div");
+  avatarSlot.className = "avatar-insignia-slot";
+
   const avatar = document.createElement("img");
   avatar.className = "avatar-responsavel";
   if (tarefa.responsavel) {
     const slug = tarefa.responsavel.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     avatar.classList.add(`avatar-${slug}`);
+    avatarSlot.classList.add(`insignia-${slug}`);
   }
   avatar.src = tarefa.avatar || "img/robin.png";
   avatar.alt = `Avatar de ${tarefa.responsavel}`;
   avatar.title = `Responsável: ${tarefa.responsavel}`;
 
-  rodape.append(blocoMeta, avatar);
+  avatarSlot.append(avatar);
+  rodape.append(blocoMeta, avatarSlot);
 
   // Montagem limpa do cartão
   cartao.append(topo, titulo, rodape);

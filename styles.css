@@ -1,329 +1,75 @@
-@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,600&family=Oxanium:wght@600;700;800&family=Share+Tech+Mono&family=Teko:wght@600;700&display=swap');
+/* ==========================================================================
+   TORRE DOS TITÃS — COMPUTADOR CENTRAL
+   Direção de Arte: Animação Clássica dos Jovens Titãs (2003 / Warner Bros)
+   Design Gráfico de Desenho Animado: Cel-Shading, Cores Planas e Formas Orgânicas
+   ========================================================================== */
 
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
 :root {
-  /* Paleta Holográfica Oficial da Torre dos Titãs */
-  --cor-cyan-neon: #00d4ff;
-  --cor-cyan-glow: rgba(0, 212, 255, 0.5);
-  --cor-amarelo-titans: #facc15;
-  --cor-vermelho-alerta: #ef4444;
-  --cor-vermelho-glow: rgba(239, 68, 68, 0.6);
-  --cor-verde-arquivo: #22c55e;
-  --cor-roxo-scanner: #c084fc;
+  /* Paleta Oficial da Animação dos Jovens Titãs */
+  --bg-universo: #040711;
+  --bg-telao: #060c1c;
+  --bg-placa: #0c162c;
+  --bg-placa-hover: #12203e;
+  --bg-placa-subsolo: #081022;
 
-  --cor-fundo-dossie: rgba(10, 18, 38, 0.92);
-  --cor-borda-tech: rgba(0, 212, 255, 0.4);
+  /* Cores dos Personagens e da Torre (Cores Planas / Cel-Shading) */
+  --titans-amarelo: #facc15;
+  --titans-amarelo-hover: #fde047;
+  --titans-vermelho: #e11d48;
+  --titans-vermelho-alerta: #ef4444;
+  --titans-roxo: #7c3aed;
+  --titans-verde: #16a34a;
+  --titans-azul: #0284c7;
+  --titans-ciano: #38bdf8;
+  --titans-rosa: #f43f5e;
 
-  --cor-texto-claro: #f8fafc;
+  /* Tipografia: Sem Clichê Sci-Fi Gamer */
+  --fonte-display: 'Teko', 'Arial Black', Impact, sans-serif;
+  --fonte-corpo: system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --fonte-dados: 'Share Tech Mono', monospace;
+
+  /* Texto e Contraste Alto */
+  --cor-texto-puro: #ffffff;
+  --cor-texto-suave: #cbd5e1;
   --cor-texto-mutado: #94a3b8;
-  --cor-texto-tech: #38bdf8;
+  --cor-texto-escuro: #040813;
 
-  --fonte-display: 'Oxanium', 'Teko', sans-serif;
-  --fonte-mono: 'Share Tech Mono', monospace;
-  --fonte-base: 'Chakra Petch', sans-serif;
+  /* Estética Gráfica Comic (Sombras Duras, Sem Glow Neon Borrado) */
+  --sombra-comic-sm: 2px 3px 0px rgba(0, 0, 0, 0.7);
+  --sombra-comic: 4px 5px 0px rgba(0, 0, 0, 0.75);
+  --sombra-comic-lg: 6px 8px 0px rgba(0, 0, 0, 0.85);
+  --borda-comic-fina: 1px solid rgba(255, 255, 255, 0.14);
+  --borda-comic-destaque: 2px solid var(--titans-amarelo);
 }
 
 html {
   font-size: 100%;
 }
 
+/* ==========================================================================
+   1. FUNDO CINEMATOGRÁFICO: PINTURA DE CENÁRIO (MATTE PAINTING)
+   ========================================================================== */
 body.hud-body {
   margin: 0;
-  font-family: var(--fonte-base);
-  color: var(--cor-texto-claro);
+  font-family: var(--fonte-corpo);
+  color: var(--cor-texto-suave);
   min-height: 100vh;
-  line-height: 1.5;
-  background: 
-    radial-gradient(circle at 50% 30%, rgba(0, 212, 255, 0.08) 0%, transparent 65%),
-    linear-gradient(rgba(8, 14, 28, 0.74), rgba(4, 8, 18, 0.90)),
-    url('img/torre-fundo.jpg') no-repeat center center fixed;
+  line-height: 1.4;
+  background-color: var(--bg-universo);
+  background-image: 
+    radial-gradient(circle at 50% 35%, rgba(12, 22, 44, 0.72) 0%, rgba(4, 7, 17, 0.94) 85%),
+    url('img/torre-fundo.jpg');
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
   background-size: cover;
   position: relative;
   overflow-x: hidden;
-  transition: background 0.4s ease;
-}
-
-/* ==========================================================================
-   1. ABERTURA CINEMÁTICA: A TORRE ACORDANDO (BOOT SEQUENCE)
-   ========================================================================== */
-.tela-boot {
-  position: fixed;
-  inset: 0;
-  background: #040812;
-  z-index: 99999;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s ease;
-}
-
-.tela-boot.oculto {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.boot-terminal-caixa {
-  background: rgba(10, 18, 36, 0.95);
-  border: 2px solid var(--cor-cyan-neon);
-  border-radius: 14px;
-  box-shadow: 0 0 50px rgba(0, 212, 255, 0.4), inset 0 0 25px rgba(0, 212, 255, 0.1);
-  width: 100%;
-  max-width: 620px;
-  padding: 2rem;
-  position: relative;
-  overflow: hidden;
-}
-
-.boot-cabecalho {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  border-bottom: 1px solid rgba(0, 212, 255, 0.3);
-  padding-bottom: 1rem;
-  margin-bottom: 1.25rem;
-}
-
-.boot-emblema-t {
-  width: 52px;
-  height: 52px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 12px rgba(234, 179, 8, 0.8));
-  animation: bootPulso 2s infinite ease-in-out;
-}
-
-@keyframes bootPulso {
-  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(234, 179, 8, 0.8)); }
-  50% { transform: scale(1.08); filter: drop-shadow(0 0 22px rgba(0, 212, 255, 1)); }
-}
-
-.boot-versao {
-  font-family: var(--fonte-mono);
-  font-size: 0.72rem;
-  color: var(--cor-cyan-neon);
-  letter-spacing: 0.15em;
-  font-weight: 700;
-}
-
-.boot-titulo {
-  margin: 0;
-  font-family: var(--fonte-display);
-  font-size: 1.4rem;
-  letter-spacing: 0.08em;
-  color: #ffffff;
-}
-
-.boot-log-linhas {
-  font-family: var(--fonte-mono);
-  font-size: 0.85rem;
-  line-height: 1.8;
-  color: #94a3b8;
-  margin-bottom: 1.5rem;
-}
-
-.boot-linha {
-  margin: 0.3rem 0;
-}
-
-.boot-destaque {
-  color: var(--cor-cyan-neon);
-  font-weight: 700;
-  animation: blinkCursor 1s infinite;
-}
-
-@keyframes blinkCursor {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.boot-barra-progresso {
-  width: 100%;
-  height: 6px;
-  background: rgba(0, 212, 255, 0.15);
-  border-radius: 9999px;
-  overflow: hidden;
-  margin-bottom: 1.5rem;
-}
-
-.boot-progresso-fill {
-  height: 100%;
-  width: 0%;
-  background: linear-gradient(90deg, var(--cor-cyan-neon), #38bdf8);
-  box-shadow: 0 0 12px var(--cor-cyan-neon);
-  animation: carregarBoot 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-}
-
-@keyframes carregarBoot {
-  0% { width: 0%; }
-  40% { width: 65%; }
-  100% { width: 100%; }
-}
-
-.btn-pular-boot {
-  background: rgba(0, 212, 255, 0.15);
-  border: 1px solid var(--cor-cyan-neon);
-  color: var(--cor-cyan-neon);
-  font-family: var(--fonte-mono);
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 8px 16px;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  float: right;
-}
-
-.btn-pular-boot:hover {
-  background: var(--cor-cyan-neon);
-  color: #040812;
-  box-shadow: 0 0 15px var(--cor-cyan-neon);
-}
-
-/* ==========================================================================
-   2. ESTADO DE EMERGÊNCIA (TITANS ALERT)
-   ========================================================================== */
-body.alerta-emergencia-ativo {
-  background: 
-    radial-gradient(circle at 50% 30%, rgba(239, 68, 68, 0.22) 0%, transparent 65%),
-    linear-gradient(rgba(28, 8, 12, 0.82), rgba(18, 4, 8, 0.94)),
-    url('img/torre-fundo.jpg') no-repeat center center fixed;
-  background-size: cover;
-}
-
-body.alerta-emergencia-ativo .beacon-pulso {
-  background: var(--cor-vermelho-alerta);
-  box-shadow: 0 0 15px var(--cor-vermelho-alerta), 0 0 30px var(--cor-vermelho-alerta);
-}
-
-body.alerta-emergencia-ativo .btn-alerta-emergencia {
-  background: var(--cor-vermelho-alerta);
-  color: #ffffff;
-  border-color: #ff8888;
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
-  animation: sirenFlash 1s infinite alternate;
-}
-
-@keyframes sirenFlash {
-  from { filter: brightness(1); }
-  to { filter: brightness(1.4); }
-}
-
-body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
-  border-color: var(--cor-vermelho-alerta) !important;
-  box-shadow: 0 0 25px rgba(239, 68, 68, 0.6), inset 0 0 15px rgba(239, 68, 68, 0.15) !important;
-  animation: alertaCardPulse 1.8s infinite alternate;
-}
-
-@keyframes alertaCardPulse {
-  from { border-color: rgba(239, 68, 68, 0.5); }
-  to { border-color: rgba(239, 68, 68, 1); }
-}
-
-
-/* ==========================================================================
-   4. ELEMENTOS FLUTUANTES (SEM HEADER — SEM BARRA — SEM FAIXA)
-   ========================================================================== */
-
-/* Grupo de botões flutuantes — fixo no canto superior esquerdo */
-.hud-botoes-flutuantes {
-  position: fixed;
-  top: 1.25rem;
-  left: 1.25rem;
-  z-index: 50;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-/* Botão de Emergência / Indicador Dinâmico do Sistema (Item 3) */
-.btn-alerta-emergencia {
-  background: rgba(8, 14, 28, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(148, 163, 184, 0.3);
-  color: #cbd5e1;
-  font-family: var(--fonte-mono);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 8px 14px;
-  border-radius: 8px;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
-}
-
-.alerta-ponto-pulso {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: #64748b;
-  flex-shrink: 0;
-  transition: all 0.3s ease;
-}
-
-/* Quando existem missões urgentes ativas no radar: PULSAÇÃO REAL! */
-.btn-alerta-emergencia.tem-urgencia {
-  border-color: rgba(239, 68, 68, 0.6);
-  color: #fca5a5;
-  background: rgba(24, 10, 16, 0.85);
-}
-
-.btn-alerta-emergencia.tem-urgencia .alerta-ponto-pulso {
-  background: var(--cor-vermelho-alerta);
-  box-shadow: 0 0 10px var(--cor-vermelho-alerta), 0 0 20px rgba(239, 68, 68, 0.8);
-  animation: alertaPulsoCritico 1.2s infinite ease-in-out;
-}
-
-@keyframes alertaPulsoCritico {
-  0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 8px #ef4444; }
-  50% { transform: scale(1.5); opacity: 0.35; box-shadow: 0 0 20px #ef4444; }
-}
-
-.btn-alerta-emergencia:hover {
-  background: rgba(239, 68, 68, 0.28);
-  color: #ffffff;
-  border-color: #ef4444;
-  box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
-}
-
-/* Botão Comunicador T flutuante */
-.btn-comunicador-icone {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  padding: 0;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
-  filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.7));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-}
-
-.btn-comunicador-icone:hover {
-  transform: scale(1.18) rotate(8deg);
-  filter: drop-shadow(0 0 20px rgba(234, 179, 8, 1)) drop-shadow(0 0 30px rgba(0, 212, 255, 0.7));
-}
-
-.btn-comunicador-icone:active {
-  transform: scale(0.94);
-}
-
-.icone-t {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+  transition: background-color 0.3s ease;
 }
 
 .sr-only {
@@ -339,27 +85,242 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
 }
 
 /* ==========================================================================
-   5. LAYOUT DO RADAR: SALA DE COMANDO
+   2. SEQUÊNCIA DE INICIALIZAÇÃO (BOOT DA TORRE)
    ========================================================================== */
+.tela-boot {
+  position: fixed;
+  inset: 0;
+  background: #03060f;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
 
-/* Notificação de Aniversário */
+.tela-boot.oculto {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.boot-terminal-caixa {
+  background: #091224;
+  border: 3px solid var(--titans-amarelo);
+  box-shadow: var(--sombra-comic-lg);
+  width: 100%;
+  max-width: 540px;
+  padding: 2rem;
+  position: relative;
+}
+
+.boot-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 2px solid rgba(250, 204, 21, 0.3);
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.boot-emblema-t {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.8));
+}
+
+.boot-versao {
+  font-family: var(--fonte-display);
+  font-size: 1.1rem;
+  color: var(--titans-amarelo);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  display: block;
+}
+
+.boot-titulo {
+  margin: 0;
+  font-family: var(--fonte-display);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #ffffff;
+  line-height: 1;
+}
+
+.boot-log-linhas {
+  font-family: var(--fonte-dados);
+  font-size: 0.85rem;
+  line-height: 1.7;
+  color: var(--cor-texto-mutado);
+  margin-bottom: 1.5rem;
+}
+
+.boot-linha {
+  margin: 0.25rem 0;
+}
+
+.boot-destaque {
+  color: var(--titans-amarelo);
+  font-weight: 700;
+}
+
+.boot-barra-progresso {
+  width: 100%;
+  height: 8px;
+  background: #040813;
+  border: 1px solid rgba(250, 204, 21, 0.3);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.boot-progresso-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--titans-amarelo);
+  animation: animarCarregamento 1.8s ease forwards;
+}
+
+@keyframes animarCarregamento {
+  0% { width: 0%; }
+  50% { width: 70%; }
+  100% { width: 100%; }
+}
+
+.btn-pular-boot {
+  background: var(--titans-amarelo);
+  border: none;
+  color: #040813;
+  font-family: var(--fonte-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  padding: 6px 18px;
+  cursor: pointer;
+  box-shadow: var(--sombra-comic-sm);
+  transition: transform 0.15s ease, background-color 0.15s ease;
+  float: right;
+}
+
+.btn-pular-boot:hover {
+  background: var(--titans-amarelo-hover);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   3. CONTROLES DO PAINEL DA TORRE (CANTO SUPERIOR ESQUERDO)
+   ========================================================================== */
+.hud-botoes-flutuantes {
+  position: fixed;
+  top: 1.25rem;
+  left: 1.5rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Botão de Alerta dos Titãs */
+.btn-alerta-emergencia {
+  background: #091224;
+  border: 2px solid rgba(255, 255, 255, 0.18);
+  color: #f1f5f9;
+  font-family: var(--fonte-display);
+  font-size: 1.15rem;
+  letter-spacing: 0.06em;
+  padding: 5px 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: var(--sombra-comic);
+  transition: all 0.18s ease;
+}
+
+.alerta-ponto-pulso {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #64748b;
+  flex-shrink: 0;
+  transition: background-color 0.3s ease;
+}
+
+.btn-alerta-emergencia.tem-urgencia {
+  border-color: var(--titans-vermelho);
+  background: #180911;
+}
+
+.btn-alerta-emergencia.tem-urgencia .alerta-ponto-pulso {
+  background: var(--titans-vermelho-alerta);
+  box-shadow: 0 0 10px var(--titans-vermelho-alerta);
+  animation: pulsoUrgenciaAlerta 1s infinite alternate;
+}
+
+@keyframes pulsoUrgenciaAlerta {
+  from { transform: scale(0.9); opacity: 0.6; }
+  to { transform: scale(1.3); opacity: 1; }
+}
+
+.btn-alerta-emergencia:hover {
+  background: #1e293b;
+  border-color: var(--titans-amarelo);
+  color: #ffffff;
+  transform: translateY(-2px);
+}
+
+/* Botão Comunicador T */
+.btn-comunicador-icone {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.7));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-comunicador-icone:hover {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.btn-comunicador-icone:active {
+  transform: scale(0.95);
+}
+
+.icone-t {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   4. NOTIFICAÇÃO DE ANIVERSÁRIO (EVENTO DA ANIMAÇÃO)
+   ========================================================================== */
 .evento-aniversario {
   position: fixed;
-  top: 5rem;
+  top: 4.5rem;
   left: 50%;
   transform: translateX(-50%) translateY(-20px);
   z-index: 200;
   display: flex;
   align-items: center;
-  gap: 12px;
-  background: rgba(8, 14, 28, 0.95);
-  border: 1px solid var(--cor-amarelo-titans);
-  border-radius: 12px;
-  padding: 10px 16px;
-  box-shadow: 0 0 30px rgba(250, 204, 21, 0.4);
+  gap: 14px;
+  background: #091224;
+  border: 2px solid var(--titans-rosa);
+  border-left: 6px solid var(--titans-rosa);
+  padding: 10px 18px;
+  box-shadow: var(--sombra-comic-lg);
   opacity: 0;
-  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
-  max-width: 420px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  max-width: 460px;
   width: calc(100% - 2rem);
 }
 
@@ -369,508 +330,496 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
 }
 
 .evento-icone {
-  font-size: 1.4rem;
-  color: var(--cor-amarelo-titans);
+  font-size: 1.5rem;
   flex-shrink: 0;
-  animation: beaconPulse 2s infinite;
 }
 
 .evento-texto {
   display: flex;
   flex-direction: column;
-  gap: 2px;
 }
 
 .evento-label {
-  font-family: var(--fonte-mono);
-  font-size: 0.68rem;
+  font-family: var(--fonte-display);
+  font-size: 0.9rem;
   letter-spacing: 0.1em;
-  color: var(--cor-amarelo-titans);
+  color: var(--titans-rosa);
+  text-transform: uppercase;
 }
 
 .evento-nome {
-  font-family: var(--fonte-display);
-  font-size: 0.95rem;
+  font-size: 1rem;
+  font-weight: 700;
   color: #ffffff;
-  letter-spacing: 0.04em;
 }
 
 .btn-fechar-evento {
   background: transparent;
   border: none;
-  color: rgba(255,255,255,0.5);
-  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 1.1rem;
   cursor: pointer;
   padding: 4px;
   margin-left: auto;
-  transition: color 0.2s;
-  flex-shrink: 0;
+  transition: color 0.15s;
 }
 
-.btn-fechar-evento:hover { color: #fff; }
+.btn-fechar-evento:hover {
+  color: #ffffff;
+}
 
-/* Painel de Operativos — canto direito fixo (Ícones soltos sobre a tela) */
+/* ==========================================================================
+   5. ROSTER DOS TITÃS — COLEÇÃO DE INSÍGNIAS (LATERAL DIREITA)
+   ========================================================================== */
 .painel-operativos {
   position: fixed;
-  right: 1.25rem;
+  right: 1.5rem;
   top: 50%;
   transform: translateY(-50%);
-  z-index: 50;
+  z-index: 45;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
-  background: transparent;
-  border: none;
-  padding: 0;
 }
 
 .roster-lista {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 2px;
   align-items: center;
 }
 
-/* Ícones soltos: SEM círculo, SEM borda, molde transparente livre */
+/* Botão de Herói: Estilo Insígnia dos Titãs */
 .btn-roster {
   background: transparent;
   border: none;
-  border-radius: 0;
   width: 50px;
   height: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
   padding: 0;
   position: relative;
-  box-shadow: none;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.7));
 }
 
 .btn-roster:hover {
-  transform: scale(1.22) rotate(4deg);
+  transform: scale(1.2) translateX(-4px);
+  z-index: 10;
 }
 
 .btn-roster.ativo {
-  transform: scale(1.26);
-}
-
-.btn-roster:hover .roster-avatar {
-  filter: drop-shadow(0 0 14px var(--cor-cyan-neon));
-}
-
-.btn-roster.ativo .roster-avatar {
-  filter: drop-shadow(0 0 20px var(--cor-cyan-neon)) drop-shadow(0 0 30px rgba(0, 212, 255, 0.85));
-}
-
-/* Botão TODOS: Badge cyber sutil */
-.btn-roster.btn-roster-todos {
-  border: 1px solid rgba(250, 204, 21, 0.4);
-  border-radius: 6px;
-  width: auto;
-  min-width: 48px;
-  height: 24px;
-  padding: 2px 8px;
-  background: rgba(10, 16, 32, 0.7);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-}
-
-.btn-roster.btn-roster-todos:hover {
-  border-color: var(--cor-amarelo-titans);
-  background: rgba(250, 204, 21, 0.18);
-  box-shadow: 0 0 12px rgba(250, 204, 21, 0.5);
-  transform: scale(1.08);
-}
-
-.btn-roster.btn-roster-todos.ativo {
-  border-color: var(--cor-amarelo-titans);
-  background: rgba(250, 204, 21, 0.25);
-  box-shadow: 0 0 16px rgba(250, 204, 21, 0.6);
-  transform: scale(1.1);
-}
-
-.roster-label-all {
-  font-family: var(--fonte-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--cor-amarelo-titans);
+  transform: scale(1.22) translateX(-6px);
+  z-index: 11;
+  filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.9)) drop-shadow(0 0 10px rgba(250, 204, 21, 0.6));
 }
 
 .roster-avatar {
-  width: 46px;
-  height: 46px;
+  width: 44px;
+  height: 44px;
   object-fit: contain;
-  background: transparent;
-  border: none;
-  filter: drop-shadow(0 3px 6px rgba(0, 0, 0, 0.7));
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+  pointer-events: none;
 }
 
-/* Radar: container principal */
+/* Botão TODOS: Badge da Equipe Titãs */
+.btn-roster.btn-roster-todos {
+  width: auto;
+  min-width: 52px;
+  height: 28px;
+  padding: 0 10px;
+  margin-bottom: 8px;
+  background: #091224;
+  border: 2px solid rgba(250, 204, 21, 0.4);
+  box-shadow: var(--sombra-comic-sm);
+}
+
+.btn-roster.btn-roster-todos:hover {
+  border-color: var(--titans-amarelo);
+  background: #111e3b;
+  transform: scale(1.1) translateY(-2px);
+}
+
+.btn-roster.btn-roster-todos.ativo {
+  border-color: var(--titans-amarelo);
+  background: var(--titans-amarelo);
+  transform: scale(1.12);
+}
+
+.btn-roster.btn-roster-todos.ativo .roster-label-all {
+  color: #040813;
+}
+
+.roster-label-all {
+  font-family: var(--fonte-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--titans-amarelo);
+}
+
+/* ==========================================================================
+   6. TELÃO DE COMANDO: COMPOSIÇÃO ASSIMÉTRICA REAL (4 ZONAS)
+   ========================================================================== */
 .radar-sala {
   min-height: 100vh;
-  padding: 2rem 1rem 2rem 1.5rem;
+  padding: 4.5rem 5rem 3rem 2.5rem;
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: stretch;
-  gap: 0;
 }
 
-
-/* ==========================================================================
-   6. ZONAS OPERACIONAIS (4 ESTADOS, SEM CARA DE KANBAN)
-   ========================================================================== */
-
+/* Composição Livre: Zonas com larguras, pesos e ritmos próprios */
 .zonas-operacionais {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
   width: 100%;
-  min-height: calc(100vh - 4rem);
-  position: relative;
-  z-index: 10;
-  padding: 2.5rem 5rem 2.5rem 0;
-  gap: 0;
+  gap: 1.75rem;
 }
 
-/* Separadores sutis entre zonas — linhas verticais */
+/* ZONA BASE */
 .zona-operacional {
   display: flex;
   flex-direction: column;
-  gap: 0;
-  padding: 0 1rem;
-  border-right: 1px solid rgba(0, 212, 255, 0.08);
   position: relative;
 }
 
-.zona-operacional:last-child {
-  border-right: none;
+/* 1. A FAZER: Mais contida e vertical */
+.zona-radar {
+  flex: 0 0 21%;
 }
 
-/* Larguras assimétricas */
-.zona-radar    { width: 22%; }
-.zona-operacao { width: 30%; }
-.zona-analise  { width: 25%; }
-.zona-arquivo  { width: 23%; }
+/* 2. EM ANDAMENTO: Campo focal principal da Torre (mais largo, destacado) */
+.zona-operacao {
+  flex: 0 0 32%;
+}
 
-/* Marcador de zona — mínimo, não é caixão */
+/* 3. EM REVISÃO: Deslocada verticalmente para quebrar o alinhamento de grid */
+.zona-analise {
+  flex: 0 0 24%;
+  margin-top: 1.75rem;
+}
+
+/* 4. CONCLUÍDAS: Mais compacta, área de arquivo */
+.zona-arquivo {
+  flex: 0 0 21%;
+  margin-top: 0.5rem;
+}
+
+/* Marcador Gráfico da Zona (Abas de Desenho) */
 .zona-marcador {
   display: flex;
-  flex-direction: column;
-  gap: 4px;
-  padding: 0.75rem 0 1.25rem 0.5rem;
-  position: sticky;
-  top: 1rem;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.08);
 }
 
 .zona-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  margin-bottom: 4px;
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
 }
 
-.dot-radar   { background: #94a3b8; box-shadow: 0 0 8px #94a3b8; }
-.dot-operacao{ background: #38bdf8; box-shadow: 0 0 8px #38bdf8; animation: beaconPulse 1.8s infinite; }
-.dot-analise { background: #c084fc; box-shadow: 0 0 8px #c084fc; }
-.dot-arquivo { background: #4ade80; box-shadow: 0 0 8px #4ade80; }
+.dot-radar    { background: #94a3b8; }
+.dot-operacao { background: var(--titans-amarelo); box-shadow: 0 0 8px rgba(250, 204, 21, 0.5); }
+.dot-analise  { background: var(--titans-roxo); }
+.dot-arquivo  { background: var(--titans-verde); }
 
 .zona-titulo {
   font-family: var(--fonte-display);
-  font-size: 0.95rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   margin: 0;
-  line-height: 1.1;
+  line-height: 1;
 }
 
 .zona-radar    .zona-titulo { color: #94a3b8; }
-.zona-operacao .zona-titulo { color: #38bdf8; }
-.zona-analise  .zona-titulo { color: #d8b4fe; }
+.zona-operacao .zona-titulo { color: var(--titans-amarelo); }
+.zona-analise  .zona-titulo { color: #c4b5fd; }
 .zona-arquivo  .zona-titulo { color: #86efac; }
 
-.zona-meta {
-  font-family: var(--fonte-mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  color: rgba(148, 163, 184, 0.5);
+.zona-operacao .zona-marcador {
+  border-bottom-color: rgba(250, 204, 21, 0.35);
 }
 
-/* Lista de fichas dentro da zona */
+/* Lista de Fichas */
 .lista-zona {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 1.4rem;
 }
 
 .item-missao-li {
   width: 100%;
 }
 
-/* Offsets irregulares nos cards via nth-child */
-.lista-zona > .item-missao-li:nth-child(2) { margin-left: 8px; }
-.lista-zona > .item-missao-li:nth-child(3) { margin-left: -6px; }
-.lista-zona > .item-missao-li:nth-child(4) { margin-left: 14px; }
-.lista-zona > .item-missao-li:nth-child(5) { margin-left: 4px; }
-
 /* ==========================================================================
-   7. FICHAS MAGNÉTICAS (CARDS DE MISSÃO)
+   7. CARDS DE MISSÃO (FICHAS GRÁFICAS COM VARIEDADE ORGÂNICA)
    ========================================================================== */
 .ficha-magnetica {
-  background: rgba(8, 15, 30, 0.85);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 212, 255, 0.22);
-  border-radius: 10px;
-  padding: 1rem 1.15rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.55);
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  background: var(--bg-placa);
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  box-shadow: var(--sombra-comic);
+  padding: 1.15rem 1.25rem;
   cursor: pointer;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.85rem;
+  transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.18s ease, background-color 0.18s ease;
 }
 
-/* Inclinações magnéticas sutis — fichas presas no computador */
-.rot-1 { transform: rotate(-0.8deg); }
-.rot-2 { transform: rotate(0.9deg); }
-.rot-3 { transform: rotate(-0.6deg); }
-.rot-4 { transform: rotate(1.1deg); }
+/* Leve rotação de ficha magnética presa no painel */
+.rot-1 { transform: rotate(-0.5deg); }
+.rot-2 { transform: rotate(0.6deg); }
+.rot-3 { transform: rotate(-0.4deg); }
+.rot-4 { transform: rotate(0.5deg); }
 
 .ficha-magnetica:hover {
-  transform: translateY(-5px) scale(1.03) rotate(0deg) !important;
-  border-color: var(--cor-cyan-neon);
-  box-shadow: 0 0 28px rgba(0, 212, 255, 0.55), 0 14px 32px rgba(0, 0, 0, 0.75);
-  z-index: 20;
+  background: var(--bg-placa-hover);
+  transform: translateY(-5px) scale(1.02) rotate(0deg) !important;
+  box-shadow: var(--sombra-comic-lg);
+  border-color: rgba(255, 255, 255, 0.35);
+  z-index: 15;
 }
 
-/* Fichas grandes para prioridade alta */
+/* ──────────────────────────────────────────────────────────
+   VARIEDADE ORGÂNICA POR STATUS E PRIORIDADE
+   ────────────────────────────────────────────────────────── */
+
+/* 1. EM ANDAMENTO: Borda lateral em Amarelo Titãs */
+.ficha-magnetica.status-em-andamento {
+  border-left: 5px solid var(--titans-amarelo);
+}
+
+/* 2. EM REVISÃO: Borda lateral em Roxo Ravena */
+.ficha-magnetica.status-em-revisao {
+  border-left: 5px solid var(--titans-roxo);
+}
+
+/* 3. CONCLUÍDAS: Ficha mais limpa e compacta com acento verde */
+.ficha-magnetica.status-concluida {
+  border-left: 4px solid var(--titans-verde);
+  opacity: 0.85;
+}
+
+.ficha-magnetica.status-concluida:hover {
+  opacity: 1;
+}
+
+/* 4. PRIORIDADE ALTA (URGENTE): TRATAMENTO RADICALMENTE DISTINTO! */
 .ficha-magnetica.prioridade-alta {
-  border-color: rgba(239, 68, 68, 0.5);
-  padding: 1.2rem 1.35rem;
+  border: 2px solid var(--titans-vermelho) !important;
+  border-top: 6px solid var(--titans-vermelho) !important;
+  background: #110d1a;
+  box-shadow: 5px 6px 0px rgba(225, 29, 72, 0.5), 0 10px 25px rgba(0, 0, 0, 0.8);
+  padding: 1.35rem 1.35rem;
 }
 
 .ficha-magnetica.prioridade-alta .cartao-titulo {
-  font-size: 1.05rem;
+  font-size: 1.3rem;
+  color: #ffffff;
+  letter-spacing: 0.02em;
 }
 
-/* Fichas menores para prioridade baixa */
+.ficha-magnetica.prioridade-alta .tag-prioridade {
+  background: var(--titans-vermelho);
+  color: #ffffff;
+  font-weight: 700;
+  border: none;
+}
+
+/* 5. PRIORIDADE BAIXA: Mais contida e compacta */
 .ficha-magnetica.prioridade-baixa {
-  padding: 0.8rem 1rem;
-  opacity: 0.85;
+  padding: 0.9rem 1.05rem;
 }
 
 .ficha-magnetica.prioridade-baixa .cartao-titulo {
-  font-size: 0.9rem;
+  font-size: 1rem;
+  color: var(--cor-texto-suave);
 }
 
-/* Status visual dos cards */
-.ficha-magnetica.status-em-andamento {
-  border-color: rgba(56, 189, 248, 0.5);
-}
+/* ──────────────────────────────────────────────────────────
+   ELEMENTOS INTERNOS DO CARD
+   ────────────────────────────────────────────────────────── */
 
-.ficha-magnetica.status-em-revisao {
-  border-color: rgba(192, 132, 252, 0.45);
-}
-
-.ficha-magnetica.status-concluida {
-  border-color: rgba(74, 222, 128, 0.35);
-  opacity: 0.85;
-  filter: saturate(0.7);
-}
-
-/* Topo do Dossiê */
+/* Topo do Card */
 .cartao-tags {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 .cartao-codigo-bloco {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 6px;
 }
 
 .cartao-dot-pulso {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--cor-cyan-neon);
-  box-shadow: 0 0 7px var(--cor-cyan-neon);
-  flex-shrink: 0;
-}
-
-.status-em-andamento .cartao-dot-pulso {
-  animation: beaconPulse 1.4s infinite;
-  background: #38bdf8;
-  box-shadow: 0 0 7px #38bdf8;
-}
-
-.status-em-revisao .cartao-dot-pulso {
-  background: #c084fc;
-  box-shadow: 0 0 7px #c084fc;
-  animation: beaconPulse 2.2s infinite;
-}
-
-.status-concluida .cartao-dot-pulso {
-  background: #4ade80;
-  box-shadow: 0 0 7px #4ade80;
+  width: 6px;
+  height: 6px;
+  background: var(--titans-amarelo);
 }
 
 .tag-projeto {
-  font-family: var(--fonte-mono);
-  font-size: 0.72rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: var(--cor-cyan-neon);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
+/* Badges de Prioridade em Bloco de Cor Sólida */
 .tag-prioridade {
-  font-family: var(--fonte-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 3px;
-  letter-spacing: 0.07em;
+  font-family: var(--fonte-display);
+  font-size: 0.85rem;
+  padding: 2px 7px;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
+  line-height: 1.1;
 }
 
 .tag-prioridade.prioridade-alta {
-  background: rgba(239, 68, 68, 0.2);
-  color: #fca5a5;
-  border: 1px solid rgba(239, 68, 68, 0.5);
+  background: var(--titans-vermelho);
+  color: #ffffff;
 }
 
 .tag-prioridade.prioridade-media {
-  background: rgba(245, 158, 11, 0.2);
-  color: #fde68a;
-  border: 1px solid rgba(245, 158, 11, 0.5);
+  background: #b45309;
+  color: #fef3c7;
 }
 
 .tag-prioridade.prioridade-baixa {
-  background: rgba(34, 197, 94, 0.15);
-  color: #86efac;
-  border: 1px solid rgba(34, 197, 94, 0.4);
+  background: #1e293b;
+  color: #94a3b8;
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
+/* Título da Missão (A parte mais importante visualmente!) */
 .cartao-titulo {
   margin: 0;
-  font-size: 0.95rem;
-  font-weight: 700;
-  line-height: 1.35;
-  color: #e2e8f0;
-  letter-spacing: 0.01em;
-  font-family: var(--fonte-base);
+  font-family: var(--fonte-display);
+  font-size: 1.18rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #ffffff;
+  letter-spacing: 0.02em;
 }
 
-/* Rodapé do card */
+/* Rodapé do Card */
 .cartao-rodape {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding-top: 0.6rem;
-  border-top: 1px dashed rgba(0, 212, 255, 0.18);
+  align-items: flex-end;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .cartao-meta-info {
   display: flex;
   flex-direction: column;
-  gap: 3px;
+  gap: 6px;
 }
 
 .cartao-prazo {
-  font-family: var(--fonte-mono);
-  font-size: 0.7rem;
-  color: rgba(148, 163, 184, 0.7);
-  letter-spacing: 0.04em;
+  font-family: var(--fonte-dados);
+  font-size: 0.72rem;
+  color: var(--cor-texto-mutado);
 }
 
-/* Botão VER DOSSIÊ com destaque dinâmico no hover (Item 5) */
 .btn-ver-dossie {
-  font-family: var(--fonte-mono);
-  font-size: 0.65rem;
-  font-weight: 700;
-  color: rgba(0, 212, 255, 0.75);
-  letter-spacing: 0.06em;
-  padding: 3px 8px;
-  border-radius: 4px;
-  border: 1px solid rgba(0, 212, 255, 0.25);
-  background: rgba(0, 212, 255, 0.08);
-  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
-  display: inline-block;
+  font-family: var(--fonte-display);
+  font-size: 0.92rem;
+  letter-spacing: 0.04em;
+  color: var(--titans-amarelo);
+  text-transform: uppercase;
+  transition: transform 0.15s ease, color 0.15s ease;
 }
 
 .ficha-magnetica:hover .btn-ver-dossie {
-  background: var(--cor-cyan-neon);
-  color: #040812;
-  font-weight: 800;
-  border-color: #ffffff;
-  box-shadow: 0 0 16px var(--cor-cyan-neon), 0 0 25px rgba(0, 212, 255, 0.7);
-  transform: scale(1.08) translateX(2px);
-}
-
-.avatar-responsavel {
-  width: 44px;
-  height: 44px;
-  background: transparent;
-  border: none;
-  object-fit: contain;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
-  flex-shrink: 0;
-}
-
-.ficha-magnetica.prioridade-baixa .avatar-responsavel { width: 36px; height: 36px; }
-.ficha-magnetica.prioridade-alta  .avatar-responsavel { width: 52px; height: 52px; }
-
-.ficha-magnetica:hover .avatar-responsavel { transform: scale(1.15) rotate(3deg); }
-.ficha-magnetica:hover .avatar-robin    { filter: drop-shadow(0 0 10px rgba(239, 68, 68, 0.9)); }
-.ficha-magnetica:hover .avatar-ciborgue { filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.9)); }
-.ficha-magnetica:hover .avatar-estelar  { filter: drop-shadow(0 0 10px rgba(244, 114, 182, 0.9)); }
-.ficha-magnetica:hover .avatar-ravena   { filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.9)); }
-.ficha-magnetica:hover .avatar-mutano   { filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.9)); }
-
-/* Efeito Comemorativo do Aniversário */
-body.aniversario-ativo {
-  box-shadow: inset 0 0 120px rgba(244, 114, 182, 0.25);
-  transition: box-shadow 0.8s ease;
-}
-
-body.aniversario-ativo .hud-radio-flutuante {
-  border-color: var(--cor-amarelo-titans);
-  box-shadow: 0 0 25px rgba(250, 204, 21, 0.5);
+  color: #ffffff;
+  transform: translateX(3px);
 }
 
 /* ==========================================================================
-   8. MODAL DE DOSSIÊ HOLOGRÁFICO DA MISSÃO
+   8. AVATAR E SUPORTE DE INSÍGNIA GRÁFICA
+   ========================================================================== */
+.avatar-insignia-slot {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* Base gráfica sólida de apoio atrás do avatar */
+.avatar-insignia-slot::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: #091224;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  transition: transform 0.18s ease, border-color 0.18s ease;
+}
+
+/* Acentos individuais de cada Titã no suporte */
+.insignia-robin::before    { border-color: rgba(225, 29, 72, 0.6); }
+.insignia-ciborgue::before { border-color: rgba(2, 132, 199, 0.6); }
+.insignia-estelar::before  { border-color: rgba(244, 63, 94, 0.6); }
+.insignia-ravena::before   { border-color: rgba(124, 58, 237, 0.6); }
+.insignia-mutano::before   { border-color: rgba(22, 163, 74, 0.6); }
+
+.ficha-magnetica:hover .avatar-insignia-slot::before {
+  border-color: var(--titans-amarelo);
+  transform: scale(1.08);
+}
+
+.avatar-responsavel {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  position: relative;
+  z-index: 1;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(1px 2px 0 rgba(0, 0, 0, 0.7));
+}
+
+.ficha-magnetica:hover .avatar-responsavel {
+  transform: scale(1.15) rotate(2deg);
+}
+
+/* ==========================================================================
+   9. MODAIS DA TORRE: READOUT EDITORIAL TÁTICO
    ========================================================================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(4, 8, 18, 0.85);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
+  background: rgba(3, 6, 14, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem;
+  padding: 1.25rem;
   z-index: 1000;
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transition: opacity 0.25s ease, visibility 0.25s ease;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
 .modal-overlay.ativo {
@@ -879,155 +828,181 @@ body.aniversario-ativo .hud-radio-flutuante {
   pointer-events: auto;
 }
 
-.modal-conteudo {
-  background: #091224;
-  border: 2px solid var(--cor-cyan-neon);
-  border-radius: 16px;
-  box-shadow: 0 0 50px rgba(0, 212, 255, 0.45), 0 25px 65px rgba(0, 0, 0, 0.85);
+/* Chassi do Modal */
+.modal-conteudo,
+.terminal-comunicador {
+  background: #091326;
+  border: 3px solid var(--titans-amarelo);
+  box-shadow: var(--sombra-comic-lg);
   width: 100%;
-  max-width: 600px;
-  padding: 1.75rem;
-  transform: scale(0.92) translateY(-10px);
-  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-width: 580px;
+  padding: 2rem;
+  transform: scale(0.95);
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   max-height: 90vh;
   overflow-y: auto;
   color: #ffffff;
+  position: relative;
 }
 
-.modal-overlay.ativo .modal-conteudo {
-  transform: scale(1) translateY(0);
+.modal-overlay.ativo .modal-conteudo,
+.modal-overlay.ativo .terminal-comunicador {
+  transform: scale(1);
 }
 
-.modal-cabecalho {
+/* Cabeçalho do Modal */
+.modal-cabecalho,
+.terminal-cabecalho {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(0, 212, 255, 0.3);
-  padding-bottom: 0.85rem;
-  margin-bottom: 1.25rem;
+  border-bottom: 2px solid rgba(250, 204, 21, 0.3);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
 
-.modal-titulo-box {
+.modal-titulo-box,
+.terminal-id-bloco {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.subtitulo-popup {
-  display: block;
-  font-family: var(--fonte-mono);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--cor-amarelo-titans);
+.terminal-icone-t {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+  filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.8));
 }
 
-.modal-cabecalho h2 {
-  margin: 0;
+.subtitulo-popup,
+.terminal-subtitulo {
   font-family: var(--fonte-display);
-  font-size: 1.4rem;
+  font-size: 1rem;
+  letter-spacing: 0.08em;
+  color: var(--titans-amarelo);
+  text-transform: uppercase;
+  display: block;
+  line-height: 1;
+}
+
+.modal-cabecalho h2,
+.terminal-titulo {
+  margin: 4px 0 0 0;
+  font-family: var(--fonte-display);
+  font-size: 2rem;
   font-weight: 700;
+  letter-spacing: 0.03em;
   color: #ffffff;
+  line-height: 1;
 }
 
 .btn-fechar-modal {
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #94a3b8;
-  font-size: 1rem;
+  background: #111e3b;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 1.1rem;
   width: 36px;
   height: 36px;
-  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
+  box-shadow: var(--sombra-comic-sm);
+  transition: all 0.15s ease;
 }
 
 .btn-fechar-modal:hover {
-  background: rgba(239, 68, 68, 0.2);
-  border-color: #ef4444;
-  color: #ef4444;
+  background: var(--titans-vermelho);
+  border-color: #ffffff;
+  transform: scale(1.08);
 }
 
+/* Corpo do Dossiê */
 .dossie-stamp {
-  background: rgba(0, 212, 255, 0.12);
-  border: 1px solid var(--cor-cyan-neon);
-  color: var(--cor-cyan-neon);
-  font-family: var(--fonte-mono);
-  font-size: 0.82rem;
+  background: var(--titans-amarelo);
+  color: #040813;
+  font-family: var(--fonte-display);
+  font-size: 1.1rem;
   font-weight: 700;
-  padding: 4px 8px;
-  border-radius: 4px;
+  padding: 3px 10px;
+  letter-spacing: 0.05em;
+  box-shadow: var(--sombra-comic-sm);
 }
 
-.dossie-corpo { display: flex; flex-direction: column; gap: 1.25rem; }
+.dossie-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
 
 .dossie-hero-bloco {
   display: flex;
   align-items: center;
-  gap: 16px;
-  background: rgba(15, 23, 42, 0.65);
-  border: 1px solid rgba(0, 212, 255, 0.25);
-  border-radius: 12px;
-  padding: 1rem;
+  gap: 18px;
+  background: #0d1b36;
+  border: 2px solid rgba(255, 255, 255, 0.12);
+  border-left: 6px solid var(--titans-amarelo);
+  padding: 1.15rem 1.25rem;
 }
 
 .dossie-avatar-grande {
   width: 72px;
   height: 72px;
   object-fit: contain;
-  filter: drop-shadow(0 0 14px rgba(0, 212, 255, 0.6));
+  filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.8));
 }
 
-.dossie-hero-dados { display: flex; flex-direction: column; }
+.dossie-hero-dados {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
 
 .dossie-label {
-  font-family: var(--fonte-mono);
-  font-size: 0.66rem;
+  font-family: var(--fonte-display);
+  font-size: 0.95rem;
+  letter-spacing: 0.06em;
   color: var(--cor-texto-mutado);
-  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
 .dossie-nome-heroi {
   font-family: var(--fonte-display);
-  font-size: 1.5rem;
+  font-size: 2rem;
+  font-weight: 700;
   color: #ffffff;
-  letter-spacing: 0.05em;
+  line-height: 1;
 }
 
 .dossie-status-tag {
-  font-family: var(--fonte-mono);
-  font-size: 0.7rem;
+  font-size: 0.85rem;
   font-weight: 700;
-  color: var(--cor-cyan-neon);
+  color: var(--titans-amarelo);
+  text-transform: uppercase;
+  margin-top: 4px;
 }
 
 .dossie-detalhes-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 10px;
+  gap: 12px;
 }
 
 .dossie-info-box {
-  background: rgba(15, 23, 42, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 8px;
-  padding: 8px 12px;
+  background: #0d1b36;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 10px 14px;
   display: flex;
   flex-direction: column;
+  gap: 2px;
 }
 
 .dossie-dado {
-  font-family: var(--fonte-mono);
-  font-size: 0.85rem;
+  font-size: 1rem;
   font-weight: 700;
   color: #ffffff;
-  margin-top: 2px;
 }
-
-.text-cyan { color: var(--cor-cyan-neon); }
 
 .dossie-botoes-acao {
   display: flex;
@@ -1036,134 +1011,51 @@ body.aniversario-ativo .hud-radio-flutuante {
 }
 
 .btn-limpar {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.45);
-  color: #fca5a5;
-  font-family: var(--fonte-mono);
+  background: #1e293b;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-family: var(--fonte-display);
+  font-size: 1.1rem;
   font-weight: 700;
-  font-size: 0.82rem;
-  padding: 8px 16px;
-  border-radius: 7px;
-  min-height: 40px;
+  letter-spacing: 0.05em;
+  padding: 6px 18px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
+  box-shadow: var(--sombra-comic-sm);
+  transition: all 0.15s ease;
 }
 
 .btn-limpar:hover {
-  background: rgba(239, 68, 68, 0.3);
-  color: #ffffff;
-  border-color: #ef4444;
+  background: var(--titans-vermelho);
+  border-color: #ffffff;
+  transform: translateY(-2px);
 }
 
-/* ==========================================================================
-   9. TERMINAL COMUNICADOR T (MODAL DE FILTROS REESTILIZADO)
-   ========================================================================== */
-.terminal-comunicador {
-  background: #070f1e;
-  border: 1px solid rgba(0, 212, 255, 0.45);
-  border-radius: 14px;
-  box-shadow: 0 0 40px rgba(0, 212, 255, 0.3), 0 20px 60px rgba(0, 0, 0, 0.9);
-  width: 100%;
-  max-width: 480px;
-  padding: 1.5rem;
-  transform: scale(0.92) translateY(-10px);
-  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
-  max-height: 90vh;
-  overflow-y: auto;
-  position: relative;
-}
-
-/* Linhas de terminal no fundo */
-.terminal-comunicador::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 28px,
-    rgba(0, 212, 255, 0.03) 28px,
-    rgba(0, 212, 255, 0.03) 29px
-  );
-  border-radius: 14px;
-  pointer-events: none;
-}
-
-.modal-overlay.ativo .terminal-comunicador {
-  transform: scale(1) translateY(0);
-}
-
-.terminal-cabecalho {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(0, 212, 255, 0.25);
-  padding-bottom: 0.85rem;
-  margin-bottom: 1.25rem;
-  position: relative;
-  z-index: 1;
-}
-
-.terminal-id-bloco {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.terminal-icone-t {
-  width: 38px;
-  height: 38px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(234, 179, 8, 0.8));
-}
-
-.terminal-subtitulo {
-  display: block;
-  font-family: var(--fonte-mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  color: var(--cor-amarelo-titans);
-}
-
-.terminal-titulo {
-  margin: 0;
-  font-family: var(--fonte-display);
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: #ffffff;
-  letter-spacing: 0.06em;
-}
-
+/* ──────────────────────────────────────────────────────────
+   FORMULÁRIO DO COMUNICADOR T (FILTROS)
+   ────────────────────────────────────────────────────────── */
 .terminal-form {
   display: flex;
   flex-direction: column;
-  gap: 1.1rem;
-  position: relative;
-  z-index: 1;
+  gap: 1.25rem;
 }
 
-/* Campo de busca — estilo terminal */
 .terminal-campo-busca {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: rgba(0, 212, 255, 0.06);
-  border: 1px solid rgba(0, 212, 255, 0.35);
-  border-radius: 8px;
+  background: #0d1b36;
+  border: 2px solid rgba(255, 255, 255, 0.15);
   padding: 0 14px;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  transition: border-color 0.15s;
 }
 
 .terminal-campo-busca:focus-within {
-  border-color: var(--cor-cyan-neon);
-  box-shadow: 0 0 16px rgba(0, 212, 255, 0.35);
+  border-color: var(--titans-amarelo);
 }
 
 .campo-icone {
-  color: var(--cor-cyan-neon);
   font-size: 1.1rem;
-  flex-shrink: 0;
+  color: var(--titans-amarelo);
 }
 
 .terminal-input {
@@ -1172,36 +1064,29 @@ body.aniversario-ativo .hud-radio-flutuante {
   border: none;
   outline: none;
   color: #ffffff;
-  font-family: var(--fonte-mono);
-  font-size: 0.9rem;
-  letter-spacing: 0.06em;
+  font-size: 0.95rem;
   padding: 12px 0;
-  min-height: 44px;
 }
 
 .terminal-input::placeholder {
-  color: rgba(0, 212, 255, 0.35);
-  letter-spacing: 0.08em;
+  color: var(--cor-texto-mutado);
 }
 
-/* Grupos de filtros */
 .terminal-grupo {
-  border: 1px solid rgba(0, 212, 255, 0.18);
-  border-radius: 8px;
-  background: rgba(0, 15, 35, 0.5);
-  padding: 0.8rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #0d1b36;
+  padding: 1rem;
   margin: 0;
 }
 
 .terminal-grupo-titulo {
   display: block;
-  font-family: var(--fonte-mono);
-  font-size: 0.66rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  color: rgba(0, 212, 255, 0.6);
+  font-family: var(--fonte-display);
+  font-size: 1rem;
+  letter-spacing: 0.06em;
+  color: var(--titans-amarelo);
   text-transform: uppercase;
-  margin-bottom: 0.7rem;
+  margin-bottom: 0.6rem;
 }
 
 .terminal-opcoes {
@@ -1210,7 +1095,6 @@ body.aniversario-ativo .hud-radio-flutuante {
   gap: 6px;
 }
 
-/* Botões de canal — iluminam ao selecionar */
 .canal-btn {
   cursor: pointer;
 }
@@ -1224,32 +1108,29 @@ body.aniversario-ativo .hud-radio-flutuante {
 
 .canal-btn span {
   display: inline-block;
-  font-family: var(--fonte-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: rgba(148, 163, 184, 0.7);
-  background: rgba(0, 212, 255, 0.05);
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  border-radius: 6px;
-  padding: 6px 12px;
-  transition: all 0.2s ease;
-  cursor: pointer;
+  font-family: var(--fonte-display);
+  font-size: 1rem;
+  letter-spacing: 0.04em;
+  color: #cbd5e1;
+  background: #091326;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 4px 12px;
+  transition: all 0.15s ease;
 }
 
 .canal-btn input:checked + span {
-  background: rgba(0, 212, 255, 0.2);
-  border-color: var(--cor-cyan-neon);
-  color: var(--cor-cyan-neon);
-  box-shadow: 0 0 12px rgba(0, 212, 255, 0.35);
+  background: var(--titans-amarelo);
+  border-color: var(--titans-amarelo);
+  color: #040813;
+  font-weight: 700;
+  box-shadow: var(--sombra-comic-sm);
 }
 
 .canal-btn:hover span {
-  border-color: rgba(0, 212, 255, 0.5);
-  color: #e2e8f0;
+  border-color: var(--titans-amarelo);
+  color: #ffffff;
 }
 
-/* Select de ordenação */
 .terminal-ordenacao {
   display: flex;
   flex-direction: column;
@@ -1258,145 +1139,143 @@ body.aniversario-ativo .hud-radio-flutuante {
 
 .terminal-select {
   width: 100%;
-  background: rgba(0, 212, 255, 0.06);
-  border: 1px solid rgba(0, 212, 255, 0.3);
-  border-radius: 7px;
+  background: #0d1b36;
+  border: 2px solid rgba(255, 255, 255, 0.15);
   color: #ffffff;
-  font-family: var(--fonte-mono);
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   padding: 8px 12px;
-  min-height: 40px;
   outline: none;
   cursor: pointer;
-  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .terminal-select:focus {
-  border-color: var(--cor-cyan-neon);
-  box-shadow: 0 0 12px rgba(0, 212, 255, 0.3);
+  border-color: var(--titans-amarelo);
 }
 
-.terminal-select option {
-  background: #070f1e;
-  color: #ffffff;
-}
-
-/* Ações do terminal */
 .terminal-acoes {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   padding-top: 0.5rem;
-  border-top: 1px solid rgba(0, 212, 255, 0.12);
+  border-top: 2px solid rgba(255, 255, 255, 0.1);
 }
 
 .terminal-btn-limpar {
   background: transparent;
-  border: 1px solid rgba(239, 68, 68, 0.35);
-  color: rgba(252, 165, 165, 0.7);
-  font-family: var(--fonte-mono);
-  font-size: 0.75rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 8px 14px;
-  border-radius: 7px;
+  border: 2px solid rgba(225, 29, 72, 0.4);
+  color: #fca5a5;
+  font-family: var(--fonte-display);
+  font-size: 1.1rem;
+  letter-spacing: 0.04em;
+  padding: 6px 16px;
   cursor: pointer;
-  transition: all 0.2s ease;
-  min-height: 40px;
+  transition: all 0.15s ease;
 }
 
 .terminal-btn-limpar:hover {
-  background: rgba(239, 68, 68, 0.2);
-  color: #fca5a5;
-  border-color: #ef4444;
+  background: var(--titans-vermelho);
+  color: #ffffff;
+  border-color: var(--titans-vermelho);
 }
 
 .terminal-btn-scan {
   flex: 1;
-  background: rgba(0, 212, 255, 0.15);
-  border: 1px solid var(--cor-cyan-neon);
-  color: var(--cor-cyan-neon);
+  background: var(--titans-amarelo);
+  border: none;
+  color: #040813;
   font-family: var(--fonte-display);
-  font-size: 0.9rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
-  padding: 10px 20px;
-  border-radius: 8px;
+  letter-spacing: 0.05em;
+  padding: 8px 20px;
   cursor: pointer;
-  transition: all 0.25s ease;
-  min-height: 44px;
-  box-shadow: 0 0 12px rgba(0, 212, 255, 0.2);
+  box-shadow: var(--sombra-comic-sm);
+  transition: all 0.15s ease;
 }
 
 .terminal-btn-scan:hover {
-  background: rgba(0, 212, 255, 0.3);
-  color: #ffffff;
-  box-shadow: 0 0 24px rgba(0, 212, 255, 0.6);
+  background: var(--titans-amarelo-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--sombra-comic);
 }
 
 /* ==========================================================================
-   10. BREAKPOINTS RESPONSIVOS (RUBRICA ACADÊMICA)
+   10. ESTADO DE ALERTA VERMELHO DOS TITÃS
    ========================================================================== */
-@media (min-width: 600px) {
-  .terminal-grupo { padding: 1rem 1.2rem; }
+body.alerta-emergencia-ativo {
+  background-color: #120409;
+  background-image: 
+    radial-gradient(circle at 50% 35%, rgba(40, 8, 16, 0.85) 0%, rgba(18, 3, 7, 0.96) 85%),
+    url('img/torre-fundo.jpg');
 }
 
-@media (min-width: 700px) {
-  .zonas-operacionais {
-    gap: 0;
-  }
+body.alerta-emergencia-ativo .btn-alerta-emergencia {
+  background: var(--titans-vermelho);
+  color: #ffffff;
+  border-color: #ffffff;
+  box-shadow: 0 0 20px rgba(225, 29, 72, 0.8);
+  animation: sirenFlashAlerta 1s infinite alternate;
 }
 
-@media (min-width: 1024px) {
-  .painel-operativos {
-    right: 1.5rem;
-  }
-  .hud-botoes-flutuantes {
-    top: 1.5rem;
-    left: 1.5rem;
-  }
+@keyframes sirenFlashAlerta {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.3); }
 }
 
-/* Mobile: zonas viram coluna */
-@media (max-width: 700px) {
+body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
+  border-color: var(--titans-vermelho) !important;
+  box-shadow: 6px 8px 0px rgba(0, 0, 0, 0.9), 0 0 25px rgba(225, 29, 72, 0.7) !important;
+}
+
+/* Efeito Comemorativo do Aniversário */
+body.aniversario-ativo {
+  box-shadow: inset 0 0 100px rgba(244, 63, 94, 0.35);
+  transition: box-shadow 0.6s ease;
+}
+
+/* ==========================================================================
+   11. RESPONSIVIDADE (RUBRICA ACADÊMICA)
+   ========================================================================== */
+@media (max-width: 900px) {
+  .radar-sala {
+    padding: 4.5rem 1.5rem 5rem 1.5rem;
+  }
+
   .zonas-operacionais {
     flex-direction: column;
-    padding: 1.5rem 0.5rem 2rem 0.5rem;
-    gap: 2rem;
+    gap: 2.25rem;
   }
 
   .zona-radar,
   .zona-operacao,
   .zona-analise,
   .zona-arquivo {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid rgba(0, 212, 255, 0.08);
-    padding-bottom: 1.5rem;
+    flex: 1 1 100%;
+    margin-top: 0;
   }
-
-  .zona-marcador {
-    flex-direction: row;
-    align-items: center;
-    gap: 8px;
-    padding: 0 0 0.75rem 0;
-    position: static;
-  }
-
-  .zona-dot { margin-bottom: 0; }
 
   .painel-operativos {
     position: fixed;
     right: auto;
     left: 50%;
     top: auto;
-    bottom: 1.5rem;
+    bottom: 1.25rem;
     transform: translateX(-50%);
     flex-direction: row;
-    padding: 6px 10px;
+    background: rgba(9, 18, 36, 0.92);
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    box-shadow: var(--sombra-comic-lg);
+    padding: 4px 8px;
   }
 
-  .roster-lista { flex-direction: row; }
-}
+  .roster-lista {
+    flex-direction: row;
+    gap: 4px;
+  }
 
+  .btn-roster.btn-roster-todos {
+    margin-bottom: 0;
+    margin-right: 6px;
+  }
+}
