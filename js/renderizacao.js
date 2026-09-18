@@ -19,9 +19,9 @@ export function criarCartao(tarefa) {
   cartao.dataset.tarefaId = String(tarefa.id);
   cartao.tabIndex = 0;
   cartao.setAttribute("role", "button");
-  cartao.setAttribute("aria-label", `Abrir dossiê da missão: ${tarefa.titulo}`);
+  cartao.setAttribute("aria-label", `Abrir detalhes da missão: ${tarefa.titulo}`);
 
-  // 1. Topo: Código Tático e Prioridade
+  // 1. Topo: Projeto e Prioridade
   const topo = document.createElement("div");
   topo.className = "cartao-tags";
 
@@ -33,30 +33,27 @@ export function criarCartao(tarefa) {
 
   const tagProjeto = document.createElement("span");
   tagProjeto.className = "tag-projeto";
-  const codigoOperacao = tarefa.projeto 
-    ? `#OP-${tarefa.projeto.toUpperCase().replace(/\s+/g, "-")}`
-    : `#T-00${tarefa.id}`;
-  tagProjeto.textContent = codigoOperacao;
+  tagProjeto.textContent = tarefa.projeto || "Torre dos Titãs";
 
   blocoCodigo.append(dot, tagProjeto);
 
   const tagPrioridade = document.createElement("span");
   tagPrioridade.className = `tag-prioridade prioridade-${tarefa.prioridade}`;
   const prioridadeMap = {
-    alta: "URGENTE // CRÍTICO",
-    media: "MÉDIA PRIORIDADE",
-    baixa: "BAIXA PRIORIDADE"
+    alta: "Urgente",
+    media: "Média",
+    baixa: "Baixa"
   };
-  tagPrioridade.textContent = prioridadeMap[tarefa.prioridade] || tarefa.prioridade.toUpperCase();
+  tagPrioridade.textContent = prioridadeMap[tarefa.prioridade] || tarefa.prioridade;
 
   topo.append(blocoCodigo, tagPrioridade);
 
-  // 2. Centro: Título da Tarefa / Missão
+  // 2. Centro: Título da Missão
   const titulo = document.createElement("h4");
   titulo.className = "cartao-titulo";
   titulo.textContent = tarefa.titulo;
 
-  // 3. Base: Data de Transmissão / Prazo e Avatar do Titã responsável
+  // 3. Base: Prazo e Avatar do Titã responsável
   const rodape = document.createElement("footer");
   rodape.className = "cartao-rodape";
 
@@ -65,11 +62,11 @@ export function criarCartao(tarefa) {
 
   const prazo = document.createElement("span");
   prazo.className = "cartao-prazo";
-  prazo.textContent = `LIMITE: ${tarefa.prazo}`;
+  prazo.textContent = `Prazo: ${tarefa.prazo}`;
 
   const btnAcessar = document.createElement("span");
   btnAcessar.className = "btn-ver-dossie";
-  btnAcessar.textContent = "VER DOSSIÊ ❯";
+  btnAcessar.textContent = "Ver detalhes ❯";
 
   blocoMeta.append(prazo, btnAcessar);
 
@@ -81,26 +78,12 @@ export function criarCartao(tarefa) {
   }
   avatar.src = tarefa.avatar || "img/robin.png";
   avatar.alt = `Avatar de ${tarefa.responsavel}`;
-  avatar.title = `Titã Responsável: ${tarefa.responsavel}`;
+  avatar.title = `Responsável: ${tarefa.responsavel}`;
 
   rodape.append(blocoMeta, avatar);
 
-  // Elementos do Micro-Scanner Tático Holográfico (Hover Feedback)
-  const scanLinha = document.createElement("div");
-  scanLinha.className = "cartao-scan-linha";
-  scanLinha.setAttribute("aria-hidden", "true");
-
-  const scanFeedback = document.createElement("div");
-  scanFeedback.className = "cartao-scan-feedback";
-  scanFeedback.setAttribute("aria-hidden", "true");
-
-  const scanFeedbackTexto = document.createElement("span");
-  scanFeedbackTexto.className = "scan-feedback-texto";
-  scanFeedbackTexto.textContent = "BIO-SCAN STANDBY";
-  scanFeedback.appendChild(scanFeedbackTexto);
-
-  // Montagem do cartão com elementos holográficos
-  cartao.append(scanLinha, topo, scanFeedback, titulo, rodape);
+  // Montagem limpa do cartão
+  cartao.append(topo, titulo, rodape);
   item.append(cartao);
   return item;
 }

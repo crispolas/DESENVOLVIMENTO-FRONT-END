@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Torre dos Titãs // Computador Central</title>
+  <title>Torre dos Titãs — Computador Central</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,600&family=Oxanium:wght@600;700;800&family=Share+Tech+Mono&family=Teko:wght@600;700&display=swap" rel="stylesheet">
@@ -11,36 +11,27 @@
 </head>
 <body class="hud-body">
 
-  <!-- 1. Abertura Cinemática: A Torre Acordando (Boot Sequence) -->
-  <div id="tela-boot" class="tela-boot" aria-label="Sequência de Inicialização do Sistema">
+  <!-- 1. Abertura: A Torre Acordando (Boot Sequence) -->
+  <div id="tela-boot" class="tela-boot" aria-label="Inicialização do Sistema">
     <div class="boot-terminal-caixa">
       <div class="boot-cabecalho">
         <img src="img/comunicador-t.png" alt="" class="boot-emblema-t">
         <div>
-          <span class="boot-versao">CYBORG OS // V-4.8.2</span>
-          <h1 class="boot-titulo">TITANS TOWER // SYSTEM BOOT</h1>
+          <span class="boot-versao">Torre dos Titãs</span>
+          <h1 class="boot-titulo">COMPUTADOR CENTRAL</h1>
         </div>
       </div>
       <div class="boot-log-linhas">
-        <p class="boot-linha">[OK] REATORES DE ENERGIA T: 98.4% ESTABILIZADOS</p>
-        <p class="boot-linha">[OK] RADAR ORBITAL DE JUMP CITY CONECTADO</p>
-        <p class="boot-linha">[OK] REDE COMUNICADOR-T: 5 CANAIS ATIVOS</p>
-        <p class="boot-linha boot-destaque">>> SISTEMA CENTRAL ONLINE. ENTRANDO NA SALA DE COMANDO...</p>
+        <p class="boot-linha">[OK] Sistemas da Torre conectados</p>
+        <p class="boot-linha">[OK] Monitoramento de Jump City ativo</p>
+        <p class="boot-linha">[OK] Rede dos Comunicadores T sincronizada</p>
+        <p class="boot-linha boot-destaque">>> Carregando central de missões...</p>
       </div>
       <div class="boot-barra-progresso">
         <div class="boot-progresso-fill"></div>
       </div>
-      <button type="button" id="btn-pular-boot" class="btn-pular-boot">ACESSAR TELÃO DIRETO ❯</button>
+      <button type="button" id="btn-pular-boot" class="btn-pular-boot">Acessar telão ❯</button>
     </div>
-  </div>
-
-  <!-- Camada Holográfica de Fundo: Mira Tática do Radar Jump City -->
-  <div class="radar-overlay" aria-hidden="true">
-    <div class="mira-circulo-externo"></div>
-    <div class="mira-circulo-interno"></div>
-    <div class="mira-eixo-x"></div>
-    <div class="mira-eixo-y"></div>
-    <div class="scanlines"></div>
   </div>
 
   <!-- Região Viva de Acessibilidade (Obrigatória, invisível) -->
@@ -48,7 +39,7 @@
 
   <!-- Botões Flutuantes — canto superior esquerdo -->
   <div class="hud-botoes-flutuantes">
-    <button type="button" id="btn-alerta-emergencia" class="btn-alerta-emergencia tem-urgencia" title="Alternar Estado de Emergência (Alerta dos Titãs)">
+    <button type="button" id="btn-alerta-emergencia" class="btn-alerta-emergencia tem-urgencia" title="Alternar Estado de Emergência">
       <span class="alerta-ponto-pulso" aria-hidden="true"></span>
       <span class="texto-alerta-btn">ALERTA DOS TITÃS</span>
     </button>
@@ -64,20 +55,18 @@
     </button>
   </div>
 
-
   <!-- Notificação de Aniversário (aparece como evento do sistema) -->
-
   <div id="evento-aniversario" class="evento-aniversario" aria-live="polite" hidden>
-    <span class="evento-icone">◈</span>
+    <span class="evento-icone">🎉</span>
     <div class="evento-texto">
-      <span class="evento-label">CALENDÁRIO SOCIAL // EVENTO DETECTADO</span>
-      <strong class="evento-nome" id="evento-aniversario-nome">ANIVERSÁRIO DA ESTELAR — HOJE</strong>
+      <span class="evento-label">Aniversário</span>
+      <strong class="evento-nome" id="evento-aniversario-nome">Aniversário da Estelar — Hoje</strong>
     </div>
     <button type="button" id="btn-fechar-evento" class="btn-fechar-evento" aria-label="Fechar notificação">✕</button>
   </div>
 
-  <!-- Roster de Operativos — canto direito fixo (Ícones soltos, sem círculo) -->
-  <nav class="painel-operativos" aria-label="Filtrar por operativo">
+  <!-- Roster dos Titãs — canto direito fixo (Ícones soltos sobre a tela) -->
+  <nav class="painel-operativos" aria-label="Filtrar por herói">
     <div class="roster-lista">
       <button type="button" class="btn-roster btn-roster-todos ativo" data-heroi="" title="Todos os Titãs">
         <span class="roster-label-all">TODOS</span>
@@ -100,141 +89,54 @@
     </div>
   </nav>
 
-  <!-- RADAR: Sala de Comando Central -->
+  <!-- Sala de Comando Central -->
   <main class="radar-sala" id="radar-sala">
 
-    <!-- Torre no centro do radar: Silhueta Holográfica e Linhas de Convergência -->
-    <div class="torre-central" aria-hidden="true">
-      <div class="torre-pulso-anel anel-3"></div>
-      <div class="torre-pulso-anel anel-2"></div>
-      <div class="torre-pulso-anel anel-1"></div>
-
-      <!-- Linhas de radar convergindo para a Torre dos Titãs -->
-      <svg class="torre-linhas-convergencia" viewBox="0 0 600 600" aria-hidden="true">
-        <line x1="300" y1="300" x2="30" y2="60" class="linha-setor" />
-        <line x1="300" y1="300" x2="570" y2="60" class="linha-setor" />
-        <line x1="300" y1="300" x2="60" y2="540" class="linha-setor" />
-        <line x1="300" y1="300" x2="540" y2="540" class="linha-setor" />
-        <circle cx="300" cy="300" r="180" class="circulo-convergencia" />
-        <circle cx="300" cy="300" r="260" class="circulo-convergencia-externo" />
-      </svg>
-
-      <!-- Silhueta Holográfica Vetorial da Torre dos Titãs (em 'T') -->
-      <div class="torre-holograma-svg">
-        <svg viewBox="0 0 160 190" class="svg-torre-silhueta" aria-hidden="true">
-          <!-- Ilha / Base da Torre -->
-          <polygon points="20,185 140,185 130,170 30,170" class="torre-ilha" />
-          <!-- Corpo Central Vertical -->
-          <polygon points="65,170 95,170 92,60 68,60" class="torre-coluna" />
-          <line x1="80" y1="60" x2="80" y2="170" class="torre-linha-estrutural" />
-          <line x1="70" y1="90" x2="90" y2="90" class="torre-linha-estrutural" />
-          <line x1="68" y1="120" x2="92" y2="120" class="torre-linha-estrutural" />
-          <line x1="66" y1="145" x2="94" y2="145" class="torre-linha-estrutural" />
-          <!-- Braços Superiores do 'T' (Asas da Torre) -->
-          <polygon points="10,60 150,60 155,20 5,20" class="torre-asas-t" />
-          <!-- Janelas Panorâmicas da Sala de Comando Central -->
-          <rect x="18" y="28" width="124" height="12" rx="2" class="torre-janelas" />
-          <line x1="45" y1="28" x2="45" y2="40" class="torre-janela-divisoria" />
-          <line x1="80" y1="28" x2="80" y2="40" class="torre-janela-divisoria" />
-          <line x1="115" y1="28" x2="115" y2="40" class="torre-janela-divisoria" />
-          <!-- Antena / Transmissor de Satélite no Topo -->
-          <line x1="80" y1="20" x2="80" y2="4" class="torre-antena" />
-          <circle cx="80" cy="4" r="3" class="torre-beacon-topo" />
-        </svg>
-      </div>
-
-      <div class="torre-nucleo">
-        <img src="img/comunicador-t.png" alt="" class="torre-emblema">
-        <span class="torre-label">TCS // JUMP CITY COMMAND</span>
-      </div>
-    </div>
-
-    <!-- Quadro de Missões: 4 Zonas Operacionais -->
+    <!-- Quadro de Missões: 4 Zonas -->
     <section aria-labelledby="quadro-heading" data-quadro class="zonas-operacionais">
       <h2 id="quadro-heading" class="sr-only">Central de Missões — Computador dos Jovens Titãs</h2>
 
-      <!-- ZONA 1: SINAIS NO RADAR (A FAZER) — 22% -->
+      <!-- ZONA 1: A FAZER -->
       <section aria-labelledby="zona-radar-heading" class="zona-operacional zona-radar">
         <div class="zona-marcador">
           <span class="zona-dot dot-radar" aria-hidden="true"></span>
-          <h3 id="zona-radar-heading" class="zona-titulo">SINAL<br>DETECTADO</h3>
-          <span class="zona-meta">// A FAZER</span>
+          <h3 id="zona-radar-heading" class="zona-titulo">A Fazer</h3>
         </div>
         <ul data-lista-status="a-fazer" class="lista-zona"></ul>
       </section>
 
-      <!-- ZONA 2: EM OPERAÇÃO ATIVA (EM ANDAMENTO) — 30% -->
+      <!-- ZONA 2: EM ANDAMENTO -->
       <section aria-labelledby="zona-operacao-heading" class="zona-operacional zona-operacao">
         <div class="zona-marcador">
           <span class="zona-dot dot-operacao" aria-hidden="true"></span>
-          <h3 id="zona-operacao-heading" class="zona-titulo">EM<br>OPERAÇÃO</h3>
-          <span class="zona-meta">// ATIVA</span>
+          <h3 id="zona-operacao-heading" class="zona-titulo">Em Andamento</h3>
         </div>
         <ul data-lista-status="em-andamento" class="lista-zona"></ul>
       </section>
 
-      <!-- ZONA 3: EM ANÁLISE / SCANNER (EM REVISÃO) — 25% -->
+      <!-- ZONA 3: EM REVISÃO -->
       <section aria-labelledby="zona-analise-heading" class="zona-operacional zona-analise">
         <div class="zona-marcador">
           <span class="zona-dot dot-analise" aria-hidden="true"></span>
-          <h3 id="zona-analise-heading" class="zona-titulo">EM<br>ANÁLISE</h3>
-          <span class="zona-meta">// SCANNER</span>
+          <h3 id="zona-analise-heading" class="zona-titulo">Em Revisão</h3>
         </div>
         <ul data-lista-status="em-revisao" class="lista-zona"></ul>
       </section>
 
-      <!-- ZONA 4: ARQUIVO (CONCLUÍDA) — 23% -->
+      <!-- ZONA 4: CONCLUÍDAS -->
       <section aria-labelledby="zona-arquivo-heading" class="zona-operacional zona-arquivo">
         <div class="zona-marcador">
           <span class="zona-dot dot-arquivo" aria-hidden="true"></span>
-          <h3 id="zona-arquivo-heading" class="zona-titulo">ARQUIVO<br>TÁTICO</h3>
-          <span class="zona-meta">// CONCLUÍDO</span>
+          <h3 id="zona-arquivo-heading" class="zona-titulo">Concluídas</h3>
         </div>
         <ul data-lista-status="concluida" class="lista-zona"></ul>
       </section>
 
     </section>
 
-    <!-- Telemetria Inferior do Radar (Preenche o espaço inferior com estética de radar autêntica) -->
-    <footer class="radar-telemetria-deck" aria-label="Monitoramento Geotático de Jump City">
-      <div class="deck-bloco deck-setor">
-        <div class="deck-dados-linha">
-          <span class="deck-destaque">JUMP CITY // SECTOR 04 — BAY HARBOR</span>
-          <span class="deck-coordenadas">LAT 37°48'12"N • LONG 122°24'38"W • AZM 284°</span>
-        </div>
-      </div>
-
-      <div class="deck-bloco deck-espectro">
-        <div class="deck-onda-frequencia" aria-hidden="true">
-          <svg viewBox="0 0 240 24" class="svg-onda" preserveAspectRatio="none">
-            <polyline points="0,12 30,12 40,3 50,21 60,12 110,12 120,5 130,19 140,12 190,12 200,2 210,22 220,12 240,12" fill="none" stroke="rgba(0, 212, 255, 0.6)" stroke-width="1.5" />
-          </svg>
-          <div class="deck-varredura-feixe"></div>
-        </div>
-        <div class="deck-dados-frequencia">
-          <span>FREQUÊNCIA: 9.4 GHz</span>
-          <span class="deck-separador">|</span>
-          <span>SATELLITE BEACON: T-SAT 1 (SYNCHRONIZED)</span>
-        </div>
-      </div>
-
-      <div class="deck-bloco deck-malha-sensores">
-        <span class="deck-rotulo">MALHA DE SENSORES URBANOS</span>
-        <div class="deck-sensores-grid">
-          <span class="sensor-chip ativo" title="Sensor da Torre dos Titãs">TORRE [LOCK]</span>
-          <span class="sensor-chip ativo" title="Sensor da Ponte de Jump City">PONTE [ATIVO]</span>
-          <span class="sensor-chip" title="Sensor do Distrito da H.I.V.E.">H.I.V.E. [SCAN]</span>
-          <span class="sensor-chip" title="Sensor do Porto Municipal">PORTO [VIGIA]</span>
-        </div>
-      </div>
-    </footer>
-
-    <!-- Feedback de Scan (aparece ao filtrar) -->
-    <div id="scan-feedback" class="scan-feedback" aria-live="off"></div>
-
   </main>
 
-  <!-- Modal 1: Comunicador T — Terminal de Busca Tática -->
+  <!-- Modal 1: Comunicador T (Filtros e Busca) -->
   <div id="modal-filtros-overlay" class="modal-overlay" aria-hidden="true">
     <div id="modal-filtros" class="terminal-comunicador" role="dialog" aria-modal="true" aria-labelledby="busca-filtros-heading">
 
@@ -242,114 +144,107 @@
         <div class="terminal-id-bloco">
           <img src="img/comunicador-t.png" alt="" class="terminal-icone-t">
           <div class="terminal-id-texto">
-            <span class="terminal-subtitulo">COMUNICADOR T // CENTRAL</span>
-            <h2 id="busca-filtros-heading" class="terminal-titulo">TERMINAL DE BUSCA</h2>
+            <span class="terminal-subtitulo">Comunicador T</span>
+            <h2 id="busca-filtros-heading" class="terminal-titulo">Filtrar Missões</h2>
           </div>
         </div>
-        <button type="button" id="btn-fechar-modal" class="btn-fechar-modal" aria-label="Fechar terminal">✕</button>
+        <button type="button" id="btn-fechar-modal" class="btn-fechar-modal" aria-label="Fechar filtros">✕</button>
       </div>
 
       <form class="terminal-form">
 
         <!-- Busca -->
         <div class="terminal-campo-busca">
-          <span class="campo-icone" aria-hidden="true">⌕</span>
+          <span class="campo-icone" aria-hidden="true">🔍</span>
           <input type="search" id="busca-titulo" name="busca-titulo"
                  class="terminal-input"
-                 placeholder="LOCALIZAR OPERAÇÃO..."
+                 placeholder="Buscar por missão ou herói..."
                  autocomplete="off">
         </div>
 
-        <!-- Canais de Operação (Status) -->
+        <!-- Status -->
         <fieldset class="terminal-grupo">
-          <legend class="terminal-grupo-titulo">CANAL DE OPERAÇÃO</legend>
+          <legend class="terminal-grupo-titulo">Status da Missão</legend>
           <div class="terminal-opcoes">
-            <label class="canal-btn"><input type="radio" name="status" value="todos" checked><span>◉ TODOS</span></label>
-            <label class="canal-btn"><input type="radio" name="status" value="a-fazer"><span>● RADAR</span></label>
-            <label class="canal-btn"><input type="radio" name="status" value="em-andamento"><span>◉ OPERAÇÃO</span></label>
-            <label class="canal-btn"><input type="radio" name="status" value="em-revisao"><span>◉ ANÁLISE</span></label>
-            <label class="canal-btn"><input type="radio" name="status" value="concluida"><span>✓ ARQUIVO</span></label>
+            <label class="canal-btn"><input type="radio" name="status" value="todos" checked><span>Todos</span></label>
+            <label class="canal-btn"><input type="radio" name="status" value="a-fazer"><span>A Fazer</span></label>
+            <label class="canal-btn"><input type="radio" name="status" value="em-andamento"><span>Em Andamento</span></label>
+            <label class="canal-btn"><input type="radio" name="status" value="em-revisao"><span>Em Revisão</span></label>
+            <label class="canal-btn"><input type="radio" name="status" value="concluida"><span>Concluídas</span></label>
           </div>
         </fieldset>
 
-        <!-- Nível de Ameaça (Prioridade) -->
+        <!-- Prioridade -->
         <fieldset class="terminal-grupo">
-          <legend class="terminal-grupo-titulo">NÍVEL DE AMEAÇA</legend>
+          <legend class="terminal-grupo-titulo">Prioridade</legend>
           <div class="terminal-opcoes">
-            <label class="canal-btn"><input type="radio" name="prioridade" value="todas" checked><span>○ TODAS</span></label>
-            <label class="canal-btn"><input type="radio" name="prioridade" value="baixa"><span>○ NORMAL</span></label>
-            <label class="canal-btn"><input type="radio" name="prioridade" value="media"><span>○ ATENÇÃO</span></label>
-            <label class="canal-btn"><input type="radio" name="prioridade" value="alta"><span>○ CRÍTICO</span></label>
+            <label class="canal-btn"><input type="radio" name="prioridade" value="todas" checked><span>Todas</span></label>
+            <label class="canal-btn"><input type="radio" name="prioridade" value="baixa"><span>Baixa</span></label>
+            <label class="canal-btn"><input type="radio" name="prioridade" value="media"><span>Média</span></label>
+            <label class="canal-btn"><input type="radio" name="prioridade" value="alta"><span>Urgente</span></label>
           </div>
         </fieldset>
 
-        <!-- Parâmetro de Varredura (Ordenação) -->
+        <!-- Ordenação -->
         <div class="terminal-grupo terminal-ordenacao">
-          <span class="terminal-grupo-titulo">PARÂMETRO DE VARREDURA</span>
+          <label for="ordenacao" class="terminal-grupo-titulo">Ordenar por prazo</label>
           <select id="ordenacao" name="ordenacao" class="terminal-select">
-            <option value="prazo-asc">PRAZO ↑ PRÓXIMO PRIMEIRO</option>
-            <option value="prazo-desc">PRAZO ↓ DISTANTE PRIMEIRO</option>
+            <option value="prazo-asc">Prazo mais próximo</option>
+            <option value="prazo-desc">Prazo mais distante</option>
           </select>
         </div>
 
         <!-- Ações -->
         <div class="terminal-acoes">
-          <button type="button" id="btn-limpar-filtros" class="terminal-btn-limpar">RESETAR</button>
-          <button type="button" id="btn-iniciar-varredura" class="terminal-btn-scan">INICIAR VARREDURA ❯</button>
+          <button type="button" id="btn-limpar-filtros" class="terminal-btn-limpar">Limpar filtros</button>
+          <button type="button" id="btn-iniciar-varredura" class="terminal-btn-scan">Aplicar filtros</button>
         </div>
 
       </form>
     </div>
   </div>
 
-
-
-
-  <!-- Modal 2: Dossiê Holográfico da Missão (Ao Clicar no Card) -->
+  <!-- Modal 2: Dossiê da Missão (Ao Clicar no Card) -->
   <div id="modal-dossie-overlay" class="modal-overlay" aria-hidden="true">
     <div id="modal-dossie" class="modal-conteudo modal-dossie-zoom" role="dialog" aria-modal="true" aria-labelledby="dossie-titulo">
       <div class="modal-cabecalho">
         <div class="modal-titulo-box">
-          <span class="dossie-stamp" id="dossie-codigo">#OP-TITANS</span>
+          <span class="dossie-stamp" id="dossie-codigo">Missão</span>
           <div>
-            <span class="subtitulo-popup">ARQUIVO TÁTICO DA MISSÃO</span>
+            <span class="subtitulo-popup">Detalhes da Missão</span>
             <h2 id="dossie-titulo">Título da Missão</h2>
           </div>
         </div>
-        <button type="button" id="btn-fechar-dossie" class="btn-fechar-modal" aria-label="Fechar dossiê da missão">✕</button>
+        <button type="button" id="btn-fechar-dossie" class="btn-fechar-modal" aria-label="Fechar detalhes da missão">✕</button>
       </div>
 
       <div class="dossie-corpo">
         <div class="dossie-hero-bloco">
           <img id="dossie-avatar" src="img/robin.png" alt="" class="dossie-avatar-grande">
           <div class="dossie-hero-dados">
-            <span class="dossie-label">OPERATIVO RESPONSÁVEL</span>
+            <span class="dossie-label">Responsável</span>
             <strong class="dossie-nome-heroi" id="dossie-heroi">Robin</strong>
-            <span class="dossie-status-tag" id="dossie-status-tag">EM OPERAÇÃO ATIVA</span>
+            <span class="dossie-status-tag" id="dossie-status-tag">Em Andamento</span>
           </div>
         </div>
 
         <div class="dossie-detalhes-grid">
           <div class="dossie-info-box">
-            <span class="dossie-label">CÓDIGO DE OPERAÇÃO</span>
+            <span class="dossie-label">Projeto / Local</span>
             <span class="dossie-dado" id="dossie-projeto">Torre dos Titãs</span>
           </div>
           <div class="dossie-info-box">
-            <span class="dossie-label">PRIORIDADE TÁTICA</span>
-            <span class="dossie-dado" id="dossie-prioridade">URGENTE</span>
+            <span class="dossie-label">Prioridade</span>
+            <span class="dossie-dado" id="dossie-prioridade">Urgente</span>
           </div>
           <div class="dossie-info-box">
-            <span class="dossie-label">PRAZO LIMITE</span>
+            <span class="dossie-label">Prazo de Entrega</span>
             <span class="dossie-dado" id="dossie-prazo">25/09/2026</span>
-          </div>
-          <div class="dossie-info-box">
-            <span class="dossie-label">CANAL DE COMUNICAÇÃO</span>
-            <span class="dossie-dado text-cyan">CRIPTOGRAFIA NÍVEL 5</span>
           </div>
         </div>
 
         <div class="dossie-botoes-acao">
-          <button type="button" id="btn-fechar-dossie-secundario" class="btn-limpar">Fechar Arquivo</button>
+          <button type="button" id="btn-fechar-dossie-secundario" class="btn-limpar">Fechar</button>
         </div>
       </div>
     </div>

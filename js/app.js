@@ -136,24 +136,6 @@ function instalarControles() {
     });
   }
 
-  // ── Scan Feedback ────────────────────────────────────────────────────────
-  let scanTimer = null;
-
-  function mostrarScan(totalVisiveis) {
-    const el = document.getElementById("scan-feedback");
-    if (!el) return;
-    clearTimeout(scanTimer);
-    el.textContent = "SCANNING...";
-    el.classList.add("visivel");
-    tocarScanBeep();
-    scanTimer = setTimeout(() => {
-      el.textContent = totalVisiveis === 0
-        ? "NENHUM SINAL ENCONTRADO"
-        : `${totalVisiveis} OCORRÊNCIA${totalVisiveis > 1 ? "S" : ""} IDENTIFICADA${totalVisiveis > 1 ? "S" : ""}`;
-      setTimeout(() => el.classList.remove("visivel"), 2000);
-    }, 600);
-  }
-
   // ── Modal do Comunicador T ───────────────────────────────────────────────
 
   const btnComunicador = document.getElementById("btn-comunicador");
@@ -195,18 +177,11 @@ function instalarControles() {
     });
   }
 
-  // Botão INICIAR VARREDURA: fecha modal e dispara scan visual
+  // Botão Aplicar filtros: fecha o modal
   const btnVarredura = document.getElementById("btn-iniciar-varredura");
   if (btnVarredura) {
     btnVarredura.addEventListener("click", () => {
       alternarModalFiltros(false);
-      const visiveis = estado.tarefas.filter(t => {
-        const buscaOk = !estado.busca || t.titulo.toLowerCase().includes(estado.busca.toLowerCase()) || (t.responsavel || "").toLowerCase().includes(estado.busca.toLowerCase()) || (t.projeto || "").toLowerCase().includes(estado.busca.toLowerCase());
-        const statusOk = estado.status === "todos" || t.status === estado.status;
-        const prioridadeOk = estado.prioridade === "todas" || t.prioridade === estado.prioridade;
-        return buscaOk && statusOk && prioridadeOk;
-      }).length;
-      setTimeout(() => mostrarScan(visiveis), 250);
     });
   }
 
@@ -228,19 +203,25 @@ function instalarControles() {
     const elPrazo = document.getElementById("dossie-prazo");
 
     const statusFormatado = {
-      "a-fazer": "SINAIS NO RADAR // A FAZER",
-      "em-andamento": "EM OPERAÇÃO ATIVA",
-      "em-revisao": "EM ANÁLISE // SCANNER",
-      "concluida": "ARQUIVO DE MISSÕES // CONCLUÍDO"
+      "a-fazer": "A Fazer",
+      "em-andamento": "Em Andamento",
+      "em-revisao": "Em Revisão",
+      "concluida": "Concluída"
     }[tarefa.status] || tarefa.status;
 
-    if (elCodigo) elCodigo.textContent = tarefa.projeto ? `#OP-${tarefa.projeto.toUpperCase().replace(/\s+/g, "-")}` : `#T-00${tarefa.id}`;
+    const prioridadeFormatada = {
+      "alta": "Urgente",
+      "media": "Média",
+      "baixa": "Baixa"
+    }[tarefa.prioridade] || tarefa.prioridade;
+
+    if (elCodigo) elCodigo.textContent = "Missão";
     if (elTitulo) elTitulo.textContent = tarefa.titulo;
     if (elAvatar) elAvatar.src = tarefa.avatar || "img/robin.png";
-    if (elHeroi) elHeroi.textContent = tarefa.responsavel || "Titã Não Identificado";
+    if (elHeroi) elHeroi.textContent = tarefa.responsavel || "Não atribuído";
     if (elStatus) elStatus.textContent = statusFormatado;
     if (elProjeto) elProjeto.textContent = tarefa.projeto || "Torre dos Titãs";
-    if (elPrioridade) elPrioridade.textContent = (tarefa.prioridade || "MÉDIA").toUpperCase();
+    if (elPrioridade) elPrioridade.textContent = prioridadeFormatada;
     if (elPrazo) elPrazo.textContent = tarefa.prazo;
 
     modalDossieOverlay.classList.add("ativo");
@@ -284,14 +265,6 @@ function instalarControles() {
 
       estado.busca = heroi;
       if (buscaInput) buscaInput.value = heroi;
-
-      if (falaCiborgue) {
-        if (!heroi) {
-          falaCiborgue.textContent = `"Exibindo todas as operações táticas da Torre."`;
-        } else {
-          falaCiborgue.textContent = `"Isolando ocorrências do operativo ${heroi} no radar."`;
-        }
-      }
 
       renderizarAplicacao(estado);
     });
@@ -387,62 +360,6 @@ function instalarControles() {
             abrirDossie(tarefa);
           }
         }
-      }
-    });
-
-    // 12. Microinteração Tática nos Cards (Hover Scanner Sequencial — Item 5)
-    let hoverTimer1 = null;
-    let hoverTimer2 = null;
-
-    quadro.addEventListener("mouseover", (evento) => {
-      if (!(evento.target instanceof Element)) return;
-      const cartao = evento.target.closest("[data-tarefa-id]");
-      if (!cartao || !quadro.contains(cartao) || cartao.dataset.hoverAtivo === "true") return;
-
-      cartao.dataset.hoverAtivo = "true";
-      const textoFeedback = cartao.querySelector(".scan-feedback-texto");
-
-      if (textoFeedback) {
-        // Passo 1: SCANNING BIO-SIG...
-        textoFeedback.textContent = "SCANNING BIO-SIG...";
-        textoFeedback.className = "scan-feedback-texto scan-ativo";
-        tocarBeep(1200, 0.04, "sine", 0.03);
-
-        // Passo 2 (220ms): IDENTITY VERIFIED
-        hoverTimer1 = setTimeout(() => {
-          if (cartao.dataset.hoverAtivo === "true") {
-            textoFeedback.textContent = "IDENTITY VERIFIED";
-            textoFeedback.className = "scan-feedback-texto scan-verificado";
-            tocarBeep(1600, 0.03, "sine", 0.03);
-          }
-        }, 220);
-
-        // Passo 3 (500ms): ACCESSING DOSSIER...
-        hoverTimer2 = setTimeout(() => {
-          if (cartao.dataset.hoverAtivo === "true") {
-            textoFeedback.textContent = "ACCESSING DOSSIER...";
-            textoFeedback.className = "scan-feedback-texto scan-dossie";
-            tocarBeep(2000, 0.04, "sine", 0.04);
-          }
-        }, 500);
-      }
-    });
-
-    quadro.addEventListener("mouseout", (evento) => {
-      if (!(evento.target instanceof Element)) return;
-      const cartao = evento.target.closest("[data-tarefa-id]");
-      if (!cartao) return;
-
-      const related = evento.relatedTarget;
-      if (related instanceof Node && cartao.contains(related)) return;
-
-      cartao.dataset.hoverAtivo = "false";
-      clearTimeout(hoverTimer1);
-      clearTimeout(hoverTimer2);
-      const textoFeedback = cartao.querySelector(".scan-feedback-texto");
-      if (textoFeedback) {
-        textoFeedback.textContent = "BIO-SCAN STANDBY";
-        textoFeedback.className = "scan-feedback-texto";
       }
     });
   }
