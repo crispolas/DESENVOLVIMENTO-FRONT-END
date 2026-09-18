@@ -46,20 +46,11 @@
   <!-- Região Viva de Acessibilidade (Obrigatória, invisível) -->
   <div id="status" class="sr-only" role="status" aria-live="polite"></div>
 
-  <!-- Transmissão de Rádio (canto inferior esquerdo) -->
-  <div class="hud-radio-flutuante" aria-live="off">
-    <span class="beacon-pulso" aria-hidden="true"></span>
-    <div class="hud-radio-texto">
-      <span class="operador-tag" id="hud-operador-tag">⚡ CIBORGUE:</span>
-      <span class="operador-fala" id="hud-fala-ciborgue">"Varredura completa. 8 missões ativas no radar!"</span>
-    </div>
-  </div>
-
   <!-- Botões Flutuantes — canto superior esquerdo -->
   <div class="hud-botoes-flutuantes">
-    <button type="button" id="btn-alerta-emergencia" class="btn-alerta-emergencia tem-urgencia" title="Alternar Estado de Emergência (Alerta Titãs)">
+    <button type="button" id="btn-alerta-emergencia" class="btn-alerta-emergencia tem-urgencia" title="Alternar Estado de Emergência (Alerta dos Titãs)">
       <span class="alerta-ponto-pulso" aria-hidden="true"></span>
-      <span class="texto-alerta-btn">TITANS ALERT // <span id="alerta-contador-criticas">03</span></span>
+      <span class="texto-alerta-btn">ALERTA DOS TITÃS</span>
     </button>
 
     <button type="button"
@@ -85,9 +76,8 @@
     <button type="button" id="btn-fechar-evento" class="btn-fechar-evento" aria-label="Fechar notificação">✕</button>
   </div>
 
-  <!-- Roster de Operativos — canto direito fixo -->
+  <!-- Roster de Operativos — canto direito fixo (Ícones soltos, sem círculo) -->
   <nav class="painel-operativos" aria-label="Filtrar por operativo">
-    <div class="operativos-titulo">OPERATIVOS</div>
     <div class="roster-lista">
       <button type="button" class="btn-roster btn-roster-todos ativo" data-heroi="" title="Todos os Titãs">
         <span class="roster-label-all">TODOS</span>
@@ -208,10 +198,6 @@
     <!-- Telemetria Inferior do Radar (Preenche o espaço inferior com estética de radar autêntica) -->
     <footer class="radar-telemetria-deck" aria-label="Monitoramento Geotático de Jump City">
       <div class="deck-bloco deck-setor">
-        <div class="deck-tag-radar">
-          <span class="deck-dot-pulso" aria-hidden="true"></span>
-          <span class="deck-rotulo">SURVEILLANCE RADAR // ONLINE</span>
-        </div>
         <div class="deck-dados-linha">
           <span class="deck-destaque">JUMP CITY // SECTOR 04 — BAY HARBOR</span>
           <span class="deck-coordenadas">LAT 37°48'12"N • LONG 122°24'38"W • AZM 284°</span>

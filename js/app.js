@@ -103,32 +103,10 @@ function instalarControles() {
       nomeEl.textContent = `ANIVERSÁRIO D${aniversariante.nome === "Estelar" ? "A" : "O"} ${aniversariante.nome.toUpperCase()} — HOJE`;
       divEvento.removeAttribute("hidden");
       divEvento.style.display = "flex";
+      tocarBeep(523, 0.15, "sine", 0.18);
+      setTimeout(() => tocarBeep(659, 0.15, "sine", 0.16), 180);
+      setTimeout(() => tocarBeep(784, 0.2, "sine", 0.18), 360);
     }
-
-    const fala = document.getElementById("hud-fala-ciborgue");
-    const tag  = document.getElementById("hud-operador-tag");
-
-    // Sequência especial no canto inferior:
-    // Passo 1: SOCIAL EVENT DETECTED
-    if (tag) tag.textContent = "🎂 SISTEMA:";
-    if (fala) fala.textContent = `"SOCIAL EVENT DETECTED // CALENDÁRIO ATIVO"`;
-    tocarBeep(523, 0.12, "sine", 0.18);
-
-    // Passo 2: HAPPY BIRTHDAY, STARFIRE
-    setTimeout(() => {
-      if (tag) tag.textContent = "✨ EVENTO:";
-      const nomeEn = aniversariante.nome === "Estelar" ? "STARFIRE" : aniversariante.nome.toUpperCase();
-      if (fala) fala.textContent = `"HAPPY BIRTHDAY, ${nomeEn}! 🎉"`;
-      tocarBeep(659, 0.15, "sine", 0.16);
-      setTimeout(() => tocarBeep(784, 0.2, "sine", 0.18), 160);
-    }, 1800);
-
-    // Passo 3: Mensagem afetuosa do Ciborgue
-    setTimeout(() => {
-      if (tag) tag.textContent = "🎂 CIBORGUE:";
-      if (fala) fala.textContent = `"PARABÉNS, ${aniversariante.nome.toUpperCase()}! A Torre toda está feliz com você!"`;
-      tocarBeep(880, 0.18, "sine", 0.15);
-    }, 4200);
 
     // Botão de fechar notificação
     const btnFecharEvento = document.getElementById("btn-fechar-evento");
@@ -139,32 +117,20 @@ function instalarControles() {
     }
   }
 
-  // 2. Indicador do Sistema / Modo de Emergência (TITANS ALERT // XX)
+  // 2. Indicador do Sistema / Modo de Emergência (ALERTA DOS TITÃS)
   const btnAlertaEmergencia = document.getElementById("btn-alerta-emergencia");
-  const operadorTag = document.getElementById("hud-operador-tag");
-  const falaCiborgue = document.getElementById("hud-fala-ciborgue");
 
   if (btnAlertaEmergencia) {
     btnAlertaEmergencia.addEventListener("click", () => {
       const estaAtivo = document.body.classList.toggle("alerta-emergencia-ativo");
       const textoBtn = btnAlertaEmergencia.querySelector(".texto-alerta-btn");
-      const totalUrgentes = (estado.tarefas || []).filter(t => t.prioridade === "alta").length;
-      const qtdStr = String(totalUrgentes).padStart(2, "0");
 
       if (estaAtivo) {
-        if (operadorTag) operadorTag.textContent = "🚨 ROBIN:";
-        if (falaCiborgue) {
-          falaCiborgue.textContent = `"ALERTA VERMELHO! Ocorrência crítica em Jump City! Todos os Titãs aos seus postos!"`;
-        }
-        if (textoBtn) textoBtn.innerHTML = `CANCELAR ALERTA // <span id="alerta-contador-criticas">${qtdStr}</span>`;
+        if (textoBtn) textoBtn.textContent = "CANCELAR ALERTA";
         tocarBeep(220, 0.2, "sawtooth", 0.2);
         setTimeout(() => tocarBeep(180, 0.25, "sawtooth", 0.2), 220);
       } else {
-        if (operadorTag) operadorTag.textContent = "⚡ CIBORGUE:";
-        if (falaCiborgue) {
-          falaCiborgue.textContent = `"SISTEMA ESTABILIZADO. A Torre está segura e sob controle."`;
-        }
-        if (textoBtn) textoBtn.innerHTML = `TITANS ALERT // <span id="alerta-contador-criticas">${qtdStr}</span>`;
+        if (textoBtn) textoBtn.textContent = "ALERTA DOS TITÃS";
         tocarBeep(440, 0.1, "sine", 0.12);
       }
     });
@@ -391,10 +357,6 @@ function instalarControles() {
       botoesRoster.forEach((b) => {
         b.classList.toggle("ativo", b.classList.contains("btn-roster-todos"));
       });
-
-      if (falaCiborgue) {
-        falaCiborgue.textContent = `"Filtros resetados. 8 missões ativas na varredura."`;
-      }
 
       renderizarAplicacao(estado);
     });

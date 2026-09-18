@@ -15,23 +15,13 @@ import { selecionarTarefas } from "./estado.js";
  */
 export function renderizarResumo(totalVisiveis, totalGeral) {
   const statusEl = document.getElementById("status");
-  const falaCiborgueEl = document.getElementById("hud-fala-ciborgue");
 
   if (totalGeral === 0) {
     if (statusEl) statusEl.textContent = "Nenhuma tarefa foi cadastrada.";
-    if (falaCiborgueEl) falaCiborgueEl.textContent = `"Nenhuma missão registrada no sistema."`;
   } else if (totalVisiveis === 0) {
     if (statusEl) statusEl.textContent = "Nenhuma tarefa encontrada. Altere ou limpe os critérios de filtro.";
-    if (falaCiborgueEl) falaCiborgueEl.textContent = `"Nenhum sinal encontrado com esses parâmetros. Tente limpar os filtros!"`;
   } else {
     if (statusEl) statusEl.textContent = `${totalVisiveis} de ${totalGeral} tarefas exibidas.`;
-    if (falaCiborgueEl) {
-      if (totalVisiveis === totalGeral) {
-        falaCiborgueEl.textContent = `"Varredura completa. ${totalVisiveis} missões ativas no radar!"`;
-      } else {
-        falaCiborgueEl.textContent = `"Filtro tático aplicado: ${totalVisiveis} de ${totalGeral} missões isoladas."`;
-      }
-    }
   }
 }
 
@@ -47,14 +37,10 @@ export function renderizarAplicacao(estado) {
   renderizarTarefas(visiveis);
   renderizarResumo(visiveis.length, estado.tarefas.length);
 
-  // Atualiza indicador TITANS ALERT com feedback real (Item 3)
-  const contadorAlertEl = document.getElementById("alerta-contador-criticas");
+  // Pulsa indicador ALERTA DOS TITÃS se houver missões urgentes ativas
   const btnAlertaEl = document.getElementById("btn-alerta-emergencia");
   const totalUrgentes = (visiveis || []).filter((t) => t.prioridade === "alta").length;
 
-  if (contadorAlertEl) {
-    contadorAlertEl.textContent = String(totalUrgentes).padStart(2, "0");
-  }
   if (btnAlertaEl) {
     btnAlertaEl.classList.toggle("tem-urgencia", totalUrgentes > 0);
   }
