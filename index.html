@@ -3,113 +3,206 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gerenciador de Tarefas Acadêmicas</title>
+  <title>Torre dos Titãs // Computador Central</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,600&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=Teko:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="hud-body">
 
-  <header>
-    <h1>Gerenciador de Tarefas Acadêmicas</h1>
+  <!-- Camada Holográfica de Fundo: Mira Tática do Radar Jump City -->
+  <div class="radar-overlay" aria-hidden="true">
+    <div class="mira-circulo-externo"></div>
+    <div class="mira-circulo-interno"></div>
+    <div class="mira-eixo-x"></div>
+    <div class="mira-eixo-y"></div>
+    <div class="scanlines"></div>
+  </div>
+
+  <!-- Barra Superior Tática do Ciborgue (HUD de Comando) -->
+  <header class="hud-top-bar">
+    <div class="hud-bloco-status">
+      <span class="beacon-pulso" aria-hidden="true"></span>
+      <div class="hud-titulos">
+        <span class="hud-terminal-id">TITANS COMMAND SYSTEM // RADAR JUMP CITY</span>
+        <span class="hud-substatus" id="hud-substatus">5 OPERATIVOS CONECTADOS • VARREDURA ATIVA</span>
+      </div>
+    </div>
+
+    <!-- Transmissão de Rádio do Ciborgue -->
+    <div class="hud-transmissao" aria-live="off">
+      <span class="operador-tag">⚡ CIBORGUE:</span>
+      <span class="operador-fala" id="hud-fala-ciborgue">"Varredura completa. 8 missões ativas no radar!"</span>
+    </div>
+
+    <!-- Controles de Acesso: Região Viva #status e Comunicador T -->
+    <div class="hud-controles-topo">
+      <div id="status" class="badge-status-missao" role="status" aria-live="polite"></div>
+
+      <button type="button" 
+              id="btn-comunicador" 
+              class="btn-comunicador-icone" 
+              aria-haspopup="dialog"
+              aria-expanded="false" 
+              aria-controls="modal-filtros-overlay" 
+              title="Acessar Comunicador T (Filtros e Busca de Missões)">
+        <img src="img/comunicador-t.png" alt="Comunicador dos Titãs" class="icone-t">
+      </button>
+    </div>
   </header>
+
+  <!-- Modal Popup de Gerenciamento (Filtros e Busca no Comunicador T) -->
+  <div id="modal-filtros-overlay" class="modal-overlay" aria-hidden="true">
+    <div id="modal-filtros" class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="busca-filtros-heading">
+      <div class="modal-cabecalho">
+        <div class="modal-titulo-box">
+          <img src="img/comunicador-t.png" alt="" class="modal-icone-t">
+          <div>
+            <span class="subtitulo-popup">COMUNICADOR T // TERMINAL TÁTICO</span>
+            <h2 id="busca-filtros-heading">Gerenciador de Missões</h2>
+          </div>
+        </div>
+        <button type="button" id="btn-fechar-modal" class="btn-fechar-modal" aria-label="Fechar terminal do comunicador">✕</button>
+      </div>
+
+      <form class="modal-form">
+        <div class="campo-busca">
+          <label for="busca-titulo">Buscar missão por título ou Titã:</label>
+          <input type="search" id="busca-titulo" name="busca-titulo" placeholder="Digite para filtrar em tempo real...">
+        </div>
+
+        <fieldset class="grupo-filtros">
+          <legend>Filtrar por setor de operação</legend>
+          <div class="opcoes-radio">
+            <label class="item-radio">
+              <input type="radio" id="status-todos" name="status" value="todos" checked>
+              <span>Todos os setores</span>
+            </label>
+            <label class="item-radio">
+              <input type="radio" id="status-a-fazer" name="status" value="a-fazer">
+              <span>🔵 Sinais no Radar</span>
+            </label>
+            <label class="item-radio">
+              <input type="radio" id="status-em-andamento" name="status" value="em-andamento">
+              <span>🟡 Em Operação</span>
+            </label>
+            <label class="item-radio">
+              <input type="radio" id="status-em-revisao" name="status" value="em-revisao">
+              <span>🟣 Em Análise</span>
+            </label>
+            <label class="item-radio">
+              <input type="radio" id="status-concluida" name="status" value="concluida">
+              <span>🟢 Arquivado</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <fieldset class="grupo-filtros">
+          <legend>Filtrar por prioridade tática</legend>
+          <div class="opcoes-radio">
+            <label class="item-radio">
+              <input type="radio" id="prioridade-todas" name="prioridade" value="todas" checked>
+              <span>Todas</span>
+            </label>
+            <label class="item-radio">
+              <input type="radio" id="prioridade-baixa" name="prioridade" value="baixa">
+              <span>Baixa</span>
+            </label>
+            <label class="item-radio">
+              <input type="radio" id="prioridade-media" name="prioridade" value="media">
+              <span>Média</span>
+            </label>
+            <label class="item-radio">
+              <input type="radio" id="prioridade-alta" name="prioridade" value="alta">
+              <span>Urgente</span>
+            </label>
+          </div>
+        </fieldset>
+
+        <div class="linha-controles-base">
+          <div class="campo-ordenacao">
+            <label for="ordenacao">Ordenar por prazo limite:</label>
+            <select id="ordenacao" name="ordenacao">
+              <option value="prazo-asc">Prazo mais próximo primeiro</option>
+              <option value="prazo-desc">Prazo mais distante primeiro</option>
+            </select>
+          </div>
+
+          <button type="button" id="btn-limpar-filtros" class="btn-limpar">Limpar filtros</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Telão Principal de Missões (Fichas Magnéticas Projetadas) -->
   <main>
-  <div id="status" role="status" aria-live="polite"></div>
-  <section aria-labelledby="busca-filtros-heading">
-  <h2 id="busca-filtros-heading">Busca e filtros</h2>
+    <section aria-labelledby="quadro-heading" data-quadro class="quadro-tatico">
+      <h2 id="quadro-heading" class="sr-only">Fichas Táticas de Missões</h2>
 
-  <form>
-    <div>
-      <label for="busca-titulo">Buscar por título da tarefa</label>
-      <input type="search" id="busca-titulo" name="busca-titulo">
-    </div>
-
-    <fieldset>
-      <legend>Filtrar por status</legend>
-      <div>
-        <input type="radio" id="status-todos" name="status" value="todos" checked>
-        <label for="status-todos">Todos</label>
-      </div>
-      <div>
-        <input type="radio" id="status-a-fazer" name="status" value="a-fazer">
-        <label for="status-a-fazer">A fazer</label>
-      </div>
-      <div>
-        <input type="radio" id="status-em-andamento" name="status" value="em-andamento">
-        <label for="status-em-andamento">Em andamento</label>
-      </div>
-      <div>
-        <input type="radio" id="status-em-revisao" name="status" value="em-revisao">
-        <label for="status-em-revisao">Em revisão</label>
-      </div>
-      <div>
-        <input type="radio" id="status-concluida" name="status" value="concluida">
-        <label for="status-concluida">Concluída</label>
-      </div>
-    </fieldset>
-
-    <fieldset>
-      <legend>Filtrar por prioridade</legend>
-      <div>
-        <input type="radio" id="prioridade-todas" name="prioridade" value="todas" checked>
-        <label for="prioridade-todas">Todas</label>
-      </div>
-      <div>
-        <input type="radio" id="prioridade-baixa" name="prioridade" value="baixa">
-        <label for="prioridade-baixa">Baixa</label>
-      </div>
-      <div>
-        <input type="radio" id="prioridade-media" name="prioridade" value="media">
-        <label for="prioridade-media">Média</label>
-      </div>
-      <div>
-        <input type="radio" id="prioridade-alta" name="prioridade" value="alta">
-        <label for="prioridade-alta">Alta</label>
-      </div>
-    </fieldset>
-
-    <div>
-      <label for="ordenacao">Ordenar por prazo</label>
-      <select id="ordenacao" name="ordenacao">
-        <option value="prazo-asc">Prazo mais próximo primeiro</option>
-        <option value="prazo-desc">Prazo mais distante primeiro</option>
-      </select>
-    </div>
-
-    <div>
-      <button type="button" id="btn-limpar-filtros">Limpar filtros</button>
-    </div>
-
-  </form>
-
-</section>
-  <section aria-labelledby="quadro-heading" data-quadro>
-      <h2 id="quadro-heading">Quadro de tarefas</h2>
-
-      <section aria-labelledby="coluna-a-fazer-heading">
-        <h3 id="coluna-a-fazer-heading">A fazer</h3>
+      <!-- Setor 1: SINAIS NO RADAR -->
+      <section aria-labelledby="coluna-a-fazer-heading" class="setor-tatico setor-radar">
+        <header class="setor-cabecalho">
+          <div class="setor-tag-box">
+            <span class="setor-dot dot-radar" aria-hidden="true"></span>
+            <h3 id="coluna-a-fazer-heading">🔵 SINAIS // RADAR</h3>
+          </div>
+          <span class="setor-meta">A FAZER</span>
+        </header>
         <ul data-lista-status="a-fazer"></ul>
       </section>
 
-      <section aria-labelledby="coluna-em-andamento-heading">
-        <h3 id="coluna-em-andamento-heading">Em andamento</h3>
+      <!-- Setor 2: EM OPERAÇÃO ATIVA -->
+      <section aria-labelledby="coluna-em-andamento-heading" class="setor-tatico setor-operacao">
+        <header class="setor-cabecalho">
+          <div class="setor-tag-box">
+            <span class="setor-dot dot-operacao" aria-hidden="true"></span>
+            <h3 id="coluna-em-andamento-heading">🟡 EM OPERAÇÃO</h3>
+          </div>
+          <span class="setor-meta">EXECUTANDO</span>
+        </header>
         <ul data-lista-status="em-andamento"></ul>
       </section>
 
-      <section aria-labelledby="coluna-em-revisao-heading">
-        <h3 id="coluna-em-revisao-heading">Em revisão</h3>
+      <!-- Setor 3: SCANNER TÁTICO / ANÁLISE -->
+      <section aria-labelledby="coluna-em-revisao-heading" class="setor-tatico setor-analise">
+        <header class="setor-cabecalho">
+          <div class="setor-tag-box">
+            <span class="setor-dot dot-analise" aria-hidden="true"></span>
+            <h3 id="coluna-em-revisao-heading">🟣 EM ANÁLISE</h3>
+          </div>
+          <span class="setor-meta">SCANNER</span>
+        </header>
         <ul data-lista-status="em-revisao"></ul>
       </section>
 
-      <section aria-labelledby="coluna-concluida-heading">
-        <h3 id="coluna-concluida-heading">Concluída</h3>
+      <!-- Setor 4: ARQUIVO DE MISSÕES CONCLUÍDAS -->
+      <section aria-labelledby="coluna-concluida-heading" class="setor-tatico setor-arquivo">
+        <header class="setor-cabecalho">
+          <div class="setor-tag-box">
+            <span class="setor-dot dot-arquivo" aria-hidden="true"></span>
+            <h3 id="coluna-concluida-heading">🟢 ARQUIVO</h3>
+          </div>
+          <span class="setor-meta">CONCLUÍDO</span>
+        </header>
         <ul data-lista-status="concluida"></ul>
       </section>
-
     </section>
-</main>
 
-  <footer>
-    <p>Gabriel — Desenvolvimento Frontend, 2026.2 - Quarta</p>
-  </footer>
+    <!-- Alerta de Evento Integrado ao Sistema (Personalidade da Torre) -->
+    <aside id="alerta-evento-social" class="hud-alerta-social" aria-label="Alerta de Calendário Social">
+      <div class="alerta-social-conteudo">
+        <span class="alerta-icone" aria-hidden="true">🎂</span>
+        <div>
+          <span class="alerta-tag">⚠ CALENDÁRIO SOCIAL // NOTIFICAÇÃO DA TORRE</span>
+          <p class="alerta-texto">HOJE É ANIVERSÁRIO DA ESTELAR!</p>
+        </div>
+      </div>
+      <button type="button" id="btn-evento-estelar" class="btn-acao-evento">
+        ⚡ Ver Missões da Estelar ❯
+      </button>
+    </aside>
+  </main>
 
   <script type="module" src="js/app.js"></script>
 </body>

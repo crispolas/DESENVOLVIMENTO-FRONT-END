@@ -2,273 +2,857 @@
   box-sizing: border-box;
 }
 
-body {
-  margin: 0;
-}
-
 :root {
-  --cor-fundo: #f5f5f7;
-  --cor-superficie: #ffffff;
+  /* Paleta Holográfica do Computador dos Titãs */
+  --cor-cyan-neon: #00d4ff;
+  --cor-cyan-glow: rgba(0, 212, 255, 0.45);
+  --cor-amarelo-titans: #eab308;
+  --cor-vermelho-alerta: #ef4444;
+  --cor-roxo-scanner: #a855f7;
+  --cor-verde-arquivo: #22c55e;
 
-  --cor-texto: #1c1c1e;
-  --cor-texto-secundario: #55555a;
-  --cor-borda: #d8d8dc;
+  --cor-fundo-cartao: rgba(13, 20, 38, 0.92);
+  --cor-borda-tech: rgba(0, 212, 255, 0.3);
 
-  --cor-status-a-fazer: #6b6b70;
-  --cor-status-em-andamento: #0a66c2;
-  --cor-status-em-revisao: #7a5700;
-  --cor-status-concluida: #1e7d32;
+  --cor-texto-claro: #f8fafc;
+  --cor-texto-mutado: #94a3b8;
+  --cor-texto-tech: #38bdf8;
+
+  --fonte-tech: 'Chakra Petch', 'Rajdhani', sans-serif;
+  --fonte-mono: 'Share Tech Mono', monospace;
+  --fonte-display: 'Teko', sans-serif;
 
   --espaco-1: 0.5rem;
   --espaco-2: 1rem;
   --espaco-3: 1.5rem;
   --espaco-4: 2rem;
-
-  --raio: 0.5rem;
 }
 
 html {
   font-size: 100%;
 }
 
-body {
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  background-color: var(--cor-fundo);
-  color: var(--cor-texto);
+body.hud-body {
+  margin: 0;
+  font-family: var(--fonte-tech);
+  color: var(--cor-texto-claro);
+  min-height: 100vh;
   line-height: 1.5;
-  font-size: 1rem;
+  background: 
+    radial-gradient(circle at 50% 30%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
+    linear-gradient(rgba(10, 15, 28, 0.72), rgba(6, 10, 22, 0.88)),
+    url('img/torre-fundo.jpg') no-repeat center center fixed;
+  background-size: cover;
+  position: relative;
+  overflow-x: hidden;
 }
 
 :focus-visible {
-  outline: 3px solid var(--cor-status-em-andamento);
+  outline: 3px solid var(--cor-cyan-neon);
   outline-offset: 2px;
 }
 
-header {
-  background-color: var(--cor-superficie);
-  border-bottom: 1px solid var(--cor-borda);
-  padding: var(--espaco-2);
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.25rem;
-}
-
-footer {
-  background-color: var(--cor-superficie);
-  border-top: 1px solid var(--cor-borda);
-  padding: var(--espaco-2);
-  color: var(--cor-texto-secundario);
-  font-size: 0.875rem;
-}
-
-main {
-  padding: var(--espaco-2);
-  display: flex;
-  flex-direction: column;
-  gap: var(--espaco-3);
-}
-
-#busca-filtros-heading {
-  font-size: 1rem;
-  margin-bottom: var(--espaco-2);
-}
-
-form {
-  display: flex;
-  flex-direction: column;
-  gap: var(--espaco-2);
-}
-
-form > div {
-  display: flex;
-  flex-direction: column;
-  gap: var(--espaco-1);
-}
-
-form input[type="search"],
-form select,
-form button {
-  padding: var(--espaco-1) var(--espaco-2);
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio);
-  font-size: 1rem;
-  min-height: 44px;
-  background-color: var(--cor-superficie);
-  color: var(--cor-texto);
-  font-family: inherit;
-}
-
-form button {
-  cursor: pointer;
-  align-self: flex-start;
-}
-
-
-fieldset {
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio);
-  padding: var(--espaco-2);
-  display: flex;
-  flex-direction: column;
-  gap: var(--espaco-1);
-}
-
-legend {
-  padding: 0 var(--espaco-1);
-  font-weight: bold;
-}
-
-fieldset > div {
+/* ==========================================================================
+   CAMADA HOLOGRÁFICA DO RADAR // JUMP CITY
+   ========================================================================== */
+.radar-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
   display: flex;
   align-items: center;
-  gap: var(--espaco-1);
-  min-height: 24px;
+  justify-content: center;
+  overflow: hidden;
+  background-image: 
+    linear-gradient(to right, rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
 }
 
-fieldset input[type="radio"] {
-  width: 20px;
-  height: 20px;
+.mira-circulo-externo {
+  width: min(85vw, 680px);
+  height: min(85vw, 680px);
+  border: 1px dashed rgba(0, 212, 255, 0.18);
+  border-radius: 50%;
+  position: absolute;
+  animation: rotacaoRadar 50s linear infinite;
 }
 
-section[aria-labelledby^="coluna-"] ul {
+.mira-circulo-interno {
+  width: min(50vw, 400px);
+  height: min(50vw, 400px);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 50%;
+  position: absolute;
+}
+
+.mira-eixo-x {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(0, 212, 255, 0.25) 50%, transparent);
+  position: absolute;
+}
+
+.mira-eixo-y {
+  height: 100%;
+  width: 1px;
+  background: linear-gradient(to bottom, transparent, rgba(0, 212, 255, 0.25) 50%, transparent);
+  position: absolute;
+}
+
+.scanlines {
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 3px,
+    rgba(0, 212, 255, 0.02) 3px,
+    rgba(0, 212, 255, 0.02) 6px
+  );
+  opacity: 0.6;
+}
+
+@keyframes rotacaoRadar {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* ==========================================================================
+   BARRA SUPERIOR TÁTICA DO CIBORGUE (HUD DE COMANDO)
+   ========================================================================== */
+.hud-top-bar {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem clamp(1rem, 3vw, 2.5rem);
+  background: rgba(10, 16, 32, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.hud-bloco-status {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.beacon-pulso {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cor-cyan-neon);
+  box-shadow: 0 0 12px var(--cor-cyan-neon), 0 0 20px var(--cor-cyan-neon);
+  animation: beaconPulse 2s infinite ease-in-out;
+}
+
+@keyframes beaconPulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.4; }
+}
+
+.hud-titulos {
+  display: flex;
+  flex-direction: column;
+}
+
+.hud-terminal-id {
+  font-family: var(--fonte-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  color: var(--cor-cyan-neon);
+  text-transform: uppercase;
+  font-weight: 700;
+}
+
+.hud-substatus {
+  font-size: 0.75rem;
+  color: var(--cor-texto-mutado);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Banner de Transmissão de Rádio do Ciborgue */
+.hud-transmissao {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  background: rgba(14, 116, 144, 0.2);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  padding: 5px 14px;
+  border-radius: 9999px;
+  font-size: 0.8rem;
+}
+
+@media (min-width: 820px) {
+  .hud-transmissao {
+    display: flex;
+  }
+}
+
+.operador-tag {
+  color: var(--cor-amarelo-titans);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+}
+
+.operador-fala {
+  color: #e0f2fe;
+  font-style: italic;
+  font-family: var(--fonte-mono);
+}
+
+/* Controles de Topo: Região Viva e Botão Comunicador */
+.hud-controles-topo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.badge-status-missao {
+  font-family: var(--fonte-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--cor-cyan-neon);
+  background: rgba(8, 20, 42, 0.85);
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  padding: 5px 12px;
+  border-radius: 6px;
+  white-space: nowrap;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
+}
+
+.badge-status-missao:empty {
+  display: none;
+}
+
+/* Botão Comunicador T Oficial */
+.btn-comunicador-icone {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  padding: 0;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+  filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.75));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.btn-comunicador-icone:hover {
+  transform: scale(1.15) rotate(6deg);
+  filter: drop-shadow(0 0 16px rgba(234, 179, 8, 0.95)) drop-shadow(0 0 25px rgba(0, 212, 255, 0.8));
+}
+
+.btn-comunicador-icone:active {
+  transform: scale(0.95);
+}
+
+.icone-t {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* ==========================================================================
+   TELÃO PRINCIPAL DE MISSÕES
+   ========================================================================== */
+main {
+  position: relative;
+  z-index: 5;
+  padding: 1.75rem clamp(1rem, 2.5vw, 2.5rem);
+  max-width: 1680px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Quadro Tático com Setores de Radar */
+.quadro-tatico {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.setor-tatico {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.setor-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 0.65rem;
+  margin-bottom: 1.15rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.setor-tag-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.setor-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.dot-radar {
+  background: #94a3b8;
+  box-shadow: 0 0 8px #94a3b8;
+}
+
+.dot-operacao {
+  background: #38bdf8;
+  box-shadow: 0 0 8px #38bdf8;
+  animation: beaconPulse 1.8s infinite;
+}
+
+.dot-analise {
+  background: #c084fc;
+  box-shadow: 0 0 8px #c084fc;
+}
+
+.dot-arquivo {
+  background: #4ade80;
+  box-shadow: 0 0 8px #4ade80;
+}
+
+.setor-cabecalho h3 {
+  margin: 0;
+  font-family: var(--fonte-mono);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.setor-radar h3 { color: #cbd5e1; }
+.setor-operacao h3 { color: #38bdf8; }
+.setor-analise h3 { color: #d8b4fe; }
+.setor-arquivo h3 { color: #86efac; }
+
+.setor-radar .setor-cabecalho { border-bottom-color: rgba(148, 163, 184, 0.4); }
+.setor-operacao .setor-cabecalho { border-bottom-color: rgba(56, 189, 248, 0.5); }
+.setor-analise .setor-cabecalho { border-bottom-color: rgba(192, 132, 252, 0.5); }
+.setor-arquivo .setor-cabecalho { border-bottom-color: rgba(74, 222, 128, 0.5); }
+
+.setor-meta {
+  font-family: var(--fonte-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--cor-texto-mutado);
+}
+
+.setor-tatico ul[data-lista-status] {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: var(--espaco-2);
+  gap: 1.25rem;
 }
 
-section[aria-labelledby^="coluna-"] h3 {
-  font-size: 1rem;
-  margin-bottom: var(--espaco-1);
-}
-
-article {
-  background-color: var(--cor-superficie);
-  border: 1px solid var(--cor-borda);
-  border-radius: var(--raio);
-  padding: var(--espaco-2);
+/* ==========================================================================
+   FICHAS MAGNÉTICAS PROJETADAS (CARTÕES DE MISSÃO)
+   ========================================================================== */
+.ficha-magnetica {
+  background: var(--cor-fundo-cartao);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid var(--cor-borda-tech);
+  border-radius: 12px;
+  padding: 1.15rem;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), inset 0 0 12px rgba(0, 212, 255, 0.04);
+  transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
+  cursor: pointer;
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--espaco-1);
-  min-width: 0;
+  gap: 0.65rem;
 }
 
-article h4 {
-  margin: 0;
-  font-size: 1rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+/* Inclinações Orgânicas Magnéticas (Evita a rigidez do SaaS) */
+.rot-1 { transform: rotate(-1.2deg); }
+.rot-2 { transform: rotate(1.3deg); }
+.rot-3 { transform: rotate(-0.8deg); }
+.rot-4 { transform: rotate(1.5deg); }
+
+.ficha-magnetica:hover {
+  transform: translateY(-6px) scale(1.03) rotate(0deg) !important;
+  border-color: var(--cor-cyan-neon);
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.55), 0 16px 36px rgba(0, 0, 0, 0.75);
+  z-index: 20;
 }
 
-article dl {
-  margin: 0;
+/* Variações Visuais por Status de Operação */
+.ficha-magnetica.status-em-andamento {
+  border-color: rgba(56, 189, 248, 0.45);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(56, 189, 248, 0.08);
+}
+
+.ficha-magnetica.status-em-revisao {
+  border-color: rgba(192, 132, 252, 0.4);
+}
+
+.ficha-magnetica.status-concluida {
+  border-color: rgba(74, 222, 128, 0.35);
+  opacity: 0.92;
+}
+
+/* Tags de Cabeçalho da Ficha */
+.cartao-tags {
   display: flex;
-  flex-direction: column;
-  gap: var(--espaco-1);
-  flex: 1;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
 }
 
-article dt {
+.tag-projeto {
+  font-family: var(--fonte-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--cor-cyan-neon);
+}
+
+.tag-prioridade {
+  font-family: var(--fonte-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tag-prioridade.prioridade-alta {
+  background: rgba(239, 68, 68, 0.22);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.5);
+}
+
+.tag-prioridade.prioridade-media {
+  background: rgba(245, 158, 11, 0.22);
+  color: #fde68a;
+  border: 1px solid rgba(245, 158, 11, 0.5);
+}
+
+.tag-prioridade.prioridade-baixa {
+  background: rgba(34, 197, 94, 0.22);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.5);
+}
+
+.cartao-titulo {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 700;
+  line-height: 1.35;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+}
+
+/* Rodapé da Ficha: Prazo e Avatar com Molde Solto */
+.cartao-rodape {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.25rem;
+  padding-top: 0.65rem;
+  border-top: 1px dashed rgba(0, 212, 255, 0.22);
+}
+
+.cartao-prazo {
+  font-family: var(--fonte-mono);
   font-size: 0.75rem;
-  color: var(--cor-texto-secundario);
+  color: var(--cor-texto-mutado);
+  letter-spacing: 0.04em;
 }
 
-article dd {
+.avatar-responsavel {
+  width: 48px;
+  height: 48px;
+  background: transparent;
+  border: none;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
+  flex-shrink: 0;
+}
+
+.ficha-magnetica:hover .avatar-responsavel {
+  transform: scale(1.16) rotate(4deg);
+  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.9));
+}
+
+/* Auras Específicas de cada Titã */
+.ficha-magnetica:hover .avatar-robin {
+  filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.9));
+}
+.ficha-magnetica:hover .avatar-ciborgue {
+  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.9));
+}
+.ficha-magnetica:hover .avatar-estelar {
+  filter: drop-shadow(0 0 12px rgba(244, 114, 182, 0.9));
+}
+.ficha-magnetica:hover .avatar-ravena {
+  filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.9));
+}
+.ficha-magnetica:hover .avatar-mutano {
+  filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.9));
+}
+
+/* ==========================================================================
+   ALERTA DE EVENTO / ANIVERSÁRIO INTEGRADO AO SISTEMA
+   ========================================================================== */
+.hud-alerta-social {
+  margin-top: 2rem;
+  padding: 0.85rem 1.25rem;
+  border-radius: 12px;
+  background: linear-gradient(90deg, rgba(80, 7, 36, 0.75) 0%, rgba(30, 27, 75, 0.7) 50%, rgba(15, 23, 42, 0.85) 100%);
+  border: 1px solid rgba(244, 114, 182, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  flex-wrap: wrap;
+}
+
+.alerta-social-conteudo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.alerta-icone {
+  font-size: 1.75rem;
+  filter: drop-shadow(0 0 8px rgba(244, 114, 182, 0.6));
+}
+
+.alerta-tag {
+  font-family: var(--fonte-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: #f472b6;
+  text-transform: uppercase;
+  display: block;
+}
+
+.alerta-texto {
   margin: 0;
-  font-size: 0.9375rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #ffffff;
 }
 
-article dl > :nth-child(7),
-article dl > :nth-child(8) {
-  order: 1;
+.btn-acao-evento {
+  background: rgba(244, 114, 182, 0.18);
+  border: 1px solid rgba(244, 114, 182, 0.5);
+  color: #fbcfe8;
+  font-family: var(--fonte-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
 }
 
-article dl > :nth-child(5),
-article dl > :nth-child(6) {
-  order: 2;
+.btn-acao-evento:hover {
+  background: rgba(244, 114, 182, 0.35);
+  color: #ffffff;
+  border-color: #f472b6;
+  box-shadow: 0 0 15px rgba(244, 114, 182, 0.5);
 }
 
-article dl > dt:nth-child(5) {
-  margin-top: auto;
+/* ==========================================================================
+   POPUP MODAL DO COMUNICADOR T (BUSCA E FILTROS TÁTICOS)
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 10, 20, 0.78);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.25s ease, visibility 0.25s ease;
 }
 
-article dl > dd:nth-child(8) {
+.modal-overlay.ativo {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.modal-conteudo {
+  background: #0d1426;
+  border: 2px solid var(--cor-cyan-neon);
+  border-radius: 16px;
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.4), 0 25px 60px rgba(0, 0, 0, 0.85);
+  width: 100%;
+  max-width: 580px;
+  padding: 1.5rem;
+  transform: scale(0.92) translateY(-10px);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  max-height: 90vh;
+  overflow-y: auto;
+  color: #ffffff;
+}
+
+.modal-overlay.ativo .modal-conteudo {
+  transform: scale(1) translateY(0);
+}
+
+.modal-cabecalho {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+  padding-bottom: 0.75rem;
+  margin-bottom: 1.25rem;
+}
+
+.modal-titulo-box {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.modal-icone-t {
+  width: 38px;
+  height: 38px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.7));
+}
+
+.subtitulo-popup {
+  display: block;
+  font-family: var(--fonte-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--cor-amarelo-titans);
+}
+
+.modal-cabecalho h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.btn-fechar-modal {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #cbd5e1;
+  font-size: 1rem;
   font-weight: bold;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-section[aria-labelledby="quadro-heading"] {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--espaco-3);
+.btn-fechar-modal:hover {
+  background: rgba(239, 68, 68, 0.25);
+  border-color: #ef4444;
+  color: #ef4444;
+  transform: scale(1.1);
 }
 
-section[aria-labelledby="quadro-heading"] h2 {
-  grid-column: 1 / -1;
-  font-size: 1.125rem;
-  margin: 0;
-}
-
-section[aria-labelledby^="coluna-"] {
+.modal-form {
   display: flex;
   flex-direction: column;
-  min-width: 0;
-  background-color: var(--cor-fundo);
+  gap: 1.25rem;
 }
 
-section[aria-labelledby="coluna-a-fazer-heading"] h3 {
-  color: var(--cor-status-a-fazer);
+.campo-busca label,
+.campo-ordenacao label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
 }
 
-section[aria-labelledby="coluna-em-andamento-heading"] h3 {
-  color: var(--cor-status-em-andamento);
+.campo-busca input[type="search"],
+.campo-ordenacao select {
+  width: 100%;
+  background: #162035;
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  border-radius: 8px;
+  color: #ffffff;
+  font-size: 0.95rem;
+  padding: 10px 14px;
+  min-height: 44px;
+  outline: none;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
-section[aria-labelledby="coluna-em-revisao-heading"] h3 {
-  color: var(--cor-status-em-revisao);
+.campo-busca input[type="search"]:focus,
+.campo-ordenacao select:focus {
+  border-color: var(--cor-cyan-neon);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
 }
 
-section[aria-labelledby="coluna-concluida-heading"] h3 {
-  color: var(--cor-status-concluida);
+.grupo-filtros {
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 10px;
+  background: rgba(20, 30, 55, 0.5);
+  padding: 0.85rem 1rem;
+  margin: 0;
 }
 
-/* Tipografia fluida do título principal, combinando rem e vw */
-header h1 {
-  font-size: clamp(1.25rem, 1rem + 1vw, 1.75rem);
+.grupo-filtros legend {
+  font-family: var(--fonte-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--cor-cyan-neon);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 0 6px;
 }
 
-main {
-  padding: clamp(1rem, 2vw, 2rem);
+.opcoes-radio {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
 }
 
-/* Breakpoint 1: 600px — os filtros de status/prioridade cabem lado a lado
-   sem espremer o texto das opções; abaixo disso ficavam empilhados e ocupando
-   altura demais na tela. */
-@media (min-width: 600px) {
-  fieldset {
+.item-radio {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #e2e8f0;
+  cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(10, 16, 32, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: all 0.15s ease;
+}
+
+.item-radio:hover {
+  background: rgba(0, 212, 255, 0.15);
+  border-color: rgba(0, 212, 255, 0.4);
+}
+
+.item-radio input[type="radio"] {
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  accent-color: var(--cor-cyan-neon);
+  cursor: pointer;
+}
+
+.linha-controles-base {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 1rem;
+}
+
+@media (min-width: 480px) {
+  .linha-controles-base {
     flex-direction: row;
-    flex-wrap: wrap;
-    align-items: center;
+    align-items: flex-end;
+    justify-content: space-between;
+  }
+  .campo-ordenacao {
+    flex: 1;
   }
 }
 
-/* Breakpoint 2: 700px — a partir daqui sobra largura para duas colunas do
-   quadro lado a lado sem que nenhuma fique abaixo de ~260px, largura mínima
-   para o conteúdo do card não truncar demais. */
+.btn-limpar {
+  background: rgba(239, 68, 68, 0.18);
+  border: 1px solid rgba(239, 68, 68, 0.5);
+  color: #fca5a5;
+  font-family: var(--fonte-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 10px 18px;
+  border-radius: 8px;
+  min-height: 44px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-limpar:hover {
+  background: rgba(239, 68, 68, 0.35);
+  color: #ffffff;
+  border-color: #ef4444;
+  box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+}
+
+/* ==========================================================================
+   BREAKPOINTS RESPONSIVOS (RUBRICA)
+   ========================================================================== */
+@media (min-width: 600px) {
+  .grupo-filtros {
+    padding: 1rem 1.25rem;
+  }
+}
+
 @media (min-width: 700px) {
-  section[aria-labelledby="quadro-heading"] {
+  .quadro-tatico {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Breakpoint 3: 1024px — largura de desktop típica, onde as quatro colunas
-   de status cabem lado a lado sem espremer os cards abaixo de 260px cada. */
 @media (min-width: 1024px) {
-  section[aria-labelledby="quadro-heading"] {
+  .quadro-tatico {
     grid-template-columns: repeat(4, 1fr);
   }
 }

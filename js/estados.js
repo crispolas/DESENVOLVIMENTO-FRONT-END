@@ -15,14 +15,27 @@ import { selecionarTarefas } from "./estado.js";
  */
 export function renderizarResumo(totalVisiveis, totalGeral) {
   const statusEl = document.getElementById("status");
-  if (!statusEl) return;
+  const substatusEl = document.getElementById("hud-substatus");
+  const falaCiborgueEl = document.getElementById("hud-fala-ciborgue");
 
   if (totalGeral === 0) {
-    statusEl.textContent = "Nenhuma tarefa foi cadastrada.";
+    if (statusEl) statusEl.textContent = "Nenhuma tarefa foi cadastrada.";
+    if (substatusEl) substatusEl.textContent = "0 OPERATIVOS • NENHUMA OCORRÊNCIA";
+    if (falaCiborgueEl) falaCiborgueEl.textContent = `"Nenhuma missão registrada no sistema."`;
   } else if (totalVisiveis === 0) {
-    statusEl.textContent = "Nenhuma tarefa encontrada. Altere ou limpe os critérios de filtro.";
+    if (statusEl) statusEl.textContent = "Nenhuma tarefa encontrada. Altere ou limpe os critérios de filtro.";
+    if (substatusEl) substatusEl.textContent = `0 DE ${totalGeral} MISSÕES ENCONTRADAS`;
+    if (falaCiborgueEl) falaCiborgueEl.textContent = `"Nenhum sinal encontrado com esses parâmetros. Tente limpar os filtros!"`;
   } else {
-    statusEl.textContent = `${totalVisiveis} de ${totalGeral} tarefas exibidas.`;
+    if (statusEl) statusEl.textContent = `${totalVisiveis} de ${totalGeral} tarefas exibidas.`;
+    if (substatusEl) substatusEl.textContent = `5 OPERATIVOS CONECTADOS • ${totalVisiveis} DE ${totalGeral} OCORRÊNCIAS`;
+    if (falaCiborgueEl) {
+      if (totalVisiveis === totalGeral) {
+        falaCiborgueEl.textContent = `"Varredura completa. ${totalVisiveis} missões ativas no radar!"`;
+      } else {
+        falaCiborgueEl.textContent = `"Filtro tático aplicado: ${totalVisiveis} de ${totalGeral} missões isoladas."`;
+      }
+    }
   }
 }
 

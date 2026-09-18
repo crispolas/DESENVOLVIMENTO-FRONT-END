@@ -1,4 +1,4 @@
-﻿import { carregarTarefas } from "./api.js";
+import { carregarTarefas } from "./api.js";
 import { estado } from "./estado.js";
 import { renderizarAplicacao, renderizarEstado } from "./estados.js";
 
@@ -13,6 +13,50 @@ function instalarControles() {
   const selectOrdenacao = document.getElementById("ordenacao");
   const btnLimpar = document.getElementById("btn-limpar-filtros");
   const quadro = document.querySelector("[data-quadro]");
+
+  // 0. Botão Comunicador em 'T': abre e fecha o Popup Modal de Gerenciamento
+  const btnComunicador = document.getElementById("btn-comunicador");
+  const modalOverlay = document.getElementById("modal-filtros-overlay");
+  const btnFecharModal = document.getElementById("btn-fechar-modal");
+
+  function alternarModalFiltros(forcarAberto) {
+    if (!modalOverlay || !btnComunicador) return;
+    const deveAbrir = forcarAberto !== undefined
+      ? forcarAberto
+      : !modalOverlay.classList.contains("ativo");
+
+    modalOverlay.classList.toggle("ativo", deveAbrir);
+    btnComunicador.setAttribute("aria-expanded", String(deveAbrir));
+    modalOverlay.setAttribute("aria-hidden", String(!deveAbrir));
+
+    if (deveAbrir) {
+      if (buscaInput) buscaInput.focus();
+    } else {
+      btnComunicador.focus();
+    }
+  }
+
+  if (btnComunicador) {
+    btnComunicador.addEventListener("click", () => alternarModalFiltros());
+  }
+
+  if (btnFecharModal) {
+    btnFecharModal.addEventListener("click", () => alternarModalFiltros(false));
+  }
+
+  if (modalOverlay) {
+    modalOverlay.addEventListener("click", (evento) => {
+      if (evento.target === modalOverlay) {
+        alternarModalFiltros(false);
+      }
+    });
+  }
+
+  document.addEventListener("keydown", (evento) => {
+    if (evento.key === "Escape" && modalOverlay?.classList.contains("ativo")) {
+      alternarModalFiltros(false);
+    }
+  });
 
   // 1. Busca por título: evento input (acompanha a digitação)
   if (buscaInput) {
@@ -70,6 +114,11 @@ function instalarControles() {
 
       if (selectOrdenacao) selectOrdenacao.value = "prazo-asc";
 
+      const btnEventoEstelar = document.getElementById("btn-evento-estelar");
+      if (btnEventoEstelar) {
+        btnEventoEstelar.textContent = "⚡ Ver Missões da Estelar ❯";
+      }
+
       // Dispara o ciclo de renderização
       renderizarAplicacao(estado);
     });
@@ -87,6 +136,30 @@ function instalarControles() {
       if (tarefa) {
         console.log("Detalhes da tarefa:", tarefa);
       }
+    });
+  }
+
+  // 7. Alerta do Calendário Social: Interação com Aniversário da Estelar
+  const btnEventoEstelar = document.getElementById("btn-evento-estelar");
+  if (btnEventoEstelar) {
+    btnEventoEstelar.addEventListener("click", () => {
+      const falaCiborgue = document.getElementById("hud-fala-ciborgue");
+      if (estado.busca === "Estelar") {
+        estado.busca = "";
+        if (buscaInput) buscaInput.value = "";
+        if (falaCiborgue) {
+          falaCiborgue.textContent = `"Exibindo todas as operações táticas da Torre."`;
+        }
+        btnEventoEstelar.textContent = "⚡ Ver Missões da Estelar ❯";
+      } else {
+        estado.busca = "Estelar";
+        if (buscaInput) buscaInput.value = "Estelar";
+        if (falaCiborgue) {
+          falaCiborgue.textContent = `"Filtrando missões da aniversariante Estelar! 🎂"`;
+        }
+        btnEventoEstelar.textContent = "✕ Limpar Filtro da Estelar";
+      }
+      renderizarAplicacao(estado);
     });
   }
 }

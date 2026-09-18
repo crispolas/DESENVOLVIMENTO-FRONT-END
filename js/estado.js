@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Módulo de Estado da Aplicação e Derivação de Dados
  * Responsabilidade: manter o estado canônico único da aplicação e
  * prover a função seletora pura que calcula a lista visível.
@@ -52,7 +52,10 @@ export function selecionarTarefas(estadoAtual) {
 
   // 1. Filtragem combinada sobre a fonte original
   const filtradas = estadoAtual.tarefas.filter((tarefa) => {
-    const atendeBusca = !termo || tarefa.titulo.toLowerCase().includes(termo);
+    const atendeBusca = !termo || 
+      tarefa.titulo.toLowerCase().includes(termo) ||
+      (tarefa.responsavel && tarefa.responsavel.toLowerCase().includes(termo)) ||
+      (tarefa.projeto && tarefa.projeto.toLowerCase().includes(termo));
     const atendeStatus = estadoAtual.status === "todos" || tarefa.status === estadoAtual.status;
     const atendePrioridade = estadoAtual.prioridade === "todas" || tarefa.prioridade === estadoAtual.prioridade;
 
