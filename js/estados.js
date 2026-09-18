@@ -38,9 +38,6 @@ export function renderizarResumo(totalVisiveis, totalGeral) {
     }
   }
 }
-//... no case "carregando":
-statusEl.textContent = "Acessando banco de dados da Torre Titã...";
-
 
 /**
  * Sincroniza a aplicação inteira em um único ponto de renderização:

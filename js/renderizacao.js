@@ -84,8 +84,8 @@ export function renderizarTarefas(tarefas, quadro = document.querySelector("[dat
   const listas = quadro.querySelectorAll("[data-lista-status]");
   listas.forEach((lista) => {
     const status = lista.dataset.listaStatus;
-    const alvosDoStatus = alvos.filter((a) => a.status === status);
-    const cartoes = alvosDoStatus.map(criarCartao);
+    const tarefasDoStatus = (tarefas || []).filter((t) => t.status === status);
+    const cartoes = tarefasDoStatus.map(criarCartao);
     lista.replaceChildren(...cartoes);
   });
 }

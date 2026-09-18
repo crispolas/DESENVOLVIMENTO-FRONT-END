@@ -7,17 +7,6 @@ import { renderizarAplicacao, renderizarEstado } from "./estados.js";
  * ao ciclo centralizado de renderização (Arquitetura Unidirecional).
  */
 function instalarControles() {
-  // Lógica da Pokebola (Menu Lateral)
-  const btnTCom = document.getElementById("btn-t-com");
-  const painelLateral = document.getElementById("painel-lateral");
-  
-  if (btnTCom && painelLateral) {
-    btnTCom.addEventListener("click", () => {
-      painelLateral.classList.toggle("aberto");
-    });
-  }
-  
-
   const buscaInput = document.getElementById("busca-titulo");
   const radiosStatus = document.querySelectorAll('input[name="status"]');
   const radiosPrioridade = document.querySelectorAll('input[name="prioridade"]');
