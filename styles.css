@@ -192,6 +192,8 @@ body.alerta-emergencia-ativo {
     linear-gradient(rgba(28, 8, 12, 0.82), rgba(18, 4, 8, 0.94)),
     url('img/torre-fundo.jpg') no-repeat center center fixed;
   background-size: cover;
+}
+
 body.alerta-emergencia-ativo .beacon-pulso {
   background: var(--cor-vermelho-alerta);
   box-shadow: 0 0 15px var(--cor-vermelho-alerta), 0 0 30px var(--cor-vermelho-alerta);
