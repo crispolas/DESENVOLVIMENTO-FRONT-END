@@ -46,6 +46,18 @@ export function renderizarAplicacao(estado) {
   const visiveis = selecionarTarefas(estado);
   renderizarTarefas(visiveis);
   renderizarResumo(visiveis.length, estado.tarefas.length);
+
+  // Atualiza indicador TITANS ALERT com feedback real (Item 3)
+  const contadorAlertEl = document.getElementById("alerta-contador-criticas");
+  const btnAlertaEl = document.getElementById("btn-alerta-emergencia");
+  const totalUrgentes = (visiveis || []).filter((t) => t.prioridade === "alta").length;
+
+  if (contadorAlertEl) {
+    contadorAlertEl.textContent = String(totalUrgentes).padStart(2, "0");
+  }
+  if (btnAlertaEl) {
+    btnAlertaEl.classList.toggle("tem-urgencia", totalUrgentes > 0);
+  }
 }
 
 /**

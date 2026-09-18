@@ -85,8 +85,22 @@ export function criarCartao(tarefa) {
 
   rodape.append(blocoMeta, avatar);
 
-  // Montagem do cartão
-  cartao.append(topo, titulo, rodape);
+  // Elementos do Micro-Scanner Tático Holográfico (Hover Feedback)
+  const scanLinha = document.createElement("div");
+  scanLinha.className = "cartao-scan-linha";
+  scanLinha.setAttribute("aria-hidden", "true");
+
+  const scanFeedback = document.createElement("div");
+  scanFeedback.className = "cartao-scan-feedback";
+  scanFeedback.setAttribute("aria-hidden", "true");
+
+  const scanFeedbackTexto = document.createElement("span");
+  scanFeedbackTexto.className = "scan-feedback-texto";
+  scanFeedbackTexto.textContent = "BIO-SCAN STANDBY";
+  scanFeedback.appendChild(scanFeedbackTexto);
+
+  // Montagem do cartão com elementos holográficos
+  cartao.append(scanLinha, topo, scanFeedback, titulo, rodape);
   item.append(cartao);
   return item;
 }

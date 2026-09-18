@@ -1,4 +1,4 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,600&family=Oxanium:wght@600;700;800&family=Share+Tech+Mono&family=Teko:wght@600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,600&family=Oxanium:wght@600;700;800&family=Share+Tech+Mono&family=Teko:wght@600;700&display=swap');
 
 *, *::before, *::after {
   box-sizing: border-box;
@@ -367,29 +367,59 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
   font-size: 0.78rem;
 }
 
-/* Botão de Emergência flutuante */
+/* Botão de Emergência / Indicador Dinâmico do Sistema (Item 3) */
 .btn-alerta-emergencia {
-  background: rgba(239, 68, 68, 0.12);
-  border: 1px solid rgba(239, 68, 68, 0.55);
-  color: #fca5a5;
+  background: rgba(8, 14, 28, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(148, 163, 184, 0.3);
+  color: #cbd5e1;
   font-family: var(--fonte-mono);
   font-size: 0.78rem;
   font-weight: 700;
   letter-spacing: 0.08em;
-  padding: 7px 12px;
+  padding: 8px 14px;
   border-radius: 8px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  transition: all 0.2s ease;
+  gap: 8px;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6);
+}
+
+.alerta-ponto-pulso {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #64748b;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+/* Quando existem missões urgentes ativas no radar: PULSAÇÃO REAL! */
+.btn-alerta-emergencia.tem-urgencia {
+  border-color: rgba(239, 68, 68, 0.6);
+  color: #fca5a5;
+  background: rgba(24, 10, 16, 0.85);
+}
+
+.btn-alerta-emergencia.tem-urgencia .alerta-ponto-pulso {
+  background: var(--cor-vermelho-alerta);
+  box-shadow: 0 0 10px var(--cor-vermelho-alerta), 0 0 20px rgba(239, 68, 68, 0.8);
+  animation: alertaPulsoCritico 1.2s infinite ease-in-out;
+}
+
+@keyframes alertaPulsoCritico {
+  0%, 100% { transform: scale(1); opacity: 1; box-shadow: 0 0 8px #ef4444; }
+  50% { transform: scale(1.5); opacity: 0.35; box-shadow: 0 0 20px #ef4444; }
 }
 
 .btn-alerta-emergencia:hover {
-  background: rgba(239, 68, 68, 0.35);
+  background: rgba(239, 68, 68, 0.28);
   color: #ffffff;
   border-color: #ef4444;
-  box-shadow: 0 0 18px rgba(239, 68, 68, 0.55);
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
 }
 
 /* Botão Comunicador T flutuante */
@@ -632,17 +662,53 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
   gap: 0;
 }
 
-/* Torre Central: núcleo do radar */
+/* Torre Central: Silhueta Holográfica & Convergência do Radar (Item 2) */
 .torre-central {
   position: fixed;
-  top: 50%;
-  left: calc(50% - 40px);
+  top: 48%;
+  left: calc(50% - 30px);
   transform: translate(-50%, -50%);
   z-index: 1;
   pointer-events: none;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+/* Linhas de radar convergindo para a Torre dos Titãs */
+.torre-linhas-convergencia {
+  position: absolute;
+  width: 580px;
+  height: 580px;
+  pointer-events: none;
+  opacity: 0.35;
+  animation: rotacaoRadarSuave 80s linear infinite;
+}
+
+@keyframes rotacaoRadarSuave {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.linha-setor {
+  stroke: var(--cor-cyan-neon);
+  stroke-width: 1;
+  stroke-dasharray: 4, 8;
+  opacity: 0.5;
+}
+
+.circulo-convergencia {
+  fill: none;
+  stroke: rgba(0, 212, 255, 0.2);
+  stroke-width: 1;
+  stroke-dasharray: 6, 6;
+}
+
+.circulo-convergencia-externo {
+  fill: none;
+  stroke: rgba(0, 212, 255, 0.1);
+  stroke-width: 1;
 }
 
 .torre-pulso-anel {
@@ -658,14 +724,14 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
 }
 
 .anel-2 {
-  width: 260px;
-  height: 260px;
+  width: 280px;
+  height: 280px;
   animation: radarRing 3s ease-in-out 1s infinite;
 }
 
 .anel-3 {
-  width: 400px;
-  height: 400px;
+  width: 440px;
+  height: 440px;
   animation: radarRing 3s ease-in-out 2s infinite;
   border-color: rgba(0, 212, 255, 0.06);
 }
@@ -676,6 +742,78 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
   100% { opacity: 0.6; transform: scale(0.95); }
 }
 
+/* Silhueta Holográfica Vetorial da Torre dos Titãs (em 'T') */
+.torre-holograma-svg {
+  width: 140px;
+  height: 170px;
+  opacity: 0.42;
+  filter: drop-shadow(0 0 16px rgba(0, 212, 255, 0.7));
+  transition: opacity 0.3s ease, filter 0.3s ease;
+  margin-bottom: -15px;
+}
+
+.svg-torre-silhueta {
+  width: 100%;
+  height: 100%;
+}
+
+.torre-ilha {
+  fill: rgba(0, 212, 255, 0.08);
+  stroke: rgba(0, 212, 255, 0.4);
+  stroke-width: 1.5;
+}
+
+.torre-coluna {
+  fill: rgba(8, 20, 42, 0.75);
+  stroke: var(--cor-cyan-neon);
+  stroke-width: 1.5;
+}
+
+.torre-linha-estrutural {
+  stroke: rgba(0, 212, 255, 0.35);
+  stroke-width: 1;
+  stroke-dasharray: 2, 4;
+}
+
+.torre-asas-t {
+  fill: rgba(10, 28, 56, 0.85);
+  stroke: var(--cor-cyan-neon);
+  stroke-width: 2;
+  filter: drop-shadow(0 0 8px var(--cor-cyan-neon));
+}
+
+.torre-janelas {
+  fill: rgba(0, 212, 255, 0.45);
+  stroke: #ffffff;
+  stroke-width: 1;
+  animation: janelasPulso 3s infinite alternate ease-in-out;
+}
+
+@keyframes janelasPulso {
+  0% { fill: rgba(0, 212, 255, 0.3); }
+  100% { fill: rgba(0, 212, 255, 0.85); filter: drop-shadow(0 0 10px var(--cor-cyan-neon)); }
+}
+
+.torre-janela-divisoria {
+  stroke: rgba(4, 8, 18, 0.8);
+  stroke-width: 1.5;
+}
+
+.torre-antena {
+  stroke: var(--cor-cyan-neon);
+  stroke-width: 2;
+}
+
+.torre-beacon-topo {
+  fill: var(--cor-vermelho-alerta);
+  animation: beaconTopoFlash 1.5s infinite ease-in-out;
+}
+
+@keyframes beaconTopoFlash {
+  0%, 100% { fill: var(--cor-vermelho-alerta); filter: drop-shadow(0 0 8px #ef4444); }
+  50% { fill: #ffffff; filter: drop-shadow(0 0 16px #ffffff); }
+}
+
 .torre-nucleo {
   display: flex;
   flex-direction: column;
@@ -684,18 +822,19 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
 }
 
 .torre-emblema {
-  width: 36px;
-  height: 36px;
+  width: 34px;
+  height: 34px;
   object-fit: contain;
-  opacity: 0.5;
+  opacity: 0.55;
   filter: drop-shadow(0 0 12px rgba(250, 204, 21, 0.5));
 }
 
 .torre-label {
   font-family: var(--fonte-mono);
-  font-size: 0.6rem;
+  font-size: 0.62rem;
   letter-spacing: 0.12em;
-  color: rgba(0, 212, 255, 0.35);
+  color: rgba(0, 212, 255, 0.45);
+  font-weight: 700;
 }
 
 /* ==========================================================================
@@ -821,7 +960,7 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
 }
 
 /* ==========================================================================
-   7. FICHAS MAGNÉTICAS (CARDS COMO OBJETOS DO RADAR)
+   7. FICHAS MAGNÉTICAS (CARDS COMO OBJETOS DO RADAR COM SCANNER TÁTICO)
    ========================================================================== */
 .ficha-magnetica {
   background: rgba(8, 15, 30, 0.85);
@@ -834,9 +973,68 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
   transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
   cursor: pointer;
   position: relative;
+  overflow: hidden; /* Mantém a linha de varredura laser contida no card */
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
+}
+
+/* Linha Laser Horizontal de Varredura no Hover (Item 5) */
+.cartao-scan-linha {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 2px;
+  top: -10px;
+  background: linear-gradient(90deg, transparent 0%, var(--cor-cyan-neon) 30%, #ffffff 50%, var(--cor-cyan-neon) 70%, transparent 100%);
+  box-shadow: 0 0 10px var(--cor-cyan-neon), 0 0 18px #ffffff;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.ficha-magnetica:hover .cartao-scan-linha {
+  animation: varreduraLaserCard 0.85s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes varreduraLaserCard {
+  0%   { top: 0%; opacity: 0; }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+/* Linha de Feedback do Scanner no Cartão */
+.cartao-scan-feedback {
+  height: 14px;
+  display: flex;
+  align-items: center;
+  margin: -4px 0 0 0;
+}
+
+.scan-feedback-texto {
+  font-family: var(--fonte-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  color: rgba(148, 163, 184, 0.4);
+  transition: all 0.2s ease;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.scan-feedback-texto.scan-ativo {
+  color: var(--cor-cyan-neon);
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.8);
+}
+
+.scan-feedback-texto.scan-verificado {
+  color: var(--cor-verde-arquivo);
+  text-shadow: 0 0 8px rgba(34, 197, 94, 0.85);
+}
+
+.scan-feedback-texto.scan-dossie {
+  color: var(--cor-amarelo-titans);
+  text-shadow: 0 0 10px rgba(250, 204, 21, 0.9);
 }
 
 /* Inclinações magnéticas sutis — fichas presas no computador */
@@ -995,17 +1193,28 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
   letter-spacing: 0.04em;
 }
 
+/* Botão VER DOSSIÊ com destaque dinâmico no hover (Item 5) */
 .btn-ver-dossie {
   font-family: var(--fonte-mono);
   font-size: 0.65rem;
   font-weight: 700;
-  color: rgba(0, 212, 255, 0.6);
-  letter-spacing: 0.05em;
-  transition: color 0.2s ease;
+  color: rgba(0, 212, 255, 0.75);
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  background: rgba(0, 212, 255, 0.08);
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  display: inline-block;
 }
 
 .ficha-magnetica:hover .btn-ver-dossie {
-  color: var(--cor-cyan-neon);
+  background: var(--cor-cyan-neon);
+  color: #040812;
+  font-weight: 800;
+  border-color: #ffffff;
+  box-shadow: 0 0 16px var(--cor-cyan-neon), 0 0 25px rgba(0, 212, 255, 0.7);
+  transform: scale(1.08) translateX(2px);
 }
 
 .avatar-responsavel {
@@ -1028,6 +1237,177 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
 .ficha-magnetica:hover .avatar-estelar  { filter: drop-shadow(0 0 10px rgba(244, 114, 182, 0.9)); }
 .ficha-magnetica:hover .avatar-ravena   { filter: drop-shadow(0 0 10px rgba(168, 85, 247, 0.9)); }
 .ficha-magnetica:hover .avatar-mutano   { filter: drop-shadow(0 0 10px rgba(34, 197, 94, 0.9)); }
+
+/* ==========================================================================
+   TELEMETRIA INFERIOR DO RADAR (PREENCHE O ESPAÇO VAZIO // ITEM 1)
+   ========================================================================== */
+.radar-telemetria-deck {
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem 1.4rem;
+  background: rgba(6, 12, 26, 0.86);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  position: relative;
+  z-index: 10;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65);
+}
+
+@media (min-width: 900px) {
+  .radar-telemetria-deck {
+    grid-template-columns: 1.3fr 1.2fr 1fr;
+    align-items: center;
+    margin-right: 4.5rem;
+  }
+}
+
+.deck-bloco {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.deck-tag-radar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.deck-dot-pulso {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--cor-cyan-neon);
+  box-shadow: 0 0 8px var(--cor-cyan-neon);
+  animation: beaconPulse 1.8s infinite;
+}
+
+.deck-rotulo {
+  font-family: var(--fonte-mono);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--cor-cyan-neon);
+}
+
+.deck-destaque {
+  font-family: var(--fonte-display);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: #ffffff;
+  display: block;
+}
+
+.deck-coordenadas {
+  font-family: var(--fonte-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.05em;
+  color: var(--cor-texto-mutado);
+}
+
+.deck-espectro {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.deck-onda-frequencia {
+  position: relative;
+  width: 100%;
+  height: 24px;
+  background: rgba(0, 212, 255, 0.04);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+
+.svg-onda {
+  width: 100%;
+  height: 100%;
+  opacity: 0.85;
+}
+
+.deck-varredura-feixe {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 35px;
+  background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.5), transparent);
+  animation: ondaFeixe 2.8s infinite linear;
+}
+
+@keyframes ondaFeixe {
+  from { left: -35px; }
+  to { left: 100%; }
+}
+
+.deck-dados-frequencia {
+  font-family: var(--fonte-mono);
+  font-size: 0.66rem;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.deck-separador {
+  color: rgba(0, 212, 255, 0.3);
+}
+
+.deck-sensores-grid {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 2px;
+}
+
+.sensor-chip {
+  font-family: var(--fonte-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #64748b;
+}
+
+.sensor-chip.ativo {
+  background: rgba(0, 212, 255, 0.12);
+  border-color: rgba(0, 212, 255, 0.4);
+  color: var(--cor-cyan-neon);
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.2);
+}
+
+/* Efeito Holográfico Comemorativo do Aniversário (Item 4) */
+body.aniversario-ativo {
+  box-shadow: inset 0 0 120px rgba(244, 114, 182, 0.25);
+  transition: box-shadow 0.8s ease;
+}
+
+body.aniversario-ativo .torre-central .torre-pulso-anel {
+  border-color: rgba(250, 204, 21, 0.45);
+  box-shadow: 0 0 35px rgba(244, 114, 182, 0.35);
+}
+
+body.aniversario-ativo .hud-radio-flutuante {
+  border-color: var(--cor-amarelo-titans);
+  box-shadow: 0 0 25px rgba(250, 204, 21, 0.5);
+}
+
+body.aniversario-ativo .torre-janelas {
+  fill: #f472b6;
+  filter: drop-shadow(0 0 15px #f472b6);
+}
 
 /* ==========================================================================
    8. MODAL DE DOSSIÊ HOLOGRÁFICO DA MISSÃO
