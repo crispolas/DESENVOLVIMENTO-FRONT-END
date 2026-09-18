@@ -6,10 +6,33 @@
   <title>Torre dos Titãs // Computador Central</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,600&family=Rajdhani:wght@500;600;700&family=Share+Tech+Mono&family=Teko:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,600&family=Oxanium:wght@600;700;800&family=Share+Tech+Mono&family=Teko:wght@600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body class="hud-body">
+
+  <!-- 1. Abertura Cinemática: A Torre Acordando (Boot Sequence) -->
+  <div id="tela-boot" class="tela-boot" aria-label="Sequência de Inicialização do Sistema">
+    <div class="boot-terminal-caixa">
+      <div class="boot-cabecalho">
+        <img src="img/comunicador-t.png" alt="" class="boot-emblema-t">
+        <div>
+          <span class="boot-versao">CYBORG OS // V-4.8.2</span>
+          <h1 class="boot-titulo">TITANS TOWER // SYSTEM BOOT</h1>
+        </div>
+      </div>
+      <div class="boot-log-linhas">
+        <p class="boot-linha">[OK] REATORES DE ENERGIA T: 98.4% ESTABILIZADOS</p>
+        <p class="boot-linha">[OK] RADAR ORBITAL DE JUMP CITY CONECTADO</p>
+        <p class="boot-linha">[OK] REDE COMUNICADOR-T: 5 CANAIS ATIVOS</p>
+        <p class="boot-linha boot-destaque">>> SISTEMA CENTRAL ONLINE. ENTRANDO NA SALA DE COMANDO...</p>
+      </div>
+      <div class="boot-barra-progresso">
+        <div class="boot-progresso-fill"></div>
+      </div>
+      <button type="button" id="btn-pular-boot" class="btn-pular-boot">ACESSAR TELÃO DIRETO ❯</button>
+    </div>
+  </div>
 
   <!-- Camada Holográfica de Fundo: Mira Tática do Radar Jump City -->
   <div class="radar-overlay" aria-hidden="true">
@@ -25,41 +48,159 @@
     <div class="hud-bloco-status">
       <span class="beacon-pulso" aria-hidden="true"></span>
       <div class="hud-titulos">
-        <span class="hud-terminal-id">TITANS COMMAND SYSTEM // RADAR JUMP CITY</span>
+        <span class="hud-terminal-id">TITANS COMMAND SYSTEM // JUMP CITY</span>
         <span class="hud-substatus" id="hud-substatus">5 OPERATIVOS CONECTADOS • VARREDURA ATIVA</span>
       </div>
     </div>
 
-    <!-- Transmissão de Rádio do Ciborgue -->
+    <!-- Transmissão de Rádio Dinâmica (Ciborgue / Robin) -->
     <div class="hud-transmissao" aria-live="off">
-      <span class="operador-tag">⚡ CIBORGUE:</span>
+      <span class="operador-tag" id="hud-operador-tag">⚡ CIBORGUE:</span>
       <span class="operador-fala" id="hud-fala-ciborgue">"Varredura completa. 8 missões ativas no radar!"</span>
     </div>
 
-    <!-- Controles de Acesso: Região Viva #status e Comunicador T -->
+    <!-- Botão de Emergência & Controles de Acesso -->
     <div class="hud-controles-topo">
+      <button type="button" id="btn-alerta-emergencia" class="btn-alerta-emergencia" title="Alternar Estado de Emergência (Alerta Titãs)">
+        <span class="icone-sirene" aria-hidden="true">⚠</span>
+        <span class="texto-alerta-btn">ALERTA TITÃS</span>
+      </button>
+
+      <!-- Região Viva Obrigatória de Acessibilidade -->
       <div id="status" class="badge-status-missao" role="status" aria-live="polite"></div>
 
+      <!-- Botão Oficial Comunicador T -->
       <button type="button" 
               id="btn-comunicador" 
               class="btn-comunicador-icone" 
               aria-haspopup="dialog"
               aria-expanded="false" 
               aria-controls="modal-filtros-overlay" 
-              title="Acessar Comunicador T (Filtros e Busca de Missões)">
+              title="Acessar Comunicador T (Filtros e Busca)">
         <img src="img/comunicador-t.png" alt="Comunicador dos Titãs" class="icone-t">
       </button>
     </div>
   </header>
 
-  <!-- Modal Popup de Gerenciamento (Filtros e Busca no Comunicador T) -->
+  <!-- Telão da Sala de Comando com Consoles Integrados -->
+  <main class="cockpit-container">
+
+    <!-- Console Lateral Esquerdo: Telemetria & Operativos Titãs -->
+    <aside class="console-lateral-torre" aria-label="Painel de Diagnóstico da Torre">
+      <div class="modulo-telemetria">
+        <div class="modulo-titulo">DIAGNÓSTICO DA TORRE</div>
+        <div class="telemetria-item">
+          <span>ENERGIA REATOR</span>
+          <span class="telemetria-valor cyan">98.4%</span>
+        </div>
+        <div class="telemetria-barra"><div class="telemetria-fill w-98"></div></div>
+
+        <div class="telemetria-item">
+          <span>ESCUDO DEFESA</span>
+          <span class="telemetria-valor green">MAX</span>
+        </div>
+        <div class="telemetria-barra"><div class="telemetria-fill green w-100"></div></div>
+
+        <div class="telemetria-item">
+          <span>VARREDURA RADAR</span>
+          <span class="telemetria-valor yellow">360° ATIVA</span>
+        </div>
+      </div>
+
+      <!-- Painel de Seleção Rápida de Titã (Filtro Direto) -->
+      <div class="modulo-titans-roster">
+        <div class="modulo-titulo">TITÃS EM SERVIÇO</div>
+        <div class="roster-botoes">
+          <button type="button" class="btn-roster" data-heroi="Robin" title="Filtrar missões do Robin">
+            <img src="img/robin.png" alt="" class="roster-avatar">
+            <span>ROBIN</span>
+          </button>
+          <button type="button" class="btn-roster" data-heroi="Ciborgue" title="Filtrar missões do Ciborgue">
+            <img src="img/ciborgue.png" alt="" class="roster-avatar">
+            <span>CIBORGUE</span>
+          </button>
+          <button type="button" class="btn-roster" data-heroi="Estelar" title="Filtrar missões da Estelar">
+            <img src="img/estelar.png" alt="" class="roster-avatar">
+            <span>ESTELAR</span>
+          </button>
+          <button type="button" class="btn-roster" data-heroi="Ravena" title="Filtrar missões da Ravena">
+            <img src="img/ravena.png" alt="" class="roster-avatar">
+            <span>RAVENA</span>
+          </button>
+          <button type="button" class="btn-roster" data-heroi="Mutano" title="Filtrar missões do Mutano">
+            <img src="img/mutano.png" alt="" class="roster-avatar">
+            <span>MUTANO</span>
+          </button>
+          <button type="button" class="btn-roster btn-roster-todos ativo" data-heroi="" title="Exibir todos os Titãs">
+            <span>TODOS</span>
+          </button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Centro: O Telão Holográfico de Missões (Consoles Táticos) -->
+    <section aria-labelledby="quadro-heading" data-quadro class="cockpit-centro-missoes">
+      <h2 id="quadro-heading" class="sr-only">Quadro de Missões Táticas</h2>
+
+      <!-- Setor 1: SINAIS NO RADAR -->
+      <section aria-labelledby="coluna-a-fazer-heading" class="setor-cockpit setor-radar">
+        <header class="setor-cabecalho">
+          <div class="setor-tag-box">
+            <span class="setor-dot dot-radar" aria-hidden="true"></span>
+            <h3 id="coluna-a-fazer-heading">SINAIS NO RADAR</h3>
+          </div>
+          <span class="setor-meta">[ A FAZER ]</span>
+        </header>
+        <ul data-lista-status="a-fazer" class="lista-fichas-largas"></ul>
+      </section>
+
+      <!-- Setor 2: EM OPERAÇÃO ATIVA -->
+      <section aria-labelledby="coluna-em-andamento-heading" class="setor-cockpit setor-operacao">
+        <header class="setor-cabecalho">
+          <div class="setor-tag-box">
+            <span class="setor-dot dot-operacao" aria-hidden="true"></span>
+            <h3 id="coluna-em-andamento-heading">EM OPERAÇÃO ATIVA</h3>
+          </div>
+          <span class="setor-meta">[ EXECUTANDO ]</span>
+        </header>
+        <ul data-lista-status="em-andamento" class="lista-fichas-largas"></ul>
+      </section>
+
+      <!-- Setor 3: SCANNER TÁTICO / ANÁLISE -->
+      <section aria-labelledby="coluna-em-revisao-heading" class="setor-cockpit setor-analise">
+        <header class="setor-cabecalho">
+          <div class="setor-tag-box">
+            <span class="setor-dot dot-analise" aria-hidden="true"></span>
+            <h3 id="coluna-em-revisao-heading">EM ANÁLISE // SCANNER</h3>
+          </div>
+          <span class="setor-meta">[ REVISÃO ]</span>
+        </header>
+        <ul data-lista-status="em-revisao" class="lista-fichas-largas"></ul>
+      </section>
+
+      <!-- Setor 4: ARQUIVO DE MISSÕES CONCLUÍDAS -->
+      <section aria-labelledby="coluna-concluida-heading" class="setor-cockpit setor-arquivo">
+        <header class="setor-cabecalho">
+          <div class="setor-tag-box">
+            <span class="setor-dot dot-arquivo" aria-hidden="true"></span>
+            <h3 id="coluna-concluida-heading">ARQUIVO // CONCLUÍDO</h3>
+          </div>
+          <span class="setor-meta">[ FINALIZADO ]</span>
+        </header>
+        <ul data-lista-status="concluida" class="lista-fichas-largas"></ul>
+      </section>
+    </section>
+
+  </main>
+
+  <!-- Modal 1: Comunicador T (Filtros e Busca) -->
   <div id="modal-filtros-overlay" class="modal-overlay" aria-hidden="true">
     <div id="modal-filtros" class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="busca-filtros-heading">
       <div class="modal-cabecalho">
         <div class="modal-titulo-box">
           <img src="img/comunicador-t.png" alt="" class="modal-icone-t">
           <div>
-            <span class="subtitulo-popup">COMUNICADOR T // TERMINAL TÁTICO</span>
+            <span class="subtitulo-popup">COMUNICADOR T // CENTRAL</span>
             <h2 id="busca-filtros-heading">Gerenciador de Missões</h2>
           </div>
         </div>
@@ -68,8 +209,8 @@
 
       <form class="modal-form">
         <div class="campo-busca">
-          <label for="busca-titulo">Buscar missão por título ou Titã:</label>
-          <input type="search" id="busca-titulo" name="busca-titulo" placeholder="Digite para filtrar em tempo real...">
+          <label for="busca-titulo">Buscar missão por título, Titã ou operação:</label>
+          <input type="search" id="busca-titulo" name="busca-titulo" placeholder="Ex: Slade, Waffles, Demônio, Robin...">
         </div>
 
         <fieldset class="grupo-filtros">
@@ -81,19 +222,19 @@
             </label>
             <label class="item-radio">
               <input type="radio" id="status-a-fazer" name="status" value="a-fazer">
-              <span>🔵 Sinais no Radar</span>
+              <span>Sinais no Radar</span>
             </label>
             <label class="item-radio">
               <input type="radio" id="status-em-andamento" name="status" value="em-andamento">
-              <span>🟡 Em Operação</span>
+              <span>Em Operação</span>
             </label>
             <label class="item-radio">
               <input type="radio" id="status-em-revisao" name="status" value="em-revisao">
-              <span>🟣 Em Análise</span>
+              <span>Em Análise</span>
             </label>
             <label class="item-radio">
               <input type="radio" id="status-concluida" name="status" value="concluida">
-              <span>🟢 Arquivado</span>
+              <span>Arquivado</span>
             </label>
           </div>
         </fieldset>
@@ -135,74 +276,55 @@
     </div>
   </div>
 
-  <!-- Telão Principal de Missões (Fichas Magnéticas Projetadas) -->
-  <main>
-    <section aria-labelledby="quadro-heading" data-quadro class="quadro-tatico">
-      <h2 id="quadro-heading" class="sr-only">Fichas Táticas de Missões</h2>
-
-      <!-- Setor 1: SINAIS NO RADAR -->
-      <section aria-labelledby="coluna-a-fazer-heading" class="setor-tatico setor-radar">
-        <header class="setor-cabecalho">
-          <div class="setor-tag-box">
-            <span class="setor-dot dot-radar" aria-hidden="true"></span>
-            <h3 id="coluna-a-fazer-heading">🔵 SINAIS // RADAR</h3>
+  <!-- Modal 2: Dossiê Holográfico da Missão (Ao Clicar no Card) -->
+  <div id="modal-dossie-overlay" class="modal-overlay" aria-hidden="true">
+    <div id="modal-dossie" class="modal-conteudo modal-dossie-zoom" role="dialog" aria-modal="true" aria-labelledby="dossie-titulo">
+      <div class="modal-cabecalho">
+        <div class="modal-titulo-box">
+          <span class="dossie-stamp" id="dossie-codigo">#OP-TITANS</span>
+          <div>
+            <span class="subtitulo-popup">ARQUIVO TÁTICO DA MISSÃO</span>
+            <h2 id="dossie-titulo">Título da Missão</h2>
           </div>
-          <span class="setor-meta">A FAZER</span>
-        </header>
-        <ul data-lista-status="a-fazer"></ul>
-      </section>
+        </div>
+        <button type="button" id="btn-fechar-dossie" class="btn-fechar-modal" aria-label="Fechar dossiê da missão">✕</button>
+      </div>
 
-      <!-- Setor 2: EM OPERAÇÃO ATIVA -->
-      <section aria-labelledby="coluna-em-andamento-heading" class="setor-tatico setor-operacao">
-        <header class="setor-cabecalho">
-          <div class="setor-tag-box">
-            <span class="setor-dot dot-operacao" aria-hidden="true"></span>
-            <h3 id="coluna-em-andamento-heading">🟡 EM OPERAÇÃO</h3>
+      <div class="dossie-corpo">
+        <div class="dossie-hero-bloco">
+          <img id="dossie-avatar" src="img/robin.png" alt="" class="dossie-avatar-grande">
+          <div class="dossie-hero-dados">
+            <span class="dossie-label">OPERATIVO RESPONSÁVEL</span>
+            <strong class="dossie-nome-heroi" id="dossie-heroi">Robin</strong>
+            <span class="dossie-status-tag" id="dossie-status-tag">EM OPERAÇÃO ATIVA</span>
           </div>
-          <span class="setor-meta">EXECUTANDO</span>
-        </header>
-        <ul data-lista-status="em-andamento"></ul>
-      </section>
+        </div>
 
-      <!-- Setor 3: SCANNER TÁTICO / ANÁLISE -->
-      <section aria-labelledby="coluna-em-revisao-heading" class="setor-tatico setor-analise">
-        <header class="setor-cabecalho">
-          <div class="setor-tag-box">
-            <span class="setor-dot dot-analise" aria-hidden="true"></span>
-            <h3 id="coluna-em-revisao-heading">🟣 EM ANÁLISE</h3>
+        <div class="dossie-detalhes-grid">
+          <div class="dossie-info-box">
+            <span class="dossie-label">CÓDIGO DE OPERAÇÃO</span>
+            <span class="dossie-dado" id="dossie-projeto">Torre dos Titãs</span>
           </div>
-          <span class="setor-meta">SCANNER</span>
-        </header>
-        <ul data-lista-status="em-revisao"></ul>
-      </section>
-
-      <!-- Setor 4: ARQUIVO DE MISSÕES CONCLUÍDAS -->
-      <section aria-labelledby="coluna-concluida-heading" class="setor-tatico setor-arquivo">
-        <header class="setor-cabecalho">
-          <div class="setor-tag-box">
-            <span class="setor-dot dot-arquivo" aria-hidden="true"></span>
-            <h3 id="coluna-concluida-heading">🟢 ARQUIVO</h3>
+          <div class="dossie-info-box">
+            <span class="dossie-label">PRIORIDADE TÁTICA</span>
+            <span class="dossie-dado" id="dossie-prioridade">URGENTE</span>
           </div>
-          <span class="setor-meta">CONCLUÍDO</span>
-        </header>
-        <ul data-lista-status="concluida"></ul>
-      </section>
-    </section>
+          <div class="dossie-info-box">
+            <span class="dossie-label">PRAZO LIMITE</span>
+            <span class="dossie-dado" id="dossie-prazo">25/09/2026</span>
+          </div>
+          <div class="dossie-info-box">
+            <span class="dossie-label">CANAL DE COMUNICAÇÃO</span>
+            <span class="dossie-dado text-cyan">CRIPTOGRAFIA NÍVEL 5</span>
+          </div>
+        </div>
 
-    <!-- Alerta de Evento Integrado ao Sistema (Personalidade da Torre) -->
-    <aside id="alerta-evento-social" class="hud-alerta-social" aria-label="Alerta de Calendário Social">
-      <div class="alerta-social-conteudo">
-        <span class="alerta-icone" aria-hidden="true">🎂</span>
-        <div>
-          <span class="alerta-tag">⚠ CALENDÁRIO SOCIAL // NOTIFICAÇÃO DA TORRE</span>
-          <p class="alerta-texto">HOJE É ANIVERSÁRIO DA ESTELAR!</p>
+        <div class="dossie-botoes-acao">
+          <button type="button" id="btn-fechar-dossie-secundario" class="btn-limpar">Fechar Arquivo</button>
         </div>
       </div>
-      <button type="button" id="btn-evento-estelar" class="btn-acao-evento">
-        ⚡ Ver Missões da Estelar ❯
-      </button>
-    </aside>
-  </main>
+    </div>
+  </div>
 
   <script type="module" src="js/app.js"></script>
 </body>

@@ -1,31 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@0,500;0,700;1,600&family=Oxanium:wght@600;700;800&family=Share+Tech+Mono&family=Teko:wght@600;700&display=swap');
+
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
 :root {
-  /* Paleta Holográfica do Computador dos Titãs */
+  /* Paleta Holográfica Oficial da Torre dos Titãs */
   --cor-cyan-neon: #00d4ff;
-  --cor-cyan-glow: rgba(0, 212, 255, 0.45);
-  --cor-amarelo-titans: #eab308;
+  --cor-cyan-glow: rgba(0, 212, 255, 0.5);
+  --cor-amarelo-titans: #facc15;
   --cor-vermelho-alerta: #ef4444;
-  --cor-roxo-scanner: #a855f7;
+  --cor-vermelho-glow: rgba(239, 68, 68, 0.6);
   --cor-verde-arquivo: #22c55e;
+  --cor-roxo-scanner: #c084fc;
 
-  --cor-fundo-cartao: rgba(13, 20, 38, 0.92);
-  --cor-borda-tech: rgba(0, 212, 255, 0.3);
+  --cor-fundo-dossie: rgba(10, 18, 38, 0.92);
+  --cor-borda-tech: rgba(0, 212, 255, 0.4);
 
   --cor-texto-claro: #f8fafc;
   --cor-texto-mutado: #94a3b8;
   --cor-texto-tech: #38bdf8;
 
-  --fonte-tech: 'Chakra Petch', 'Rajdhani', sans-serif;
+  --fonte-display: 'Oxanium', 'Teko', sans-serif;
   --fonte-mono: 'Share Tech Mono', monospace;
-  --fonte-display: 'Teko', sans-serif;
-
-  --espaco-1: 0.5rem;
-  --espaco-2: 1rem;
-  --espaco-3: 1.5rem;
-  --espaco-4: 2rem;
+  --fonte-base: 'Chakra Petch', sans-serif;
 }
 
 html {
@@ -34,26 +32,205 @@ html {
 
 body.hud-body {
   margin: 0;
-  font-family: var(--fonte-tech);
+  font-family: var(--fonte-base);
   color: var(--cor-texto-claro);
   min-height: 100vh;
   line-height: 1.5;
   background: 
-    radial-gradient(circle at 50% 30%, rgba(0, 212, 255, 0.08) 0%, transparent 60%),
-    linear-gradient(rgba(10, 15, 28, 0.72), rgba(6, 10, 22, 0.88)),
+    radial-gradient(circle at 50% 30%, rgba(0, 212, 255, 0.08) 0%, transparent 65%),
+    linear-gradient(rgba(8, 14, 28, 0.74), rgba(4, 8, 18, 0.90)),
     url('img/torre-fundo.jpg') no-repeat center center fixed;
   background-size: cover;
   position: relative;
   overflow-x: hidden;
-}
-
-:focus-visible {
-  outline: 3px solid var(--cor-cyan-neon);
-  outline-offset: 2px;
+  transition: background 0.4s ease;
 }
 
 /* ==========================================================================
-   CAMADA HOLOGRÁFICA DO RADAR // JUMP CITY
+   1. ABERTURA CINEMÁTICA: A TORRE ACORDANDO (BOOT SEQUENCE)
+   ========================================================================== */
+.tela-boot {
+  position: fixed;
+  inset: 0;
+  background: #040812;
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.6s ease;
+}
+
+.tela-boot.oculto {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.boot-terminal-caixa {
+  background: rgba(10, 18, 36, 0.95);
+  border: 2px solid var(--cor-cyan-neon);
+  border-radius: 14px;
+  box-shadow: 0 0 50px rgba(0, 212, 255, 0.4), inset 0 0 25px rgba(0, 212, 255, 0.1);
+  width: 100%;
+  max-width: 620px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.boot-cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.3);
+  padding-bottom: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.boot-emblema-t {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(234, 179, 8, 0.8));
+  animation: bootPulso 2s infinite ease-in-out;
+}
+
+@keyframes bootPulso {
+  0%, 100% { transform: scale(1); filter: drop-shadow(0 0 12px rgba(234, 179, 8, 0.8)); }
+  50% { transform: scale(1.08); filter: drop-shadow(0 0 22px rgba(0, 212, 255, 1)); }
+}
+
+.boot-versao {
+  font-family: var(--fonte-mono);
+  font-size: 0.72rem;
+  color: var(--cor-cyan-neon);
+  letter-spacing: 0.15em;
+  font-weight: 700;
+}
+
+.boot-titulo {
+  margin: 0;
+  font-family: var(--fonte-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.08em;
+  color: #ffffff;
+}
+
+.boot-log-linhas {
+  font-family: var(--fonte-mono);
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: #94a3b8;
+  margin-bottom: 1.5rem;
+}
+
+.boot-linha {
+  margin: 0.3rem 0;
+}
+
+.boot-destaque {
+  color: var(--cor-cyan-neon);
+  font-weight: 700;
+  animation: blinkCursor 1s infinite;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.boot-barra-progresso {
+  width: 100%;
+  height: 6px;
+  background: rgba(0, 212, 255, 0.15);
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.boot-progresso-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--cor-cyan-neon), #38bdf8);
+  box-shadow: 0 0 12px var(--cor-cyan-neon);
+  animation: carregarBoot 2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+@keyframes carregarBoot {
+  0% { width: 0%; }
+  40% { width: 65%; }
+  100% { width: 100%; }
+}
+
+.btn-pular-boot {
+  background: rgba(0, 212, 255, 0.15);
+  border: 1px solid var(--cor-cyan-neon);
+  color: var(--cor-cyan-neon);
+  font-family: var(--fonte-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  float: right;
+}
+
+.btn-pular-boot:hover {
+  background: var(--cor-cyan-neon);
+  color: #040812;
+  box-shadow: 0 0 15px var(--cor-cyan-neon);
+}
+
+/* ==========================================================================
+   2. ESTADO DE EMERGÊNCIA (TITANS ALERT)
+   ========================================================================== */
+body.alerta-emergencia-ativo {
+  background: 
+    radial-gradient(circle at 50% 30%, rgba(239, 68, 68, 0.22) 0%, transparent 65%),
+    linear-gradient(rgba(28, 8, 12, 0.82), rgba(18, 4, 8, 0.94)),
+    url('img/torre-fundo.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
+body.alerta-emergencia-ativo .hud-top-bar {
+  border-bottom-color: var(--cor-vermelho-alerta);
+  background: rgba(30, 8, 14, 0.9);
+  box-shadow: 0 0 30px rgba(239, 68, 68, 0.35);
+}
+
+body.alerta-emergencia-ativo .beacon-pulso {
+  background: var(--cor-vermelho-alerta);
+  box-shadow: 0 0 15px var(--cor-vermelho-alerta), 0 0 30px var(--cor-vermelho-alerta);
+}
+
+body.alerta-emergencia-ativo .btn-alerta-emergencia {
+  background: var(--cor-vermelho-alerta);
+  color: #ffffff;
+  border-color: #ff8888;
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.8);
+  animation: sirenFlash 1s infinite alternate;
+}
+
+@keyframes sirenFlash {
+  from { filter: brightness(1); }
+  to { filter: brightness(1.4); }
+}
+
+body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
+  border-color: var(--cor-vermelho-alerta) !important;
+  box-shadow: 0 0 25px rgba(239, 68, 68, 0.6), inset 0 0 15px rgba(239, 68, 68, 0.15) !important;
+  animation: alertaCardPulse 1.8s infinite alternate;
+}
+
+@keyframes alertaCardPulse {
+  from { border-color: rgba(239, 68, 68, 0.5); }
+  to { border-color: rgba(239, 68, 68, 1); }
+}
+
+/* ==========================================================================
+   3. CAMADA HOLOGRÁFICA DO RADAR // JUMP CITY
    ========================================================================== */
 .radar-overlay {
   position: fixed;
@@ -65,24 +242,24 @@ body.hud-body {
   justify-content: center;
   overflow: hidden;
   background-image: 
-    linear-gradient(to right, rgba(0, 212, 255, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
-  background-size: 44px 44px;
+    linear-gradient(to right, rgba(0, 212, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 212, 255, 0.04) 1px, transparent 1px);
+  background-size: 40px 40px;
 }
 
 .mira-circulo-externo {
   width: min(85vw, 680px);
   height: min(85vw, 680px);
-  border: 1px dashed rgba(0, 212, 255, 0.18);
+  border: 1px dashed rgba(0, 212, 255, 0.16);
   border-radius: 50%;
   position: absolute;
-  animation: rotacaoRadar 50s linear infinite;
+  animation: rotacaoRadar 60s linear infinite;
 }
 
 .mira-circulo-interno {
-  width: min(50vw, 400px);
-  height: min(50vw, 400px);
-  border: 1px solid rgba(0, 212, 255, 0.15);
+  width: min(50vw, 380px);
+  height: min(50vw, 380px);
+  border: 1px solid rgba(0, 212, 255, 0.12);
   border-radius: 50%;
   position: absolute;
 }
@@ -90,14 +267,14 @@ body.hud-body {
 .mira-eixo-x {
   width: 100%;
   height: 1px;
-  background: linear-gradient(to right, transparent, rgba(0, 212, 255, 0.25) 50%, transparent);
+  background: linear-gradient(to right, transparent, rgba(0, 212, 255, 0.2) 50%, transparent);
   position: absolute;
 }
 
 .mira-eixo-y {
   height: 100%;
   width: 1px;
-  background: linear-gradient(to bottom, transparent, rgba(0, 212, 255, 0.25) 50%, transparent);
+  background: linear-gradient(to bottom, transparent, rgba(0, 212, 255, 0.2) 50%, transparent);
   position: absolute;
 }
 
@@ -111,7 +288,7 @@ body.hud-body {
     rgba(0, 212, 255, 0.02) 3px,
     rgba(0, 212, 255, 0.02) 6px
   );
-  opacity: 0.6;
+  opacity: 0.5;
 }
 
 @keyframes rotacaoRadar {
@@ -120,22 +297,23 @@ body.hud-body {
 }
 
 /* ==========================================================================
-   BARRA SUPERIOR TÁTICA DO CIBORGUE (HUD DE COMANDO)
+   4. BARRA SUPERIOR TÁTICA DO CIBORGUE (HUD DE COMANDO)
    ========================================================================== */
 .hud-top-bar {
   position: relative;
-  z-index: 10;
+  z-index: 20;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0.85rem clamp(1rem, 3vw, 2.5rem);
-  background: rgba(10, 16, 32, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(0, 212, 255, 0.3);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+  padding: 0.85rem clamp(1rem, 2.5vw, 2rem);
+  background: rgba(10, 16, 32, 0.88);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.35);
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.65);
   gap: 1rem;
   flex-wrap: wrap;
+  transition: all 0.3s ease;
 }
 
 .hud-bloco-status {
@@ -151,6 +329,7 @@ body.hud-body {
   background: var(--cor-cyan-neon);
   box-shadow: 0 0 12px var(--cor-cyan-neon), 0 0 20px var(--cor-cyan-neon);
   animation: beaconPulse 2s infinite ease-in-out;
+  flex-shrink: 0;
 }
 
 @keyframes beaconPulse {
@@ -165,7 +344,7 @@ body.hud-body {
 
 .hud-terminal-id {
   font-family: var(--fonte-mono);
-  font-size: 0.78rem;
+  font-size: 0.8rem;
   letter-spacing: 0.14em;
   color: var(--cor-cyan-neon);
   text-transform: uppercase;
@@ -173,25 +352,25 @@ body.hud-body {
 }
 
 .hud-substatus {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   color: var(--cor-texto-mutado);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
-/* Banner de Transmissão de Rádio do Ciborgue */
+/* Transmissão de Rádio Dinâmica */
 .hud-transmissao {
   display: none;
   align-items: center;
   gap: 8px;
   background: rgba(14, 116, 144, 0.2);
-  border: 1px solid rgba(0, 212, 255, 0.3);
+  border: 1px solid rgba(0, 212, 255, 0.35);
   padding: 5px 14px;
   border-radius: 9999px;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
 }
 
-@media (min-width: 820px) {
+@media (min-width: 860px) {
   .hud-transmissao {
     display: flex;
   }
@@ -201,6 +380,8 @@ body.hud-body {
   color: var(--cor-amarelo-titans);
   font-weight: 800;
   letter-spacing: 0.05em;
+  font-family: var(--fonte-display);
+  font-size: 0.95rem;
 }
 
 .operador-fala {
@@ -209,11 +390,36 @@ body.hud-body {
   font-family: var(--fonte-mono);
 }
 
-/* Controles de Topo: Região Viva e Botão Comunicador */
+/* Botão de Emergência */
+.btn-alerta-emergencia {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.6);
+  color: #fca5a5;
+  font-family: var(--fonte-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+}
+
+.btn-alerta-emergencia:hover {
+  background: rgba(239, 68, 68, 0.35);
+  color: #ffffff;
+  border-color: #ef4444;
+  box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+}
+
+/* Controles de Topo: Região Viva e Comunicador */
 .hud-controles-topo {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 12px;
 }
 
 .badge-status-missao {
@@ -253,7 +459,7 @@ body.hud-body {
 
 .btn-comunicador-icone:hover {
   transform: scale(1.15) rotate(6deg);
-  filter: drop-shadow(0 0 16px rgba(234, 179, 8, 0.95)) drop-shadow(0 0 25px rgba(0, 212, 255, 0.8));
+  filter: drop-shadow(0 0 18px rgba(234, 179, 8, 0.95)) drop-shadow(0 0 25px rgba(0, 212, 255, 0.8));
 }
 
 .btn-comunicador-icone:active {
@@ -267,15 +473,25 @@ body.hud-body {
 }
 
 /* ==========================================================================
-   TELÃO PRINCIPAL DE MISSÕES
+   5. LAYOUT DO COCKPIT (SALA DE COMANDO INTEGRADA)
    ========================================================================== */
-main {
+.cockpit-container {
   position: relative;
   z-index: 5;
-  padding: 1.75rem clamp(1rem, 2.5vw, 2.5rem);
-  max-width: 1680px;
+  padding: 1.5rem clamp(1rem, 2.5vw, 2.5rem);
+  max-width: 1720px;
   margin: 0 auto;
   width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.75rem;
+}
+
+@media (min-width: 1100px) {
+  .cockpit-container {
+    grid-template-columns: 240px 1fr;
+    align-items: start;
+  }
 }
 
 .sr-only {
@@ -290,17 +506,144 @@ main {
   border-width: 0;
 }
 
-/* Quadro Tático com Setores de Radar */
-.quadro-tatico {
+/* Painel Lateral: Telemetria & Roster */
+.console-lateral-torre {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.modulo-telemetria,
+.modulo-titans-roster {
+  background: rgba(10, 18, 36, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+}
+
+.modulo-titulo {
+  font-family: var(--fonte-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--cor-cyan-neon);
+  text-transform: uppercase;
+  border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+  padding-bottom: 0.4rem;
+  margin-bottom: 0.85rem;
+}
+
+.telemetria-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+  color: #cbd5e1;
+  margin-top: 0.5rem;
+}
+
+.telemetria-valor.cyan { color: var(--cor-cyan-neon); font-weight: 700; }
+.telemetria-valor.green { color: var(--cor-verde-arquivo); font-weight: 700; }
+.telemetria-valor.yellow { color: var(--cor-amarelo-titans); font-weight: 700; }
+
+.telemetria-barra {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.telemetria-fill {
+  height: 100%;
+  background: var(--cor-cyan-neon);
+}
+
+.telemetria-fill.w-98 { width: 98.4%; }
+.telemetria-fill.green.w-100 { width: 100%; background: var(--cor-verde-arquivo); }
+
+/* Roster de Heróis (Filtro Interativo de Titã) */
+.roster-botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn-roster {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: #cbd5e1;
+  font-family: var(--fonte-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.btn-roster:hover,
+.btn-roster.ativo {
+  background: rgba(0, 212, 255, 0.2);
+  border-color: var(--cor-cyan-neon);
+  color: #ffffff;
+  transform: translateX(4px);
+}
+
+.btn-roster.btn-roster-todos {
+  justify-content: center;
+  text-align: center;
+  margin-top: 4px;
+  background: rgba(250, 204, 21, 0.15);
+  border-color: rgba(250, 204, 21, 0.4);
+  color: var(--cor-amarelo-titans);
+}
+
+.btn-roster.btn-roster-todos.ativo {
+  background: var(--cor-amarelo-titans);
+  color: #040812;
+}
+
+.roster-avatar {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+/* ==========================================================================
+   6. CONSOLES DE MISSÕES (TIERED COCKPIT // ADEUS 4 COLUNAS FINAS)
+   ========================================================================== */
+.cockpit-centro-missoes {
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
   width: 100%;
 }
 
-.setor-tatico {
+@media (min-width: 900px) {
+  .cockpit-centro-missoes {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.setor-cockpit {
   display: flex;
   flex-direction: column;
+  background: rgba(8, 15, 32, 0.6);
+  border: 1px solid rgba(0, 212, 255, 0.25);
+  border-radius: 14px;
+  padding: 1.15rem;
+  box-shadow: inset 0 0 20px rgba(0, 212, 255, 0.03);
   min-width: 0;
 }
 
@@ -309,7 +652,7 @@ main {
   align-items: center;
   justify-content: space-between;
   padding-bottom: 0.65rem;
-  margin-bottom: 1.15rem;
+  margin-bottom: 1rem;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }
 
@@ -325,33 +668,17 @@ main {
   border-radius: 50%;
 }
 
-.dot-radar {
-  background: #94a3b8;
-  box-shadow: 0 0 8px #94a3b8;
-}
-
-.dot-operacao {
-  background: #38bdf8;
-  box-shadow: 0 0 8px #38bdf8;
-  animation: beaconPulse 1.8s infinite;
-}
-
-.dot-analise {
-  background: #c084fc;
-  box-shadow: 0 0 8px #c084fc;
-}
-
-.dot-arquivo {
-  background: #4ade80;
-  box-shadow: 0 0 8px #4ade80;
-}
+.dot-radar { background: #94a3b8; box-shadow: 0 0 8px #94a3b8; }
+.dot-operacao { background: #38bdf8; box-shadow: 0 0 8px #38bdf8; animation: beaconPulse 1.8s infinite; }
+.dot-analise { background: #c084fc; box-shadow: 0 0 8px #c084fc; }
+.dot-arquivo { background: #4ade80; box-shadow: 0 0 8px #4ade80; }
 
 .setor-cabecalho h3 {
   margin: 0;
-  font-family: var(--fonte-mono);
-  font-size: 0.95rem;
+  font-family: var(--fonte-display);
+  font-size: 1.25rem;
   font-weight: 700;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
@@ -367,70 +694,72 @@ main {
 
 .setor-meta {
   font-family: var(--fonte-mono);
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   color: var(--cor-texto-mutado);
 }
 
-.setor-tatico ul[data-lista-status] {
+.lista-fichas-largas {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.15rem;
+}
+
+.item-missao-li {
+  width: 100%;
 }
 
 /* ==========================================================================
-   FICHAS MAGNÉTICAS PROJETADAS (CARTÕES DE MISSÃO)
+   7. FICHAS MAGNÉTICAS LARGAS (DOSSIÊS HOLOGRÁFICOS GRANDES)
    ========================================================================== */
 .ficha-magnetica {
-  background: var(--cor-fundo-cartao);
+  background: var(--cor-fundo-dossie);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--cor-borda-tech);
   border-radius: 12px;
-  padding: 1.15rem;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), inset 0 0 12px rgba(0, 212, 255, 0.04);
+  padding: 1.25rem 1.4rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.65), inset 0 0 15px rgba(0, 212, 255, 0.05);
   transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, border-color 0.25s ease;
   cursor: pointer;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.65rem;
+  gap: 0.75rem;
 }
-.painel-lateral.aberto { right: 0; }
 
-/* Inclinações Orgânicas Magnéticas (Evita a rigidez do SaaS) */
-.rot-1 { transform: rotate(-1.2deg); }
-.rot-2 { transform: rotate(1.3deg); }
-.rot-3 { transform: rotate(-0.8deg); }
-.rot-4 { transform: rotate(1.5deg); }
+/* Inclinações Magnéticas Sutis */
+.rot-1 { transform: rotate(-0.9deg); }
+.rot-2 { transform: rotate(1.1deg); }
+.rot-3 { transform: rotate(-0.7deg); }
+.rot-4 { transform: rotate(1.2deg); }
 
 .ficha-magnetica:hover {
-  transform: translateY(-6px) scale(1.03) rotate(0deg) !important;
+  transform: translateY(-6px) scale(1.02) rotate(0deg) !important;
   border-color: var(--cor-cyan-neon);
-  box-shadow: 0 0 25px rgba(0, 212, 255, 0.55), 0 16px 36px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.6), 0 16px 36px rgba(0, 0, 0, 0.8);
   z-index: 20;
 }
 
-/* Variações Visuais por Status de Operação */
+/* Variações por Status */
 .ficha-magnetica.status-em-andamento {
-  border-color: rgba(56, 189, 248, 0.45);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6), inset 0 0 15px rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.55);
 }
 
 .ficha-magnetica.status-em-revisao {
-  border-color: rgba(192, 132, 252, 0.4);
+  border-color: rgba(192, 132, 252, 0.5);
 }
 
 .ficha-magnetica.status-concluida {
-  border-color: rgba(74, 222, 128, 0.35);
-  opacity: 0.92;
+  border-color: rgba(74, 222, 128, 0.45);
+  opacity: 0.94;
 }
 
-/* Tags de Cabeçalho da Ficha */
+/* Topo do Dossiê */
 .cartao-tags {
   display: flex;
   justify-content: space-between;
@@ -438,176 +767,138 @@ main {
   gap: 8px;
 }
 
+.cartao-codigo-bloco {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.cartao-dot-pulso {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cor-cyan-neon);
+  box-shadow: 0 0 8px var(--cor-cyan-neon);
+}
+
 .tag-projeto {
   font-family: var(--fonte-mono);
-  font-size: 0.74rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   color: var(--cor-cyan-neon);
 }
 
 .tag-prioridade {
   font-family: var(--fonte-mono);
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 700;
-  padding: 2px 7px;
+  padding: 3px 8px;
   border-radius: 4px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
 .tag-prioridade.prioridade-alta {
-  background: rgba(239, 68, 68, 0.22);
+  background: rgba(239, 68, 68, 0.25);
   color: #fca5a5;
-  border: 1px solid rgba(239, 68, 68, 0.5);
+  border: 1px solid rgba(239, 68, 68, 0.6);
 }
 
 .tag-prioridade.prioridade-media {
-  background: rgba(245, 158, 11, 0.22);
+  background: rgba(245, 158, 11, 0.25);
   color: #fde68a;
-  border: 1px solid rgba(245, 158, 11, 0.5);
+  border: 1px solid rgba(245, 158, 11, 0.6);
 }
 
 .tag-prioridade.prioridade-baixa {
-  background: rgba(34, 197, 94, 0.22);
+  background: rgba(34, 197, 94, 0.25);
   color: #86efac;
-  border: 1px solid rgba(34, 197, 94, 0.5);
+  border: 1px solid rgba(34, 197, 94, 0.6);
 }
 
 .cartao-titulo {
   margin: 0;
-  font-size: 1.02rem;
+  font-size: 1.15rem;
   font-weight: 700;
   line-height: 1.35;
   color: #ffffff;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.02em;
 }
 
-/* Rodapé da Ficha: Prazo e Avatar com Molde Solto */
+/* Rodapé do Dossiê */
 .cartao-rodape {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 0.25rem;
-  padding-top: 0.65rem;
-  border-top: 1px dashed rgba(0, 212, 255, 0.22);
+  margin-top: 0.35rem;
+  padding-top: 0.75rem;
+  border-top: 1px dashed rgba(0, 212, 255, 0.25);
+}
+
+.cartao-meta-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
 }
 
 .cartao-prazo {
   font-family: var(--fonte-mono);
-  font-size: 0.75rem;
+  font-size: 0.78rem;
   color: var(--cor-texto-mutado);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+}
+
+.btn-ver-dossie {
+  font-family: var(--fonte-mono);
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--cor-cyan-neon);
+  background: rgba(0, 212, 255, 0.12);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  padding: 3px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+  transition: all 0.2s ease;
+}
+
+.ficha-magnetica:hover .btn-ver-dossie {
+  background: var(--cor-cyan-neon);
+  color: #040812;
+  box-shadow: 0 0 10px var(--cor-cyan-neon);
 }
 
 .avatar-responsavel {
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   background: transparent;
   border: none;
   object-fit: contain;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.5));
+  filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.6));
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
   flex-shrink: 0;
 }
 
 .ficha-magnetica:hover .avatar-responsavel {
-  transform: scale(1.16) rotate(4deg);
-  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.9));
+  transform: scale(1.18) rotate(4deg);
 }
 
-/* Auras Específicas de cada Titã */
-.ficha-magnetica:hover .avatar-robin {
-  filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.9));
-}
-.ficha-magnetica:hover .avatar-ciborgue {
-  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.9));
-}
-.ficha-magnetica:hover .avatar-estelar {
-  filter: drop-shadow(0 0 12px rgba(244, 114, 182, 0.9));
-}
-.ficha-magnetica:hover .avatar-ravena {
-  filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.9));
-}
-.ficha-magnetica:hover .avatar-mutano {
-  filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.9));
-}
+.ficha-magnetica:hover .avatar-robin { filter: drop-shadow(0 0 12px rgba(239, 68, 68, 0.95)); }
+.ficha-magnetica:hover .avatar-ciborgue { filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.95)); }
+.ficha-magnetica:hover .avatar-estelar { filter: drop-shadow(0 0 12px rgba(244, 114, 182, 0.95)); }
+.ficha-magnetica:hover .avatar-ravena { filter: drop-shadow(0 0 12px rgba(168, 85, 247, 0.95)); }
+.ficha-magnetica:hover .avatar-mutano { filter: drop-shadow(0 0 12px rgba(34, 197, 94, 0.95)); }
 
 /* ==========================================================================
-   ALERTA DE EVENTO / ANIVERSÁRIO INTEGRADO AO SISTEMA
-   ========================================================================== */
-.hud-alerta-social {
-  margin-top: 2rem;
-  padding: 0.85rem 1.25rem;
-  border-radius: 12px;
-  background: linear-gradient(90deg, rgba(80, 7, 36, 0.75) 0%, rgba(30, 27, 75, 0.7) 50%, rgba(15, 23, 42, 0.85) 100%);
-  border: 1px solid rgba(244, 114, 182, 0.4);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  flex-wrap: wrap;
-}
-
-.alerta-social-conteudo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.alerta-icone {
-  font-size: 1.75rem;
-  filter: drop-shadow(0 0 8px rgba(244, 114, 182, 0.6));
-}
-
-.alerta-tag {
-  font-family: var(--fonte-mono);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #f472b6;
-  text-transform: uppercase;
-  display: block;
-}
-
-.alerta-texto {
-  margin: 0;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: #ffffff;
-}
-
-.btn-acao-evento {
-  background: rgba(244, 114, 182, 0.18);
-  border: 1px solid rgba(244, 114, 182, 0.5);
-  color: #fbcfe8;
-  font-family: var(--fonte-mono);
-  font-size: 0.8rem;
-  font-weight: 700;
-  padding: 8px 16px;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  white-space: nowrap;
-}
-
-.btn-acao-evento:hover {
-  background: rgba(244, 114, 182, 0.35);
-  color: #ffffff;
-  border-color: #f472b6;
-  box-shadow: 0 0 15px rgba(244, 114, 182, 0.5);
-}
-
-/* ==========================================================================
-   POPUP MODAL DO COMUNICADOR T (BUSCA E FILTROS TÁTICOS)
+   8. MODAL DE DOSSIÊ HOLOGRÁFICO DA MISSÃO (AO CLICAR NO CARD)
    ========================================================================== */
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(5, 10, 20, 0.78);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(4, 8, 18, 0.82);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -626,13 +917,13 @@ main {
 }
 
 .modal-conteudo {
-  background: #0d1426;
+  background: #091224;
   border: 2px solid var(--cor-cyan-neon);
   border-radius: 16px;
-  box-shadow: 0 0 40px rgba(0, 212, 255, 0.4), 0 25px 60px rgba(0, 0, 0, 0.85);
+  box-shadow: 0 0 45px rgba(0, 212, 255, 0.45), 0 25px 65px rgba(0, 0, 0, 0.85);
   width: 100%;
-  max-width: 580px;
-  padding: 1.5rem;
+  max-width: 600px;
+  padding: 1.75rem;
   transform: scale(0.92) translateY(-10px);
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   max-height: 90vh;
@@ -649,7 +940,7 @@ main {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(0, 212, 255, 0.3);
-  padding-bottom: 0.75rem;
+  padding-bottom: 0.85rem;
   margin-bottom: 1.25rem;
 }
 
@@ -669,7 +960,7 @@ main {
 .subtitulo-popup {
   display: block;
   font-family: var(--fonte-mono);
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   color: var(--cor-amarelo-titans);
@@ -677,7 +968,8 @@ main {
 
 .modal-cabecalho h2 {
   margin: 0;
-  font-size: 1.25rem;
+  font-family: var(--fonte-display);
+  font-size: 1.4rem;
   font-weight: 700;
   color: #ffffff;
 }
@@ -688,8 +980,8 @@ main {
   color: #cbd5e1;
   font-size: 1rem;
   font-weight: bold;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -705,6 +997,101 @@ main {
   transform: scale(1.1);
 }
 
+/* Dossiê Específico */
+.dossie-stamp {
+  background: rgba(0, 212, 255, 0.15);
+  border: 1px solid var(--cor-cyan-neon);
+  color: var(--cor-cyan-neon);
+  font-family: var(--fonte-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.dossie-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.dossie-hero-bloco {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  background: rgba(15, 23, 42, 0.7);
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  border-radius: 12px;
+  padding: 1rem;
+}
+
+.dossie-avatar-grande {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(0, 212, 255, 0.7));
+}
+
+.dossie-hero-dados {
+  display: flex;
+  flex-direction: column;
+}
+
+.dossie-label {
+  font-family: var(--fonte-mono);
+  font-size: 0.68rem;
+  color: var(--cor-texto-mutado);
+  letter-spacing: 0.1em;
+}
+
+.dossie-nome-heroi {
+  font-family: var(--fonte-display);
+  font-size: 1.5rem;
+  color: #ffffff;
+  letter-spacing: 0.05em;
+}
+
+.dossie-status-tag {
+  font-family: var(--fonte-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--cor-cyan-neon);
+}
+
+.dossie-detalhes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.dossie-info-box {
+  background: rgba(15, 23, 42, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 8px 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dossie-dado {
+  font-family: var(--fonte-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin-top: 2px;
+}
+
+.text-cyan { color: var(--cor-cyan-neon); }
+
+.dossie-botoes-acao {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+
+/* ==========================================================================
+   9. FORMULÁRIO DO COMUNICADOR T (MODAL DE FILTROS)
+   ========================================================================== */
 .modal-form {
   display: flex;
   flex-direction: column;
@@ -725,7 +1112,7 @@ main {
 .campo-busca input[type="search"],
 .campo-ordenacao select {
   width: 100%;
-  background: #162035;
+  background: #141f36;
   border: 1px solid rgba(0, 212, 255, 0.35);
   border-radius: 8px;
   color: #ffffff;
@@ -746,7 +1133,7 @@ main {
 .grupo-filtros {
   border: 1px solid rgba(0, 212, 255, 0.25);
   border-radius: 10px;
-  background: rgba(20, 30, 55, 0.5);
+  background: rgba(18, 28, 52, 0.5);
   padding: 0.85rem 1rem;
   margin: 0;
 }
@@ -760,11 +1147,6 @@ main {
   letter-spacing: 0.08em;
   padding: 0 6px;
 }
-.dados-dossie p {
-  margin: 5px 0;
-  border-bottom: 1px dotted #ccc;
-}
-.dados-dossie strong { color: var(--titans-blue); }
 
 .opcoes-radio {
   display: flex;
@@ -843,7 +1225,7 @@ main {
 }
 
 /* ==========================================================================
-   BREAKPOINTS RESPONSIVOS (RUBRICA)
+   10. BREAKPOINTS RESPONSIVOS (RUBRICA ACADÊMICA)
    ========================================================================== */
 @media (min-width: 600px) {
   .grupo-filtros {
@@ -852,13 +1234,13 @@ main {
 }
 
 @media (min-width: 700px) {
-  .quadro-tatico {
+  .cockpit-centro-missoes {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
 @media (min-width: 1024px) {
-  .quadro-tatico {
-    grid-template-columns: repeat(4, 1fr);
+  .cockpit-centro-missoes {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

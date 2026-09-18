@@ -1,45 +1,55 @@
 /**
- * Módulo de Renderização do DOM — Estilo Trello Torre dos Titãs
+ * Módulo de Renderização do DOM — Computador Central dos Jovens Titãs
  * Responsabilidade: criar elementos do DOM e atualizar o quadro de tarefas.
  * Utiliza exclusivamente createElement e textContent para segurança contra XSS.
  */
 
 /**
- * Cria o elemento DOM de um cartão de tarefa com tags e avatar do Titã.
+ * Cria o elemento DOM de um cartão de tarefa com formato de Dossiê Tático.
  * @param {Object} tarefa - Objeto representando a tarefa.
  * @returns {HTMLLIElement} Elemento <li> contendo o <article> da tarefa.
  */
 export function criarCartao(tarefa) {
   const item = document.createElement("li");
-  item.style.width = "100%";
+  item.className = "item-missao-li";
 
   const rotClasse = `rot-${((tarefa.id - 1) % 4) + 1}`;
   const cartao = document.createElement("article");
-  cartao.className = `cartao ficha-magnetica ${rotClasse} status-${tarefa.status}`;
+  cartao.className = `cartao ficha-magnetica ${rotClasse} status-${tarefa.status} prioridade-${tarefa.prioridade}`;
   cartao.dataset.tarefaId = String(tarefa.id);
+  cartao.tabIndex = 0;
+  cartao.setAttribute("role", "button");
+  cartao.setAttribute("aria-label", `Abrir dossiê da missão: ${tarefa.titulo}`);
 
   // 1. Topo: Código Tático e Prioridade
   const topo = document.createElement("div");
   topo.className = "cartao-tags";
 
+  const blocoCodigo = document.createElement("div");
+  blocoCodigo.className = "cartao-codigo-bloco";
+
+  const dot = document.createElement("span");
+  dot.className = "cartao-dot-pulso";
+
   const tagProjeto = document.createElement("span");
   tagProjeto.className = "tag-projeto";
-  // Tag de operação tática estilizada
   const codigoOperacao = tarefa.projeto 
     ? `#OP-${tarefa.projeto.toUpperCase().replace(/\s+/g, "-")}`
     : `#T-00${tarefa.id}`;
   tagProjeto.textContent = codigoOperacao;
 
+  blocoCodigo.append(dot, tagProjeto);
+
   const tagPrioridade = document.createElement("span");
   tagPrioridade.className = `tag-prioridade prioridade-${tarefa.prioridade}`;
   const prioridadeMap = {
-    alta: "URGENTE",
-    media: "MÉDIA",
-    baixa: "BAIXA"
+    alta: "URGENTE // CRÍTICO",
+    media: "MÉDIA PRIORIDADE",
+    baixa: "BAIXA PRIORIDADE"
   };
   tagPrioridade.textContent = prioridadeMap[tarefa.prioridade] || tarefa.prioridade.toUpperCase();
 
-  topo.append(tagProjeto, tagPrioridade);
+  topo.append(blocoCodigo, tagPrioridade);
 
   // 2. Centro: Título da Tarefa / Missão
   const titulo = document.createElement("h4");
@@ -50,9 +60,18 @@ export function criarCartao(tarefa) {
   const rodape = document.createElement("footer");
   rodape.className = "cartao-rodape";
 
+  const blocoMeta = document.createElement("div");
+  blocoMeta.className = "cartao-meta-info";
+
   const prazo = document.createElement("span");
   prazo.className = "cartao-prazo";
-  prazo.textContent = `PRAZO ${tarefa.prazo}`;
+  prazo.textContent = `LIMITE: ${tarefa.prazo}`;
+
+  const btnAcessar = document.createElement("span");
+  btnAcessar.className = "btn-ver-dossie";
+  btnAcessar.textContent = "VER DOSSIÊ ❯";
+
+  blocoMeta.append(prazo, btnAcessar);
 
   const avatar = document.createElement("img");
   avatar.className = "avatar-responsavel";
@@ -64,17 +83,16 @@ export function criarCartao(tarefa) {
   avatar.alt = `Avatar de ${tarefa.responsavel}`;
   avatar.title = `Titã Responsável: ${tarefa.responsavel}`;
 
-  rodape.append(prazo, avatar);
+  rodape.append(blocoMeta, avatar);
 
   // Montagem do cartão
   cartao.append(topo, titulo, rodape);
   item.append(cartao);
-  
   return item;
 }
 
 /**
- * Renderiza as tarefas no quadro distribuindo pelas 4 colunas de status.
+ * Renderiza as tarefas no quadro distribuindo pelas 4 seções de status.
  * Utiliza replaceChildren para sincronização atômica sem duplicar cartões.
  * @param {Array} tarefas - Lista de tarefas a exibir.
  * @param {HTMLElement} [quadro] - Contêiner do quadro com data-quadro.
