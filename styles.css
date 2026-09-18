@@ -10,11 +10,11 @@
 
 :root {
   /* Paleta Oficial da Animação dos Jovens Titãs */
-  --bg-universo: #040711;
-  --bg-telao: #060c1c;
-  --bg-placa: #0c162c;
-  --bg-placa-hover: #12203e;
-  --bg-placa-subsolo: #081022;
+  --bg-universo: #03050c;
+  --bg-telao: #060b18;
+  --bg-placa: #0b1426;
+  --bg-placa-hover: #101c34;
+  --bg-placa-subsolo: #080e1c;
 
   /* Cores dos Personagens e da Torre (Cores Planas / Cel-Shading) */
   --titans-amarelo: #facc15;
@@ -42,7 +42,7 @@
   --sombra-comic-sm: 2px 3px 0px rgba(0, 0, 0, 0.7);
   --sombra-comic: 4px 5px 0px rgba(0, 0, 0, 0.75);
   --sombra-comic-lg: 6px 8px 0px rgba(0, 0, 0, 0.85);
-  --borda-comic-fina: 1px solid rgba(255, 255, 255, 0.14);
+  --borda-comic-fina: 1px solid rgba(255, 255, 255, 0.12);
   --borda-comic-destaque: 2px solid var(--titans-amarelo);
 }
 
@@ -51,7 +51,7 @@ html {
 }
 
 /* ==========================================================================
-   1. FUNDO CINEMATOGRÁFICO: PINTURA DE CENÁRIO (MATTE PAINTING)
+   1. FUNDO CINEMATOGRÁFICO: PINTURA DE CENÁRIO ESCURECIDA (MATTE PAINTING)
    ========================================================================== */
 body.hud-body {
   margin: 0;
@@ -61,7 +61,7 @@ body.hud-body {
   line-height: 1.4;
   background-color: var(--bg-universo);
   background-image: 
-    radial-gradient(circle at 50% 35%, rgba(12, 22, 44, 0.72) 0%, rgba(4, 7, 17, 0.94) 85%),
+    radial-gradient(circle at 50% 30%, rgba(8, 14, 28, 0.88) 0%, rgba(3, 5, 12, 0.98) 85%),
     url('img/torre-fundo.jpg');
   background-repeat: no-repeat;
   background-position: center center;
@@ -369,7 +369,7 @@ body.hud-body {
 }
 
 /* ==========================================================================
-   5. ROSTER DOS TITÃS — COLEÇÃO DE INSÍGNIAS (LATERAL DIREITA)
+   5. ROSTER DOS TITÃS — FORMAÇÃO DE INSÍGNIAS (COLUNA PRÓPRIA SEM SOBREPOR)
    ========================================================================== */
 .painel-operativos {
   position: fixed;
@@ -380,21 +380,25 @@ body.hud-body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 8px 6px;
+  background: rgba(9, 18, 36, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: var(--sombra-comic);
 }
 
 .roster-lista {
   display: flex;
   flex-direction: column;
-  gap: 2px;
+  gap: 4px;
   align-items: center;
 }
 
-/* Botão de Herói: Estilo Insígnia dos Titãs */
+/* Botão de Herói: Insígnia dos Titãs */
 .btn-roster {
   background: transparent;
   border: none;
-  width: 50px;
-  height: 50px;
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -406,19 +410,19 @@ body.hud-body {
 }
 
 .btn-roster:hover {
-  transform: scale(1.2) translateX(-4px);
+  transform: scale(1.18) translateX(-3px);
   z-index: 10;
 }
 
 .btn-roster.ativo {
-  transform: scale(1.22) translateX(-6px);
+  transform: scale(1.22) translateX(-5px);
   z-index: 11;
   filter: drop-shadow(3px 4px 0 rgba(0, 0, 0, 0.9)) drop-shadow(0 0 10px rgba(250, 204, 21, 0.6));
 }
 
 .roster-avatar {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   object-fit: contain;
   pointer-events: none;
 }
@@ -426,10 +430,10 @@ body.hud-body {
 /* Botão TODOS: Badge da Equipe Titãs */
 .btn-roster.btn-roster-todos {
   width: auto;
-  min-width: 52px;
-  height: 28px;
-  padding: 0 10px;
-  margin-bottom: 8px;
+  min-width: 48px;
+  height: 26px;
+  padding: 0 8px;
+  margin-bottom: 6px;
   background: #091224;
   border: 2px solid rgba(250, 204, 21, 0.4);
   box-shadow: var(--sombra-comic-sm);
@@ -438,13 +442,13 @@ body.hud-body {
 .btn-roster.btn-roster-todos:hover {
   border-color: var(--titans-amarelo);
   background: #111e3b;
-  transform: scale(1.1) translateY(-2px);
+  transform: scale(1.08) translateY(-2px);
 }
 
 .btn-roster.btn-roster-todos.ativo {
   border-color: var(--titans-amarelo);
   background: var(--titans-amarelo);
-  transform: scale(1.12);
+  transform: scale(1.1);
 }
 
 .btn-roster.btn-roster-todos.ativo .roster-label-all {
@@ -453,24 +457,25 @@ body.hud-body {
 
 .roster-label-all {
   font-family: var(--fonte-display);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
   letter-spacing: 0.08em;
   color: var(--titans-amarelo);
 }
 
 /* ==========================================================================
-   6. TELÃO DE COMANDO: COMPOSIÇÃO ASSIMÉTRICA REAL (4 ZONAS)
+   6. TELÃO DE COMANDO: ASSIMETRIA REAL E HIERARQUIA ENTRE ZONAS
    ========================================================================== */
 .radar-sala {
   min-height: 100vh;
-  padding: 4.5rem 5rem 3rem 2.5rem;
+  /* Afastamento generoso à direita (7.5rem) garante isolamento total do roster */
+  padding: 4.5rem 7.5rem 5rem 2.5rem;
   position: relative;
   display: flex;
   flex-direction: column;
 }
 
-/* Composição Livre: Zonas com larguras, pesos e ritmos próprios */
+/* Zonas com ritmos, larguras e hierarquia visual bem diferenciados */
 .zonas-operacionais {
   display: flex;
   flex-direction: row;
@@ -479,48 +484,47 @@ body.hud-body {
   gap: 1.75rem;
 }
 
-/* ZONA BASE */
 .zona-operacional {
   display: flex;
   flex-direction: column;
   position: relative;
 }
 
-/* 1. A FAZER: Mais contida e vertical */
+/* 1. A FAZER: Área de sinais recebidos (compacta, contida) */
 .zona-radar {
   flex: 0 0 21%;
 }
 
-/* 2. EM ANDAMENTO: Campo focal principal da Torre (mais largo, destacado) */
+/* 2. EM ANDAMENTO: Área de maior atividade da Torre (mais larga, aberta, dominante) */
 .zona-operacao {
-  flex: 0 0 32%;
+  flex: 0 0 34%;
 }
 
-/* 3. EM REVISÃO: Deslocada verticalmente para quebrar o alinhamento de grid */
+/* 3. EM REVISÃO: Área intermediária, contida, com offset vertical */
 .zona-analise {
-  flex: 0 0 24%;
-  margin-top: 1.75rem;
+  flex: 0 0 23%;
+  margin-top: 1.5rem;
 }
 
-/* 4. CONCLUÍDAS: Mais compacta, área de arquivo */
+/* 4. CONCLUÍDAS: Área de arquivo (compacta, silenciosa) */
 .zona-arquivo {
-  flex: 0 0 21%;
+  flex: 0 0 19%;
   margin-top: 0.5rem;
 }
 
-/* Marcador Gráfico da Zona (Abas de Desenho) */
+/* Marcadores Gráficos das Zonas (Sem Caixas delimitadoras) */
 .zona-marcador {
   display: flex;
   align-items: center;
   gap: 8px;
-  padding-bottom: 0.75rem;
+  padding-bottom: 0.6rem;
   margin-bottom: 1.25rem;
   border-bottom: 2px solid rgba(255, 255, 255, 0.08);
 }
 
 .zona-dot {
-  width: 10px;
-  height: 10px;
+  width: 9px;
+  height: 9px;
   flex-shrink: 0;
 }
 
@@ -531,7 +535,7 @@ body.hud-body {
 
 .zona-titulo {
   font-family: var(--fonte-display);
-  font-size: 1.35rem;
+  font-size: 1.3rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: uppercase;
@@ -540,9 +544,9 @@ body.hud-body {
 }
 
 .zona-radar    .zona-titulo { color: #94a3b8; }
-.zona-operacao .zona-titulo { color: var(--titans-amarelo); }
+.zona-operacao .zona-titulo { color: var(--titans-amarelo); font-size: 1.45rem; }
 .zona-analise  .zona-titulo { color: #c4b5fd; }
-.zona-arquivo  .zona-titulo { color: #86efac; }
+.zona-arquivo  .zona-titulo { color: #86efac; font-size: 1.15rem; }
 
 .zona-operacao .zona-marcador {
   border-bottom-color: rgba(250, 204, 21, 0.35);
@@ -555,7 +559,7 @@ body.hud-body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: 1.25rem;
 }
 
 .item-missao-li {
@@ -563,96 +567,110 @@ body.hud-body {
 }
 
 /* ==========================================================================
-   7. CARDS DE MISSÃO (FICHAS GRÁFICAS COM VARIEDADE ORGÂNICA)
+   7. CARDS DE MISSÃO: POLIMENTO DE COMPOSIÇÃO E VARIAÇÕES SUTIS
    ========================================================================== */
 .ficha-magnetica {
   background: var(--bg-placa);
-  border: 2px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   box-shadow: var(--sombra-comic);
-  padding: 1.15rem 1.25rem;
   cursor: pointer;
   position: relative;
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
   transition: transform 0.18s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.18s ease, background-color 0.18s ease;
 }
 
-/* Leve rotação de ficha magnética presa no painel */
-.rot-1 { transform: rotate(-0.5deg); }
-.rot-2 { transform: rotate(0.6deg); }
-.rot-3 { transform: rotate(-0.4deg); }
-.rot-4 { transform: rotate(0.5deg); }
-
 .ficha-magnetica:hover {
   background: var(--bg-placa-hover);
-  transform: translateY(-5px) scale(1.02) rotate(0deg) !important;
+  transform: translateY(-4px);
   box-shadow: var(--sombra-comic-lg);
-  border-color: rgba(255, 255, 255, 0.35);
-  z-index: 15;
+  border-color: rgba(255, 255, 255, 0.3);
+  z-index: 10;
 }
 
 /* ──────────────────────────────────────────────────────────
-   VARIEDADE ORGÂNICA POR STATUS E PRIORIDADE
+   HIERARQUIA E PROPORÇÕES VISUAIS ENTRE AS ZONAS
    ────────────────────────────────────────────────────────── */
 
-/* 1. EM ANDAMENTO: Borda lateral em Amarelo Titãs */
-.ficha-magnetica.status-em-andamento {
+/* 1. EM ANDAMENTO: Maior presença, maior respiro interno */
+.zona-operacao .ficha-magnetica {
+  padding: 1.35rem 1.45rem;
   border-left: 5px solid var(--titans-amarelo);
+  gap: 0.95rem;
 }
 
-/* 2. EM REVISÃO: Borda lateral em Roxo Ravena */
-.ficha-magnetica.status-em-revisao {
-  border-left: 5px solid var(--titans-roxo);
+.zona-operacao .cartao-titulo {
+  font-size: 1.25rem;
+  color: #ffffff;
 }
 
-/* 3. CONCLUÍDAS: Ficha mais limpa e compacta com acento verde */
-.ficha-magnetica.status-concluida {
-  border-left: 4px solid var(--titans-verde);
-  opacity: 0.85;
+/* 2. A FAZER: Fichas de sinais recebidos (diretas, compactas) */
+.zona-radar .ficha-magnetica {
+  padding: 1.05rem 1.15rem;
+  border-left: 4px solid var(--titans-ciano);
+  gap: 0.75rem;
 }
 
-.ficha-magnetica.status-concluida:hover {
+.zona-radar .cartao-titulo {
+  font-size: 1.1rem;
+}
+
+/* 3. EM REVISÃO: Fichas intermediárias com acento violeta */
+.zona-analise .ficha-magnetica {
+  padding: 1.15rem 1.25rem;
+  border-left: 4px solid var(--titans-roxo);
+  gap: 0.8rem;
+}
+
+.zona-analise .cartao-titulo {
+  font-size: 1.15rem;
+}
+
+/* 4. CONCLUÍDAS: Arquivo silencioso, mais compacto */
+.zona-arquivo .ficha-magnetica {
+  padding: 0.8rem 1rem;
+  border-left: 3px solid var(--titans-verde);
+  gap: 0.55rem;
+  opacity: 0.82;
+}
+
+.zona-arquivo .ficha-magnetica:hover {
   opacity: 1;
 }
 
-/* 4. PRIORIDADE ALTA (URGENTE): TRATAMENTO RADICALMENTE DISTINTO! */
-.ficha-magnetica.prioridade-alta {
-  border: 2px solid var(--titans-vermelho) !important;
-  border-top: 6px solid var(--titans-vermelho) !important;
-  background: #110d1a;
-  box-shadow: 5px 6px 0px rgba(225, 29, 72, 0.5), 0 10px 25px rgba(0, 0, 0, 0.8);
-  padding: 1.35rem 1.35rem;
+.zona-arquivo .cartao-titulo {
+  font-size: 0.98rem;
+  color: var(--cor-texto-mutado);
 }
 
-.ficha-magnetica.prioridade-alta .cartao-titulo {
-  font-size: 1.3rem;
-  color: #ffffff;
-  letter-spacing: 0.02em;
+.zona-arquivo .tag-projeto {
+  font-size: 0.72rem;
+}
+
+/* ──────────────────────────────────────────────────────────
+   URGÊNCIA: REDUÇÃO DO VERMELHO (UM ELEMENTO DOMINANTE)
+   ────────────────────────────────────────────────────────── */
+.ficha-magnetica.prioridade-alta {
+  /* O restante do card continua escuro — UM elemento dominante: tarja superior */
+  border-top: 5px solid var(--titans-vermelho) !important;
+  background: var(--bg-placa);
 }
 
 .ficha-magnetica.prioridade-alta .tag-prioridade {
   background: var(--titans-vermelho);
   color: #ffffff;
   font-weight: 700;
-  border: none;
 }
 
-/* 5. PRIORIDADE BAIXA: Mais contida e compacta */
 .ficha-magnetica.prioridade-baixa {
-  padding: 0.9rem 1.05rem;
-}
-
-.ficha-magnetica.prioridade-baixa .cartao-titulo {
-  font-size: 1rem;
-  color: var(--cor-texto-suave);
+  opacity: 0.9;
 }
 
 /* ──────────────────────────────────────────────────────────
    ELEMENTOS INTERNOS DO CARD
    ────────────────────────────────────────────────────────── */
 
-/* Topo do Card */
+/* Topo */
 .cartao-tags {
   display: flex;
   justify-content: space-between;
@@ -667,25 +685,25 @@ body.hud-body {
 }
 
 .cartao-dot-pulso {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
   background: var(--titans-amarelo);
 }
 
 .tag-projeto {
-  font-size: 0.78rem;
+  font-size: 0.76rem;
   font-weight: 600;
   color: #94a3b8;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
 
-/* Badges de Prioridade em Bloco de Cor Sólida */
+/* Badges de Prioridade */
 .tag-prioridade {
   font-family: var(--fonte-display);
   font-size: 0.85rem;
-  padding: 2px 7px;
-  letter-spacing: 0.06em;
+  padding: 1px 6px;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   line-height: 1.1;
 }
@@ -696,40 +714,39 @@ body.hud-body {
 }
 
 .tag-prioridade.prioridade-media {
-  background: #b45309;
+  background: #92400e;
   color: #fef3c7;
 }
 
 .tag-prioridade.prioridade-baixa {
   background: #1e293b;
   color: #94a3b8;
-  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 
-/* Título da Missão (A parte mais importante visualmente!) */
+/* Título */
 .cartao-titulo {
   margin: 0;
   font-family: var(--fonte-display);
-  font-size: 1.18rem;
+  font-size: 1.15rem;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.22;
   color: #ffffff;
   letter-spacing: 0.02em;
 }
 
-/* Rodapé do Card */
+/* Rodapé */
 .cartao-rodape {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  padding-top: 0.75rem;
-  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 .cartao-meta-info {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .cartao-prazo {
@@ -753,30 +770,46 @@ body.hud-body {
 }
 
 /* ==========================================================================
-   8. AVATAR E SUPORTE DE INSÍGNIA GRÁFICA
+   8. AVATAR E SUPORTE DE INSÍGNIA GRÁFICA COM VARIAÇÕES
    ========================================================================== */
 .avatar-insignia-slot {
   position: relative;
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
 }
 
-/* Base gráfica sólida de apoio atrás do avatar */
 .avatar-insignia-slot::before {
   content: '';
   position: absolute;
-  inset: 2px;
+  inset: 1px;
   background: #091224;
-  border: 2px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 1px 2px 0 rgba(0, 0, 0, 0.7);
   transition: transform 0.18s ease, border-color 0.18s ease;
 }
 
-/* Acentos individuais de cada Titã no suporte */
+/* Em Andamento: Avatar quebra levemente a borda inferior */
+.zona-operacao .avatar-insignia-slot {
+  margin-bottom: -4px;
+  margin-right: -2px;
+}
+
+/* Arquivo: Avatar menor e contido */
+.zona-arquivo .avatar-insignia-slot {
+  width: 32px;
+  height: 32px;
+}
+
+.zona-arquivo .avatar-responsavel {
+  width: 28px;
+  height: 28px;
+}
+
+/* Acentos individuais dos Titãs */
 .insignia-robin::before    { border-color: rgba(225, 29, 72, 0.6); }
 .insignia-ciborgue::before { border-color: rgba(2, 132, 199, 0.6); }
 .insignia-estelar::before  { border-color: rgba(244, 63, 94, 0.6); }
@@ -785,12 +818,12 @@ body.hud-body {
 
 .ficha-magnetica:hover .avatar-insignia-slot::before {
   border-color: var(--titans-amarelo);
-  transform: scale(1.08);
+  transform: scale(1.06);
 }
 
 .avatar-responsavel {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   object-fit: contain;
   position: relative;
   z-index: 1;
@@ -799,7 +832,7 @@ body.hud-body {
 }
 
 .ficha-magnetica:hover .avatar-responsavel {
-  transform: scale(1.15) rotate(2deg);
+  transform: scale(1.12);
 }
 
 /* ==========================================================================
@@ -808,7 +841,7 @@ body.hud-body {
 .modal-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(3, 6, 14, 0.88);
+  background: rgba(3, 5, 12, 0.9);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   display: flex;
@@ -828,16 +861,15 @@ body.hud-body {
   pointer-events: auto;
 }
 
-/* Chassi do Modal */
 .modal-conteudo,
 .terminal-comunicador {
   background: #091326;
   border: 3px solid var(--titans-amarelo);
   box-shadow: var(--sombra-comic-lg);
   width: 100%;
-  max-width: 580px;
-  padding: 2rem;
-  transform: scale(0.95);
+  max-width: 560px;
+  padding: 1.85rem;
+  transform: scale(0.96);
   transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
   max-height: 90vh;
   overflow-y: auto;
@@ -850,15 +882,14 @@ body.hud-body {
   transform: scale(1);
 }
 
-/* Cabeçalho do Modal */
 .modal-cabecalho,
 .terminal-cabecalho {
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid rgba(250, 204, 21, 0.3);
-  padding-bottom: 1rem;
-  margin-bottom: 1.5rem;
+  padding-bottom: 0.85rem;
+  margin-bottom: 1.35rem;
 }
 
 .modal-titulo-box,
@@ -869,8 +900,8 @@ body.hud-body {
 }
 
 .terminal-icone-t {
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   object-fit: contain;
   filter: drop-shadow(2px 2px 0 rgba(0, 0, 0, 0.8));
 }
@@ -878,7 +909,7 @@ body.hud-body {
 .subtitulo-popup,
 .terminal-subtitulo {
   font-family: var(--fonte-display);
-  font-size: 1rem;
+  font-size: 0.95rem;
   letter-spacing: 0.08em;
   color: var(--titans-amarelo);
   text-transform: uppercase;
@@ -890,7 +921,7 @@ body.hud-body {
 .terminal-titulo {
   margin: 4px 0 0 0;
   font-family: var(--fonte-display);
-  font-size: 2rem;
+  font-size: 1.85rem;
   font-weight: 700;
   letter-spacing: 0.03em;
   color: #ffffff;
@@ -918,12 +949,12 @@ body.hud-body {
   transform: scale(1.08);
 }
 
-/* Corpo do Dossiê */
+/* Dossiê */
 .dossie-stamp {
   background: var(--titans-amarelo);
   color: #040813;
   font-family: var(--fonte-display);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   padding: 3px 10px;
   letter-spacing: 0.05em;
@@ -933,22 +964,22 @@ body.hud-body {
 .dossie-corpo {
   display: flex;
   flex-direction: column;
-  gap: 1.4rem;
+  gap: 1.25rem;
 }
 
 .dossie-hero-bloco {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
   background: #0d1b36;
-  border: 2px solid rgba(255, 255, 255, 0.12);
-  border-left: 6px solid var(--titans-amarelo);
-  padding: 1.15rem 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 5px solid var(--titans-amarelo);
+  padding: 1rem 1.2rem;
 }
 
 .dossie-avatar-grande {
-  width: 72px;
-  height: 72px;
+  width: 68px;
+  height: 68px;
   object-fit: contain;
   filter: drop-shadow(2px 3px 0 rgba(0, 0, 0, 0.8));
 }
@@ -969,7 +1000,7 @@ body.hud-body {
 
 .dossie-nome-heroi {
   font-family: var(--fonte-display);
-  font-size: 2rem;
+  font-size: 1.85rem;
   font-weight: 700;
   color: #ffffff;
   line-height: 1;
@@ -999,7 +1030,7 @@ body.hud-body {
 }
 
 .dossie-dado {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: #ffffff;
 }
@@ -1015,10 +1046,10 @@ body.hud-body {
   border: 2px solid rgba(255, 255, 255, 0.2);
   color: #ffffff;
   font-family: var(--fonte-display);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: 0.05em;
-  padding: 6px 18px;
+  padding: 5px 16px;
   cursor: pointer;
   box-shadow: var(--sombra-comic-sm);
   transition: all 0.15s ease;
@@ -1030,13 +1061,11 @@ body.hud-body {
   transform: translateY(-2px);
 }
 
-/* ──────────────────────────────────────────────────────────
-   FORMULÁRIO DO COMUNICADOR T (FILTROS)
-   ────────────────────────────────────────────────────────── */
+/* Formulário do Comunicador T */
 .terminal-form {
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 1.15rem;
 }
 
 .terminal-campo-busca {
@@ -1065,7 +1094,7 @@ body.hud-body {
   outline: none;
   color: #ffffff;
   font-size: 0.95rem;
-  padding: 12px 0;
+  padding: 10px 0;
 }
 
 .terminal-input::placeholder {
@@ -1075,18 +1104,18 @@ body.hud-body {
 .terminal-grupo {
   border: 1px solid rgba(255, 255, 255, 0.1);
   background: #0d1b36;
-  padding: 1rem;
+  padding: 0.85rem 1rem;
   margin: 0;
 }
 
 .terminal-grupo-titulo {
   display: block;
   font-family: var(--fonte-display);
-  font-size: 1rem;
+  font-size: 0.95rem;
   letter-spacing: 0.06em;
   color: var(--titans-amarelo);
   text-transform: uppercase;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.5rem;
 }
 
 .terminal-opcoes {
@@ -1109,12 +1138,12 @@ body.hud-body {
 .canal-btn span {
   display: inline-block;
   font-family: var(--fonte-display);
-  font-size: 1rem;
+  font-size: 0.95rem;
   letter-spacing: 0.04em;
   color: #cbd5e1;
   background: #091326;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  padding: 4px 12px;
+  padding: 3px 10px;
   transition: all 0.15s ease;
 }
 
@@ -1166,9 +1195,9 @@ body.hud-body {
   border: 2px solid rgba(225, 29, 72, 0.4);
   color: #fca5a5;
   font-family: var(--fonte-display);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   letter-spacing: 0.04em;
-  padding: 6px 16px;
+  padding: 5px 14px;
   cursor: pointer;
   transition: all 0.15s ease;
 }
@@ -1185,10 +1214,10 @@ body.hud-body {
   border: none;
   color: #040813;
   font-family: var(--fonte-display);
-  font-size: 1.25rem;
+  font-size: 1.2rem;
   font-weight: 700;
   letter-spacing: 0.05em;
-  padding: 8px 20px;
+  padding: 7px 18px;
   cursor: pointer;
   box-shadow: var(--sombra-comic-sm);
   transition: all 0.15s ease;
@@ -1204,9 +1233,9 @@ body.hud-body {
    10. ESTADO DE ALERTA VERMELHO DOS TITÃS
    ========================================================================== */
 body.alerta-emergencia-ativo {
-  background-color: #120409;
+  background-color: #100308;
   background-image: 
-    radial-gradient(circle at 50% 35%, rgba(40, 8, 16, 0.85) 0%, rgba(18, 3, 7, 0.96) 85%),
+    radial-gradient(circle at 50% 30%, rgba(38, 6, 15, 0.88) 0%, rgba(14, 2, 6, 0.98) 85%),
     url('img/torre-fundo.jpg');
 }
 
@@ -1224,8 +1253,8 @@ body.alerta-emergencia-ativo .btn-alerta-emergencia {
 }
 
 body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
-  border-color: var(--titans-vermelho) !important;
-  box-shadow: 6px 8px 0px rgba(0, 0, 0, 0.9), 0 0 25px rgba(225, 29, 72, 0.7) !important;
+  border-top-color: var(--titans-vermelho-alerta) !important;
+  box-shadow: 5px 7px 0px rgba(0, 0, 0, 0.9), 0 0 20px rgba(225, 29, 72, 0.5) !important;
 }
 
 /* Efeito Comemorativo do Aniversário */
@@ -1239,12 +1268,12 @@ body.aniversario-ativo {
    ========================================================================== */
 @media (max-width: 900px) {
   .radar-sala {
-    padding: 4.5rem 1.5rem 5rem 1.5rem;
+    padding: 4.5rem 1.25rem 5rem 1.25rem;
   }
 
   .zonas-operacionais {
     flex-direction: column;
-    gap: 2.25rem;
+    gap: 2rem;
   }
 
   .zona-radar,

@@ -13,9 +13,8 @@ export function criarCartao(tarefa) {
   const item = document.createElement("li");
   item.className = "item-missao-li";
 
-  const rotClasse = `rot-${((tarefa.id - 1) % 4) + 1}`;
   const cartao = document.createElement("article");
-  cartao.className = `cartao ficha-magnetica ${rotClasse} status-${tarefa.status} prioridade-${tarefa.prioridade}`;
+  cartao.className = `cartao ficha-magnetica status-${tarefa.status} prioridade-${tarefa.prioridade}`;
   cartao.dataset.tarefaId = String(tarefa.id);
   cartao.tabIndex = 0;
   cartao.setAttribute("role", "button");
