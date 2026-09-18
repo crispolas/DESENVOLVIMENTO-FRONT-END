@@ -297,110 +297,87 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
 }
 
 /* ==========================================================================
-   4. BARRA SUPERIOR TÁTICA DO CIBORGUE (HUD DE COMANDO)
+   4. ELEMENTOS FLUTUANTES (SEM HEADER — SEM BARRA — SEM FAIXA)
    ========================================================================== */
-.hud-top-bar {
-  position: relative;
-  z-index: 20;
+
+/* Rádio do Ciborgue — fixo no canto inferior esquerdo */
+.hud-radio-flutuante {
+  position: fixed;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  z-index: 50;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 0.85rem clamp(1rem, 2.5vw, 2rem);
-  background: rgba(10, 16, 32, 0.88);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(0, 212, 255, 0.35);
-  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.65);
-  gap: 1rem;
-  flex-wrap: wrap;
-  transition: all 0.3s ease;
+  gap: 10px;
+  background: rgba(8, 14, 28, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  border-radius: 10px;
+  padding: 8px 14px;
+  max-width: 360px;
 }
 
-.hud-bloco-status {
+.hud-radio-texto {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Grupo de botões flutuantes — fixo no canto superior esquerdo */
+.hud-botoes-flutuantes {
+  position: fixed;
+  top: 1.25rem;
+  left: 1.25rem;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .beacon-pulso {
-  width: 10px;
-  height: 10px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: var(--cor-cyan-neon);
-  box-shadow: 0 0 12px var(--cor-cyan-neon), 0 0 20px var(--cor-cyan-neon);
+  box-shadow: 0 0 10px var(--cor-cyan-neon);
   animation: beaconPulse 2s infinite ease-in-out;
   flex-shrink: 0;
 }
 
 @keyframes beaconPulse {
   0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.3); opacity: 0.4; }
-}
-
-.hud-titulos {
-  display: flex;
-  flex-direction: column;
-}
-
-.hud-terminal-id {
-  font-family: var(--fonte-mono);
-  font-size: 0.8rem;
-  letter-spacing: 0.14em;
-  color: var(--cor-cyan-neon);
-  text-transform: uppercase;
-  font-weight: 700;
-}
-
-.hud-substatus {
-  font-size: 0.72rem;
-  color: var(--cor-texto-mutado);
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-}
-
-/* Transmissão de Rádio Dinâmica */
-.hud-transmissao {
-  display: none;
-  align-items: center;
-  gap: 8px;
-  background: rgba(14, 116, 144, 0.2);
-  border: 1px solid rgba(0, 212, 255, 0.35);
-  padding: 5px 14px;
-  border-radius: 9999px;
-  font-size: 0.82rem;
-}
-
-@media (min-width: 860px) {
-  .hud-transmissao {
-    display: flex;
-  }
+  50% { transform: scale(1.4); opacity: 0.3; }
 }
 
 .operador-tag {
   color: var(--cor-amarelo-titans);
   font-weight: 800;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   font-family: var(--fonte-display);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
+  white-space: nowrap;
 }
 
 .operador-fala {
-  color: #e0f2fe;
+  color: #c7d9f0;
   font-style: italic;
   font-family: var(--fonte-mono);
+  font-size: 0.78rem;
 }
 
-/* Botão de Emergência */
+/* Botão de Emergência flutuante */
 .btn-alerta-emergencia {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.6);
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.55);
   color: #fca5a5;
-  font-family: var(--fonte-display);
-  font-size: 0.9rem;
+  font-family: var(--fonte-mono);
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.06em;
-  padding: 6px 12px;
-  border-radius: 6px;
+  letter-spacing: 0.08em;
+  padding: 7px 12px;
+  border-radius: 8px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -412,45 +389,20 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
   background: rgba(239, 68, 68, 0.35);
   color: #ffffff;
   border-color: #ef4444;
-  box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
+  box-shadow: 0 0 18px rgba(239, 68, 68, 0.55);
 }
 
-/* Controles de Topo: Região Viva e Comunicador */
-.hud-controles-topo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.badge-status-missao {
-  font-family: var(--fonte-mono);
-  font-size: 0.78rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  color: var(--cor-cyan-neon);
-  background: rgba(8, 20, 42, 0.85);
-  border: 1px solid rgba(0, 212, 255, 0.4);
-  padding: 5px 12px;
-  border-radius: 6px;
-  white-space: nowrap;
-  box-shadow: 0 0 10px rgba(0, 212, 255, 0.2);
-}
-
-.badge-status-missao:empty {
-  display: none;
-}
-
-/* Botão Comunicador T Oficial */
+/* Botão Comunicador T flutuante */
 .btn-comunicador-icone {
-  width: 48px;
-  height: 48px;
+  width: 50px;
+  height: 50px;
   border-radius: 50%;
   padding: 0;
   background: transparent;
   border: none;
   cursor: pointer;
   transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.25s ease;
-  filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.75));
+  filter: drop-shadow(0 0 8px rgba(234, 179, 8, 0.7));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -458,12 +410,12 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
 }
 
 .btn-comunicador-icone:hover {
-  transform: scale(1.15) rotate(6deg);
-  filter: drop-shadow(0 0 18px rgba(234, 179, 8, 0.95)) drop-shadow(0 0 25px rgba(0, 212, 255, 0.8));
+  transform: scale(1.18) rotate(8deg);
+  filter: drop-shadow(0 0 20px rgba(234, 179, 8, 1)) drop-shadow(0 0 30px rgba(0, 212, 255, 0.7));
 }
 
 .btn-comunicador-icone:active {
-  transform: scale(0.95);
+  transform: scale(0.94);
 }
 
 .icone-t {
@@ -471,6 +423,7 @@ body.alerta-emergencia-ativo .ficha-magnetica.prioridade-alta {
   height: 100%;
   object-fit: contain;
 }
+
 
 /* ==========================================================================
    5. LAYOUT DO COCKPIT (SALA DE COMANDO INTEGRADA)

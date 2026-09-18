@@ -43,44 +43,35 @@
     <div class="scanlines"></div>
   </div>
 
-  <!-- Barra Superior Tática do Ciborgue (HUD de Comando) -->
-  <header class="hud-top-bar">
-    <div class="hud-bloco-status">
-      <span class="beacon-pulso" aria-hidden="true"></span>
-      <div class="hud-titulos">
-        <span class="hud-terminal-id">TITANS COMMAND SYSTEM // JUMP CITY</span>
-        <span class="hud-substatus" id="hud-substatus">5 OPERATIVOS CONECTADOS • VARREDURA ATIVA</span>
-      </div>
-    </div>
+  <!-- Região Viva de Acessibilidade (Obrigatória, invisível) -->
+  <div id="status" class="sr-only" role="status" aria-live="polite"></div>
 
-    <!-- Transmissão de Rádio Dinâmica (Ciborgue / Robin) -->
-    <div class="hud-transmissao" aria-live="off">
+  <!-- Transmissão de Rádio (canto inferior esquerdo) -->
+  <div class="hud-radio-flutuante" aria-live="off">
+    <span class="beacon-pulso" aria-hidden="true"></span>
+    <div class="hud-radio-texto">
       <span class="operador-tag" id="hud-operador-tag">⚡ CIBORGUE:</span>
       <span class="operador-fala" id="hud-fala-ciborgue">"Varredura completa. 8 missões ativas no radar!"</span>
     </div>
+  </div>
 
-    <!-- Botão de Emergência & Controles de Acesso -->
-    <div class="hud-controles-topo">
-      <button type="button" id="btn-alerta-emergencia" class="btn-alerta-emergencia" title="Alternar Estado de Emergência (Alerta Titãs)">
-        <span class="icone-sirene" aria-hidden="true">⚠</span>
-        <span class="texto-alerta-btn">ALERTA TITÃS</span>
-      </button>
+  <!-- Botões Flutuantes — canto superior esquerdo -->
+  <div class="hud-botoes-flutuantes">
+    <button type="button" id="btn-alerta-emergencia" class="btn-alerta-emergencia" title="Modo de Alerta Titãs">
+      <span class="icone-sirene" aria-hidden="true">⚠</span>
+      <span class="texto-alerta-btn">ALERTA</span>
+    </button>
 
-      <!-- Região Viva Obrigatória de Acessibilidade -->
-      <div id="status" class="badge-status-missao" role="status" aria-live="polite"></div>
-
-      <!-- Botão Oficial Comunicador T -->
-      <button type="button" 
-              id="btn-comunicador" 
-              class="btn-comunicador-icone" 
-              aria-haspopup="dialog"
-              aria-expanded="false" 
-              aria-controls="modal-filtros-overlay" 
-              title="Acessar Comunicador T (Filtros e Busca)">
-        <img src="img/comunicador-t.png" alt="Comunicador dos Titãs" class="icone-t">
-      </button>
-    </div>
-  </header>
+    <button type="button"
+            id="btn-comunicador"
+            class="btn-comunicador-icone"
+            aria-haspopup="dialog"
+            aria-expanded="false"
+            aria-controls="modal-filtros-overlay"
+            title="Comunicador T — Filtros e Busca">
+      <img src="img/comunicador-t.png" alt="Comunicador dos Titãs" class="icone-t">
+    </button>
+  </div>
 
   <!-- Telão da Sala de Comando com Consoles Integrados -->
   <main class="cockpit-container">
