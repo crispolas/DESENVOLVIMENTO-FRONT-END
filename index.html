@@ -73,199 +73,178 @@
     </button>
   </div>
 
-  <!-- Telão da Sala de Comando com Consoles Integrados -->
-  <main class="cockpit-container">
 
-    <!-- Console Lateral Esquerdo: Telemetria & Operativos Titãs -->
-    <aside class="console-lateral-torre" aria-label="Painel de Diagnóstico da Torre">
-      <div class="modulo-telemetria">
-        <div class="modulo-titulo">DIAGNÓSTICO DA TORRE</div>
-        <div class="telemetria-item">
-          <span>ENERGIA REATOR</span>
-          <span class="telemetria-valor cyan">98.4%</span>
-        </div>
-        <div class="telemetria-barra"><div class="telemetria-fill w-98"></div></div>
+  <!-- Notificação de Aniversário (aparece como evento do sistema) -->
 
-        <div class="telemetria-item">
-          <span>ESCUDO DEFESA</span>
-          <span class="telemetria-valor green">MAX</span>
-        </div>
-        <div class="telemetria-barra"><div class="telemetria-fill green w-100"></div></div>
+  <div id="evento-aniversario" class="evento-aniversario" aria-live="polite" hidden>
+    <span class="evento-icone">◈</span>
+    <div class="evento-texto">
+      <span class="evento-label">CALENDÁRIO SOCIAL // EVENTO DETECTADO</span>
+      <strong class="evento-nome" id="evento-aniversario-nome">ANIVERSÁRIO DA ESTELAR — HOJE</strong>
+    </div>
+    <button type="button" id="btn-fechar-evento" class="btn-fechar-evento" aria-label="Fechar notificação">✕</button>
+  </div>
 
-        <div class="telemetria-item">
-          <span>VARREDURA RADAR</span>
-          <span class="telemetria-valor yellow">360° ATIVA</span>
-        </div>
+  <!-- Roster de Operativos — canto direito fixo -->
+  <nav class="painel-operativos" aria-label="Filtrar por operativo">
+    <div class="operativos-titulo">OPERATIVOS</div>
+    <div class="roster-lista">
+      <button type="button" class="btn-roster btn-roster-todos ativo" data-heroi="" title="Todos os Titãs">
+        <span class="roster-label-all">TODOS</span>
+      </button>
+      <button type="button" class="btn-roster" data-heroi="Robin" title="Robin">
+        <img src="img/robin.png" alt="Robin" class="roster-avatar">
+      </button>
+      <button type="button" class="btn-roster" data-heroi="Ciborgue" title="Ciborgue">
+        <img src="img/ciborgue.png" alt="Ciborgue" class="roster-avatar">
+      </button>
+      <button type="button" class="btn-roster" data-heroi="Estelar" title="Estelar">
+        <img src="img/estelar.png" alt="Estelar" class="roster-avatar">
+      </button>
+      <button type="button" class="btn-roster" data-heroi="Ravena" title="Ravena">
+        <img src="img/ravena.png" alt="Ravena" class="roster-avatar">
+      </button>
+      <button type="button" class="btn-roster" data-heroi="Mutano" title="Mutano">
+        <img src="img/mutano.png" alt="Mutano" class="roster-avatar">
+      </button>
+    </div>
+  </nav>
+
+  <!-- RADAR: Sala de Comando Central -->
+  <main class="radar-sala" id="radar-sala">
+
+    <!-- Torre no centro do radar -->
+    <div class="torre-central" aria-hidden="true">
+      <div class="torre-pulso-anel anel-3"></div>
+      <div class="torre-pulso-anel anel-2"></div>
+      <div class="torre-pulso-anel anel-1"></div>
+      <div class="torre-nucleo">
+        <img src="img/comunicador-t.png" alt="" class="torre-emblema">
+        <span class="torre-label">TITANS TOWER</span>
       </div>
+    </div>
 
-      <!-- Painel de Seleção Rápida de Titã (Filtro Direto) -->
-      <div class="modulo-titans-roster">
-        <div class="modulo-titulo">TITÃS EM SERVIÇO</div>
-        <div class="roster-botoes">
-          <button type="button" class="btn-roster" data-heroi="Robin" title="Filtrar missões do Robin">
-            <img src="img/robin.png" alt="" class="roster-avatar">
-            <span>ROBIN</span>
-          </button>
-          <button type="button" class="btn-roster" data-heroi="Ciborgue" title="Filtrar missões do Ciborgue">
-            <img src="img/ciborgue.png" alt="" class="roster-avatar">
-            <span>CIBORGUE</span>
-          </button>
-          <button type="button" class="btn-roster" data-heroi="Estelar" title="Filtrar missões da Estelar">
-            <img src="img/estelar.png" alt="" class="roster-avatar">
-            <span>ESTELAR</span>
-          </button>
-          <button type="button" class="btn-roster" data-heroi="Ravena" title="Filtrar missões da Ravena">
-            <img src="img/ravena.png" alt="" class="roster-avatar">
-            <span>RAVENA</span>
-          </button>
-          <button type="button" class="btn-roster" data-heroi="Mutano" title="Filtrar missões do Mutano">
-            <img src="img/mutano.png" alt="" class="roster-avatar">
-            <span>MUTANO</span>
-          </button>
-          <button type="button" class="btn-roster btn-roster-todos ativo" data-heroi="" title="Exibir todos os Titãs">
-            <span>TODOS</span>
-          </button>
+    <!-- Quadro de Missões: 4 Zonas Operacionais -->
+    <section aria-labelledby="quadro-heading" data-quadro class="zonas-operacionais">
+      <h2 id="quadro-heading" class="sr-only">Central de Missões — Computador dos Jovens Titãs</h2>
+
+      <!-- ZONA 1: SINAIS NO RADAR (A FAZER) — 22% -->
+      <section aria-labelledby="zona-radar-heading" class="zona-operacional zona-radar">
+        <div class="zona-marcador">
+          <span class="zona-dot dot-radar" aria-hidden="true"></span>
+          <h3 id="zona-radar-heading" class="zona-titulo">SINAL<br>DETECTADO</h3>
+          <span class="zona-meta">// A FAZER</span>
         </div>
-      </div>
-    </aside>
-
-    <!-- Centro: O Telão Holográfico de Missões (Consoles Táticos) -->
-    <section aria-labelledby="quadro-heading" data-quadro class="cockpit-centro-missoes">
-      <h2 id="quadro-heading" class="sr-only">Quadro de Missões Táticas</h2>
-
-      <!-- Setor 1: SINAIS NO RADAR -->
-      <section aria-labelledby="coluna-a-fazer-heading" class="setor-cockpit setor-radar">
-        <header class="setor-cabecalho">
-          <div class="setor-tag-box">
-            <span class="setor-dot dot-radar" aria-hidden="true"></span>
-            <h3 id="coluna-a-fazer-heading">SINAIS NO RADAR</h3>
-          </div>
-          <span class="setor-meta">[ A FAZER ]</span>
-        </header>
-        <ul data-lista-status="a-fazer" class="lista-fichas-largas"></ul>
+        <ul data-lista-status="a-fazer" class="lista-zona"></ul>
       </section>
 
-      <!-- Setor 2: EM OPERAÇÃO ATIVA -->
-      <section aria-labelledby="coluna-em-andamento-heading" class="setor-cockpit setor-operacao">
-        <header class="setor-cabecalho">
-          <div class="setor-tag-box">
-            <span class="setor-dot dot-operacao" aria-hidden="true"></span>
-            <h3 id="coluna-em-andamento-heading">EM OPERAÇÃO ATIVA</h3>
-          </div>
-          <span class="setor-meta">[ EXECUTANDO ]</span>
-        </header>
-        <ul data-lista-status="em-andamento" class="lista-fichas-largas"></ul>
+      <!-- ZONA 2: EM OPERAÇÃO ATIVA (EM ANDAMENTO) — 30% -->
+      <section aria-labelledby="zona-operacao-heading" class="zona-operacional zona-operacao">
+        <div class="zona-marcador">
+          <span class="zona-dot dot-operacao" aria-hidden="true"></span>
+          <h3 id="zona-operacao-heading" class="zona-titulo">EM<br>OPERAÇÃO</h3>
+          <span class="zona-meta">// ATIVA</span>
+        </div>
+        <ul data-lista-status="em-andamento" class="lista-zona"></ul>
       </section>
 
-      <!-- Setor 3: SCANNER TÁTICO / ANÁLISE -->
-      <section aria-labelledby="coluna-em-revisao-heading" class="setor-cockpit setor-analise">
-        <header class="setor-cabecalho">
-          <div class="setor-tag-box">
-            <span class="setor-dot dot-analise" aria-hidden="true"></span>
-            <h3 id="coluna-em-revisao-heading">EM ANÁLISE // SCANNER</h3>
-          </div>
-          <span class="setor-meta">[ REVISÃO ]</span>
-        </header>
-        <ul data-lista-status="em-revisao" class="lista-fichas-largas"></ul>
+      <!-- ZONA 3: EM ANÁLISE / SCANNER (EM REVISÃO) — 25% -->
+      <section aria-labelledby="zona-analise-heading" class="zona-operacional zona-analise">
+        <div class="zona-marcador">
+          <span class="zona-dot dot-analise" aria-hidden="true"></span>
+          <h3 id="zona-analise-heading" class="zona-titulo">EM<br>ANÁLISE</h3>
+          <span class="zona-meta">// SCANNER</span>
+        </div>
+        <ul data-lista-status="em-revisao" class="lista-zona"></ul>
       </section>
 
-      <!-- Setor 4: ARQUIVO DE MISSÕES CONCLUÍDAS -->
-      <section aria-labelledby="coluna-concluida-heading" class="setor-cockpit setor-arquivo">
-        <header class="setor-cabecalho">
-          <div class="setor-tag-box">
-            <span class="setor-dot dot-arquivo" aria-hidden="true"></span>
-            <h3 id="coluna-concluida-heading">ARQUIVO // CONCLUÍDO</h3>
-          </div>
-          <span class="setor-meta">[ FINALIZADO ]</span>
-        </header>
-        <ul data-lista-status="concluida" class="lista-fichas-largas"></ul>
+      <!-- ZONA 4: ARQUIVO (CONCLUÍDA) — 23% -->
+      <section aria-labelledby="zona-arquivo-heading" class="zona-operacional zona-arquivo">
+        <div class="zona-marcador">
+          <span class="zona-dot dot-arquivo" aria-hidden="true"></span>
+          <h3 id="zona-arquivo-heading" class="zona-titulo">ARQUIVO<br>TÁTICO</h3>
+          <span class="zona-meta">// CONCLUÍDO</span>
+        </div>
+        <ul data-lista-status="concluida" class="lista-zona"></ul>
       </section>
+
     </section>
+
+    <!-- Feedback de Scan (aparece ao filtrar) -->
+    <div id="scan-feedback" class="scan-feedback" aria-live="off"></div>
 
   </main>
 
-  <!-- Modal 1: Comunicador T (Filtros e Busca) -->
+  <!-- Modal 1: Comunicador T — Terminal de Busca Tática -->
   <div id="modal-filtros-overlay" class="modal-overlay" aria-hidden="true">
-    <div id="modal-filtros" class="modal-conteudo" role="dialog" aria-modal="true" aria-labelledby="busca-filtros-heading">
-      <div class="modal-cabecalho">
-        <div class="modal-titulo-box">
-          <img src="img/comunicador-t.png" alt="" class="modal-icone-t">
-          <div>
-            <span class="subtitulo-popup">COMUNICADOR T // CENTRAL</span>
-            <h2 id="busca-filtros-heading">Gerenciador de Missões</h2>
+    <div id="modal-filtros" class="terminal-comunicador" role="dialog" aria-modal="true" aria-labelledby="busca-filtros-heading">
+
+      <div class="terminal-cabecalho">
+        <div class="terminal-id-bloco">
+          <img src="img/comunicador-t.png" alt="" class="terminal-icone-t">
+          <div class="terminal-id-texto">
+            <span class="terminal-subtitulo">COMUNICADOR T // CENTRAL</span>
+            <h2 id="busca-filtros-heading" class="terminal-titulo">TERMINAL DE BUSCA</h2>
           </div>
         </div>
-        <button type="button" id="btn-fechar-modal" class="btn-fechar-modal" aria-label="Fechar terminal do comunicador">✕</button>
+        <button type="button" id="btn-fechar-modal" class="btn-fechar-modal" aria-label="Fechar terminal">✕</button>
       </div>
 
-      <form class="modal-form">
-        <div class="campo-busca">
-          <label for="busca-titulo">Buscar missão por título, Titã ou operação:</label>
-          <input type="search" id="busca-titulo" name="busca-titulo" placeholder="Ex: Slade, Waffles, Demônio, Robin...">
+      <form class="terminal-form">
+
+        <!-- Busca -->
+        <div class="terminal-campo-busca">
+          <span class="campo-icone" aria-hidden="true">⌕</span>
+          <input type="search" id="busca-titulo" name="busca-titulo"
+                 class="terminal-input"
+                 placeholder="LOCALIZAR OPERAÇÃO..."
+                 autocomplete="off">
         </div>
 
-        <fieldset class="grupo-filtros">
-          <legend>Filtrar por setor de operação</legend>
-          <div class="opcoes-radio">
-            <label class="item-radio">
-              <input type="radio" id="status-todos" name="status" value="todos" checked>
-              <span>Todos os setores</span>
-            </label>
-            <label class="item-radio">
-              <input type="radio" id="status-a-fazer" name="status" value="a-fazer">
-              <span>Sinais no Radar</span>
-            </label>
-            <label class="item-radio">
-              <input type="radio" id="status-em-andamento" name="status" value="em-andamento">
-              <span>Em Operação</span>
-            </label>
-            <label class="item-radio">
-              <input type="radio" id="status-em-revisao" name="status" value="em-revisao">
-              <span>Em Análise</span>
-            </label>
-            <label class="item-radio">
-              <input type="radio" id="status-concluida" name="status" value="concluida">
-              <span>Arquivado</span>
-            </label>
+        <!-- Canais de Operação (Status) -->
+        <fieldset class="terminal-grupo">
+          <legend class="terminal-grupo-titulo">CANAL DE OPERAÇÃO</legend>
+          <div class="terminal-opcoes">
+            <label class="canal-btn"><input type="radio" name="status" value="todos" checked><span>◉ TODOS</span></label>
+            <label class="canal-btn"><input type="radio" name="status" value="a-fazer"><span>● RADAR</span></label>
+            <label class="canal-btn"><input type="radio" name="status" value="em-andamento"><span>◉ OPERAÇÃO</span></label>
+            <label class="canal-btn"><input type="radio" name="status" value="em-revisao"><span>◉ ANÁLISE</span></label>
+            <label class="canal-btn"><input type="radio" name="status" value="concluida"><span>✓ ARQUIVO</span></label>
           </div>
         </fieldset>
 
-        <fieldset class="grupo-filtros">
-          <legend>Filtrar por prioridade tática</legend>
-          <div class="opcoes-radio">
-            <label class="item-radio">
-              <input type="radio" id="prioridade-todas" name="prioridade" value="todas" checked>
-              <span>Todas</span>
-            </label>
-            <label class="item-radio">
-              <input type="radio" id="prioridade-baixa" name="prioridade" value="baixa">
-              <span>Baixa</span>
-            </label>
-            <label class="item-radio">
-              <input type="radio" id="prioridade-media" name="prioridade" value="media">
-              <span>Média</span>
-            </label>
-            <label class="item-radio">
-              <input type="radio" id="prioridade-alta" name="prioridade" value="alta">
-              <span>Urgente</span>
-            </label>
+        <!-- Nível de Ameaça (Prioridade) -->
+        <fieldset class="terminal-grupo">
+          <legend class="terminal-grupo-titulo">NÍVEL DE AMEAÇA</legend>
+          <div class="terminal-opcoes">
+            <label class="canal-btn"><input type="radio" name="prioridade" value="todas" checked><span>○ TODAS</span></label>
+            <label class="canal-btn"><input type="radio" name="prioridade" value="baixa"><span>○ NORMAL</span></label>
+            <label class="canal-btn"><input type="radio" name="prioridade" value="media"><span>○ ATENÇÃO</span></label>
+            <label class="canal-btn"><input type="radio" name="prioridade" value="alta"><span>○ CRÍTICO</span></label>
           </div>
         </fieldset>
 
-        <div class="linha-controles-base">
-          <div class="campo-ordenacao">
-            <label for="ordenacao">Ordenar por prazo limite:</label>
-            <select id="ordenacao" name="ordenacao">
-              <option value="prazo-asc">Prazo mais próximo primeiro</option>
-              <option value="prazo-desc">Prazo mais distante primeiro</option>
-            </select>
-          </div>
-
-          <button type="button" id="btn-limpar-filtros" class="btn-limpar">Limpar filtros</button>
+        <!-- Parâmetro de Varredura (Ordenação) -->
+        <div class="terminal-grupo terminal-ordenacao">
+          <span class="terminal-grupo-titulo">PARÂMETRO DE VARREDURA</span>
+          <select id="ordenacao" name="ordenacao" class="terminal-select">
+            <option value="prazo-asc">PRAZO ↑ PRÓXIMO PRIMEIRO</option>
+            <option value="prazo-desc">PRAZO ↓ DISTANTE PRIMEIRO</option>
+          </select>
         </div>
+
+        <!-- Ações -->
+        <div class="terminal-acoes">
+          <button type="button" id="btn-limpar-filtros" class="terminal-btn-limpar">RESETAR</button>
+          <button type="button" id="btn-iniciar-varredura" class="terminal-btn-scan">INICIAR VARREDURA ❯</button>
+        </div>
+
       </form>
     </div>
   </div>
+
+
+
 
   <!-- Modal 2: Dossiê Holográfico da Missão (Ao Clicar no Card) -->
   <div id="modal-dossie-overlay" class="modal-overlay" aria-hidden="true">

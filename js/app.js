@@ -21,11 +21,12 @@ function instalarControles() {
   function encerrarBoot() {
     if (telaBoot && !telaBoot.classList.contains("oculto")) {
       telaBoot.classList.add("oculto");
+      // Verifica aniversário após o boot terminar
+      setTimeout(verificarAniversario, 1200);
     }
   }
 
   if (telaBoot) {
-    // Encerra automaticamente após 2.2 segundos de animação
     setTimeout(encerrarBoot, 2200);
   }
 
@@ -33,7 +34,96 @@ function instalarControles() {
     btnPularBoot.addEventListener("click", encerrarBoot);
   }
 
-  // 2. Modo de Emergência (Titans Alert)
+  // ── Motor de som (Web Audio API, sem arquivos externos) ────────────────
+  let audioCtx = null;
+
+  function obterAudio() {
+    if (!audioCtx) {
+      try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); }
+      catch (e) { return null; }
+    }
+    return audioCtx;
+  }
+
+  function tocarBeep(frequencia = 880, duracao = 0.08, tipo = "sine", volume = 0.15) {
+    const ctx = obterAudio();
+    if (!ctx) return;
+    try {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.type = tipo;
+      osc.frequency.setValueAtTime(frequencia, ctx.currentTime);
+      gain.gain.setValueAtTime(volume, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + duracao);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + duracao);
+    } catch (e) { /* silencioso */ }
+  }
+
+  function tocarScanBeep() {
+    tocarBeep(660, 0.06, "square", 0.1);
+    setTimeout(() => tocarBeep(880, 0.06, "square", 0.08), 80);
+  }
+
+  function tocarAbertura() {
+    tocarBeep(440, 0.1, "sine", 0.12);
+    setTimeout(() => tocarBeep(550, 0.1, "sine", 0.1), 120);
+    setTimeout(() => tocarBeep(660, 0.12, "sine", 0.12), 240);
+  }
+
+  // ── Detecção de Aniversário ─────────────────────────────────────────────
+  const ANIVERSARIOS = {
+    robin:    { data: "07-01", nome: "Robin" },
+    ciborgue: { data: "06-29", nome: "Ciborgue" },
+    mutano:   { data: "10-15", nome: "Mutano" },
+    estelar:  { data: "09-17", nome: "Estelar" },
+    ravena:   { data: "01-10", nome: "Ravena" }
+  };
+
+  function verificarAniversario() {
+    const hoje = new Date();
+    const mesHoje = String(hoje.getMonth() + 1).padStart(2, "0");
+    const diaHoje = String(hoje.getDate()).padStart(2, "0");
+    const chaveHoje = `${mesHoje}-${diaHoje}`;
+
+    const aniversariante = Object.values(ANIVERSARIOS).find(a => a.data === chaveHoje);
+    if (!aniversariante) return;
+
+    const divEvento = document.getElementById("evento-aniversario");
+    const nomeEl = document.getElementById("evento-aniversario-nome");
+    if (!divEvento) return;
+
+    if (nomeEl) nomeEl.textContent = `ANIVERSÁRIO D${aniversariante.nome === "Estelar" ? "A" : "O"} ${aniversariante.nome.toUpperCase()} — HOJE`;
+
+    // Exibe com animação removendo o hidden
+    divEvento.removeAttribute("hidden");
+    requestAnimationFrame(() => {
+      // força repaint antes de animar
+      divEvento.style.display = "flex";
+    });
+
+    // Transmissão do Ciborgue muda
+    const fala = document.getElementById("hud-fala-ciborgue");
+    const tag  = document.getElementById("hud-operador-tag");
+    if (fala) fala.textContent = `"PARABÉNS, ${aniversariante.nome.toUpperCase()}! A Torre toda está feliz com você!"`;
+    if (tag)  tag.textContent  = "🎂 CIBORGUE:";
+
+    tocarBeep(523, 0.15, "sine", 0.2);
+    setTimeout(() => tocarBeep(659, 0.15, "sine", 0.15), 180);
+    setTimeout(() => tocarBeep(784, 0.2, "sine", 0.18), 360);
+
+    // Botão de fechar notificação
+    const btnFecharEvento = document.getElementById("btn-fechar-evento");
+    if (btnFecharEvento) {
+      btnFecharEvento.addEventListener("click", () => {
+        divEvento.setAttribute("hidden", "");
+      });
+    }
+  }
+
+
   const btnAlertaEmergencia = document.getElementById("btn-alerta-emergencia");
   const operadorTag = document.getElementById("hud-operador-tag");
   const falaCiborgue = document.getElementById("hud-fala-ciborgue");
@@ -58,7 +148,26 @@ function instalarControles() {
     });
   }
 
-  // 3. Modal do Comunicador T (Filtros e Busca)
+  // ── Scan Feedback ────────────────────────────────────────────────────────
+  let scanTimer = null;
+
+  function mostrarScan(totalVisiveis) {
+    const el = document.getElementById("scan-feedback");
+    if (!el) return;
+    clearTimeout(scanTimer);
+    el.textContent = "SCANNING...";
+    el.classList.add("visivel");
+    tocarScanBeep();
+    scanTimer = setTimeout(() => {
+      el.textContent = totalVisiveis === 0
+        ? "NENHUM SINAL ENCONTRADO"
+        : `${totalVisiveis} OCORRÊNCIA${totalVisiveis > 1 ? "S" : ""} IDENTIFICADA${totalVisiveis > 1 ? "S" : ""}`;
+      setTimeout(() => el.classList.remove("visivel"), 2000);
+    }, 600);
+  }
+
+  // ── Modal do Comunicador T ───────────────────────────────────────────────
+
   const btnComunicador = document.getElementById("btn-comunicador");
   const modalFiltrosOverlay = document.getElementById("modal-filtros-overlay");
   const btnFecharModal = document.getElementById("btn-fechar-modal");
@@ -74,6 +183,8 @@ function instalarControles() {
     modalFiltrosOverlay.setAttribute("aria-hidden", String(!deveAbrir));
 
     if (deveAbrir) {
+      tocarBeep(523, 0.08, "sine", 0.1);
+      setTimeout(() => tocarBeep(659, 0.08, "sine", 0.08), 100);
       if (buscaInput) buscaInput.focus();
     } else {
       btnComunicador.focus();
@@ -96,7 +207,22 @@ function instalarControles() {
     });
   }
 
-  // 4. Modal de Dossiê da Missão (Ao Clicar no Card)
+  // Botão INICIAR VARREDURA: fecha modal e dispara scan visual
+  const btnVarredura = document.getElementById("btn-iniciar-varredura");
+  if (btnVarredura) {
+    btnVarredura.addEventListener("click", () => {
+      alternarModalFiltros(false);
+      const visiveis = estado.tarefas.filter(t => {
+        const buscaOk = !estado.busca || t.titulo.toLowerCase().includes(estado.busca.toLowerCase()) || (t.responsavel || "").toLowerCase().includes(estado.busca.toLowerCase()) || (t.projeto || "").toLowerCase().includes(estado.busca.toLowerCase());
+        const statusOk = estado.status === "todos" || t.status === estado.status;
+        const prioridadeOk = estado.prioridade === "todas" || t.prioridade === estado.prioridade;
+        return buscaOk && statusOk && prioridadeOk;
+      }).length;
+      setTimeout(() => mostrarScan(visiveis), 250);
+    });
+  }
+
+
   const modalDossieOverlay = document.getElementById("modal-dossie-overlay");
   const btnFecharDossie = document.getElementById("btn-fechar-dossie");
   const btnFecharDossieSec = document.getElementById("btn-fechar-dossie-secundario");
@@ -131,6 +257,7 @@ function instalarControles() {
 
     modalDossieOverlay.classList.add("ativo");
     modalDossieOverlay.setAttribute("aria-hidden", "false");
+    tocarBeep(440, 0.06, "sine", 0.1);
     if (btnFecharDossie) btnFecharDossie.focus();
   }
 
