@@ -11,6 +11,7 @@
  */
 export function criarCartao(tarefa) {
   const item = document.createElement("li");
+  item.style.width = "100%";
 
   const rotClasse = `rot-${((tarefa.id - 1) % 4) + 1}`;
   const cartao = document.createElement("article");
@@ -68,6 +69,7 @@ export function criarCartao(tarefa) {
   // Montagem do cartão
   cartao.append(topo, titulo, rodape);
   item.append(cartao);
+  
   return item;
 }
 
@@ -79,14 +81,11 @@ export function criarCartao(tarefa) {
  */
 export function renderizarTarefas(tarefas, quadro = document.querySelector("[data-quadro]")) {
   if (!quadro) return;
-
   const listas = quadro.querySelectorAll("[data-lista-status]");
-
   listas.forEach((lista) => {
     const status = lista.dataset.listaStatus;
-    const tarefasDoStatus = tarefas.filter((t) => t.status === status);
-    const cartoes = tarefasDoStatus.map(criarCartao);
-
+    const alvosDoStatus = alvos.filter((a) => a.status === status);
+    const cartoes = alvosDoStatus.map(criarCartao);
     lista.replaceChildren(...cartoes);
   });
 }

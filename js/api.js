@@ -17,7 +17,8 @@ export async function carregarTarefas() {
   }
 
   const documento = await resposta.json();
-  return documento.tarefas;
+  return documento.alvos; // Agora o json chama "alvos" em vez de tarefas
 }
+
 
 

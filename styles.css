@@ -400,6 +400,7 @@ main {
   flex-direction: column;
   gap: 0.65rem;
 }
+.painel-lateral.aberto { right: 0; }
 
 /* Inclinações Orgânicas Magnéticas (Evita a rigidez do SaaS) */
 .rot-1 { transform: rotate(-1.2deg); }
@@ -759,6 +760,11 @@ main {
   letter-spacing: 0.08em;
   padding: 0 6px;
 }
+.dados-dossie p {
+  margin: 5px 0;
+  border-bottom: 1px dotted #ccc;
+}
+.dados-dossie strong { color: var(--titans-blue); }
 
 .opcoes-radio {
   display: flex;
